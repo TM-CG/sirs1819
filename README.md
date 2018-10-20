@@ -1,5 +1,5 @@
 # sirs1819
-##Medical Records
+## Medical Records
 Health care institutions gather and store sensitive information from patients with the goal of
 providing the best care possible. The medical history of a patient is essential to allow correct
 diagnostic and help the clinical staff act in the shortest time possible. This information is

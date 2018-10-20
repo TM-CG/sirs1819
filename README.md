@@ -16,4 +16,6 @@ In this topic you should define a cloud-based system to store medical records. T
 are available for a wide range of users, so the system must provide an interface to manage
 access privileges to the records. Consider using different access control models, like ABAC,
 RBAC, and standards, like XACML‡
-, that have several open-source implementations. 
+, that have several open-source implementations.
+
+[https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#other](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#other) 

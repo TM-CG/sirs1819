@@ -1,0 +1,18 @@
+1. Authentication (only authorized personal can acesss data)
+	
+2. Multiple institutions must be able to access the data repositories
+
+Access Controll Methods:
+	Attribute-based access controll(ABAC):
+		- access right are granted to users through the use of policies
+		which combine attributes together.
+			Attributes:
+				- user attributes
+				- resource attributes
+				- object
+				- environment attributes
+	
+	Role-Based access controll(RBAC):
+		- controll mechanism defined arround roles and privileges.
+		- great for organizations with hundreds of users and thousands of permissions.
+			 

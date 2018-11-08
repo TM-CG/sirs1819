@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- http://maven.apache.org/pom.html#Quick_Overview -->
 
-	<groupId>pt.ulisboa.tecnico.sdis</groupId>
+	<groupId>pt.ulisboa.tecnico.sirs</groupId>
 	<artifactId>kerby-ws</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
@@ -19,7 +19,7 @@
 
 		<wsdl.dir>${basedir}/../kerby-contract/</wsdl.dir>
 
-		<mainclass>pt.ulisboa.tecnico.sdis.kerby.KerbyApp</mainclass>
+		<mainclass>pt.ulisboa.tecnico.sirs.kerby.KerbyApp</mainclass>
 
 		<ws.name>kerby</ws.name>
 		<ws.url>http://localhost:8888/kerby</ws.url>
@@ -36,7 +36,7 @@
 		</dependency>
 		<!-- UDDI Naming -->
 		<dependency>
-			<groupId>pt.ulisboa.tecnico.sdis</groupId>
+			<groupId>pt.ulisboa.tecnico.sirs</groupId>
 			<artifactId>uddi-naming</artifactId>
 			<version>1.2.0</version>
 		</dependency>
@@ -49,13 +49,13 @@
 		</dependency>
 		<!-- kerby-lib -->
 		<dependency>
-        	<groupId>pt.ulisboa.tecnico.sdis</groupId>
+        	<groupId>pt.ulisboa.tecnico.sirs</groupId>
         	<artifactId>kerby-lib</artifactId>
         	<version>1.0</version>
         	<exclusions>
         		<!-- Exclude kerby-ws-cli to avoid having duplicate WSDL-generated classes in the classpath. -->
 	            <exclusion>
-	                <groupId>pt.ulisboa.tecnico.sdis</groupId>
+	                <groupId>pt.ulisboa.tecnico.sirs</groupId>
 	                <artifactId>kerby-ws-cli</artifactId>
 	            </exclusion>
             </exclusions>

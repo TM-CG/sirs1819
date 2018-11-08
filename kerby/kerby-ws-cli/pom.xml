@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- http://maven.apache.org/pom.html#Quick_Overview -->
 
-	<groupId>pt.ulisboa.tecnico.sdis</groupId>
+	<groupId>pt.ulisboa.tecnico.sirs</groupId>
 	<artifactId>kerby-ws-cli</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
@@ -19,7 +19,7 @@
 
 		<wsdl.dir>${basedir}/../kerby-contract/</wsdl.dir>
 
-		<mainclass>pt.ulisboa.tecnico.sdis.kerby.cli.KerbyClientApp</mainclass>
+		<mainclass>pt.ulisboa.tecnico.sirs.kerby.cli.KerbyClientApp</mainclass>
 
 		<uddi.url>http://localhost:9090</uddi.url>
 		<ws.name>kerby</ws.name>
@@ -37,7 +37,7 @@
 		</dependency>
 		<!-- UDDI Naming -->
 		<dependency>
-			<groupId>pt.ulisboa.tecnico.sdis</groupId>
+			<groupId>pt.ulisboa.tecnico.sirs</groupId>
 			<artifactId>uddi-naming</artifactId>
 			<version>1.2.0</version>
 		</dependency>

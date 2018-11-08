@@ -24,7 +24,7 @@
 	<dependencies>
 		<!-- kerby-lib -->
 		<dependency>
-			<groupId>pt.ulisboa.tecnico.sdis</groupId>
+			<groupId>pt.ulisboa.tecnico.sirs</groupId>
 			<artifactId>kerby-lib</artifactId>
 			<version>1.0</version>
 		</dependency>

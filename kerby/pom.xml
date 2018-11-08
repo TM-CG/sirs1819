@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- http://maven.apache.org/pom.html#Quick_Overview -->
 
-	<groupId>pt.ulisboa.tecnico.sdis</groupId>
+	<groupId>pt.ulisboa.tecnico.sirs</groupId>
 	<artifactId>kerby</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>

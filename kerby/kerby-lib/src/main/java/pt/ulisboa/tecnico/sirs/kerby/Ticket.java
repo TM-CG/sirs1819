@@ -21,6 +21,8 @@ public class Ticket {
 	/** Ticket data container. After creation, cannot be null. */
 	private TicketView view;
 
+	private Key dataPrivacyKey;
+
 	// ticket creation -------------------------------------------------------
 
 	/** Create ticket from arguments. */
@@ -31,6 +33,8 @@ public class Ticket {
 		view.setTime1(XMLHelper.dateToXML(time1));
 		view.setTime2(XMLHelper.dateToXML(time2));
 		view.setEncodedKeyXY(key.getEncoded());
+		//TODO NOT SURE ABOUT THIS
+		view.setDataPrivacyKey(dataPrivacyKey.getEncoded());
 	}
 
 	// TODO create constructor without key (one is generated)

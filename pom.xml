@@ -9,13 +9,11 @@
     <packaging>pom</packaging>
 
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>MDRecords-cli</module>
-        <module>MDRecords</module>
-    </modules>
 
     <name>SIRS1819 Medical Records</name>
     <modules>
+        <module>uddi-naming</module>
+        <module>kerby</module>
         <module>MDRecords</module>
         <module>MDRecords-cli</module>
     </modules>

@@ -1,4 +1,4 @@
-package pt.sirs.MedicalRecords.Personal.Exception;
+package pt.sirs.medicalrecords.personal.exception;
 
 public class InvalidPersonException extends Exception {
 

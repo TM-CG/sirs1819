@@ -17,4 +17,79 @@
         <module>MDRecords</module>
         <module>MDRecords-cli</module>
     </modules>
+
+    <properties>
+        <version.fenixframework>2.6.2</version.fenixframework>
+        <fenix.framework.codeGeneratorClassName>pt.ist.fenixframework.backend.jvstmojb.codeGenerator.FenixCodeGeneratorOneBoxPerObject</fenix.framework.codeGeneratorClassName>
+        <fenix.framework.backend>jvstm-ojb</fenix.framework.backend>
+    </properties>
+
+    <build>
+		<pluginManagement>
+			<plugins>
+                <!-- Fénix Framework -->
+				<plugin>
+					<groupId>pt.ist</groupId>
+					<artifactId>ff-maven-plugin</artifactId>
+					<version>${version.fenixframework}</version>
+					<configuration>
+						<codeGeneratorClassName>${fenix.framework.codeGeneratorClassName}</codeGeneratorClassName>
+						<params>
+							<ptIstTxIntrospectorEnable>false</ptIstTxIntrospectorEnable>
+						</params>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>ff-generate-domain</goal>
+								<goal>ff-process-atomic-annotations</goal>
+								<goal>ff-test-process-atomic-annotations</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>pt.ist</groupId>
+							<artifactId>fenix-framework-backend-jvstm-ojb-code-generator</artifactId>
+							<version>${version.fenixframework}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+	<dependencies>
+		<!-- Fénix -->
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>fenix-framework-core-api</artifactId>
+			<version>${version.fenixframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>fenix-framework-core-consistency-predicates</artifactId>
+			<version>${version.fenixframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>fenix-framework-backend-${fenix.framework.backend}-runtime</artifactId>
+			<version>${version.fenixframework}</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>fenixedu-maven-repository</id>
+			<url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>fenixedu-maven-repository</id>
+			<url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project>

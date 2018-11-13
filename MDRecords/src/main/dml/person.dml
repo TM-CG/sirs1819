@@ -6,22 +6,46 @@ class Person {
     long identification;
 }
 
-class Doctor extends Person;
-class Patient extends Person;
+class SNS;
 
-class Nurse extends Person;
-
-
-relation DomainRootHasPersonApplication {
+relation DomainRootHasSNS {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
 		multiplicity 1..1;
 	}
-	Doctor playsRole Doctor {
-		multiplicity 0..*;
+	SNS playsRole SNS {
+		multiplicity 1..1;
 	}
+}
 
+class Patient extends Person;
+
+relation SNSHasPatitents{
+	SNS playsRole SNS{
+		multiplicity 1..1;
+	}
 	Patient playsRole patient{
 		multiplicity 0..*;
 	}
 }
 
+class Doctor extends Person;
+
+relation SNSHasDoctors{
+	SNS playsRole SNS{
+		multiplicity 1..1;
+	}
+	Doctor playsRole doctor{
+		multiplicity 0..*;
+	}
+}
+
+class Nurse extends Person;
+
+relation SNSHasNurses{
+	SNS playsRole SNS{
+		multiplicity 1..1;
+	}
+	Nurse playsRole nurse{
+		multiplicity 0..*;
+	}
+}

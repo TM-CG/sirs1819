@@ -4,7 +4,11 @@ import pt.ulisboa.tecnico.sirs.medicalrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
 public abstract class Person extends Person_Base {
+<<<<<<< HEAD:MDRecords/src/main/java/pt/ulisboa/tecnico/sirs/medicalrecords/personal/Person.java
 
+=======
+    
+>>>>>>> 25c1289e0e35d67dafa99c945c1359735085ab57:MDRecords/src/main/java/pt/sirs/medicalrecords/personal/Person.java
     public Person() {
         super();
     }

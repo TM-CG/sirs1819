@@ -9,6 +9,9 @@ class Person {
 class Doctor extends Person;
 class Patient extends Person;
 
+class Nurse extends Person;
+
+
 relation DomainRootHasPersonApplication {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
 		multiplicity 1..1;
@@ -21,3 +24,4 @@ relation DomainRootHasPersonApplication {
 		multiplicity 0..*;
 	}
 }
+

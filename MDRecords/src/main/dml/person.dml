@@ -6,11 +6,13 @@ class Person {
     long identification;
 }
 
+class Doctor extends Person;
+
 relation DomainRootHasPersonApplication {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
 		multiplicity 1..1;
 	}
-	Person playsRole person {
+	Doctor playsRole Doctor {
 		multiplicity 0..*;
 	}
 }

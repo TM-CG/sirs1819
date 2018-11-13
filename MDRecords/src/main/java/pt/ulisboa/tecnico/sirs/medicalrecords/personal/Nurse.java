@@ -1,5 +1,5 @@
-package pt.sirs.medicalrecords.personal;
-import pt.sirs.medicalrecords.personal.exception.*;
+package pt.ulisboa.tecnico.sirs.medicalrecords.personal;
+import pt.ulisboa.tecnico.sirs.medicalrecords.personal.*;
 import org.joda.time.DateTime;
 
 public class Nurse extends Nurse_Base{

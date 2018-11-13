@@ -13,13 +13,13 @@ public class Patient extends Patient_Base {
         setName(name);
         setBirthday(birthday);
         setIdentification(identification);
-        FenixFramework.getDomainRoot().addPatient(this);
+        FenixFramework.getDomainRoot().getSNS().addPatient(this);
     }
 
     public Patient(String name, long identification) throws InvalidPersonException{
         super.checkArguments(name, identification);
         setName(name);
         setIdentification(identification);
-        FenixFramework.getDomainRoot().addPatient(this);
+        FenixFramework.getDomainRoot().getSNS().addPatient(this);
     }
 }

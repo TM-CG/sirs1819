@@ -13,7 +13,7 @@ relation DomainRootHasSNS {
 		multiplicity 1..1;
 	}
 	SNS playsRole SNS {
-		multiplicity 1..1;
+		multiplicity 0..1;
 	}
 }
 

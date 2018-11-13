@@ -16,7 +16,7 @@ public class Doctor extends Doctor_Base {
         setBirthday(birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().addDoctor(this);
+        FenixFramework.getDomainRoot().getSNS().addDoctor(this);
     }
     
     public Doctor(String name, long identification) throws InvalidPersonException{
@@ -26,7 +26,7 @@ public class Doctor extends Doctor_Base {
         setName(name);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().addDoctor(this);
+        FenixFramework.getDomainRoot().getSNS().addDoctor(this);
     }
     
     /**
@@ -35,7 +35,7 @@ public class Doctor extends Doctor_Base {
      * @throws InvalidPersonException if the such doctor exists with same id on the system.
      */
     private void doctorAlreadyExists(long identification) throws InvalidPersonException {
-        for (Doctor doctor: FenixFramework.getDomainRoot().getDoctorSet()) {
+        for (Doctor doctor: FenixFramework.getDomainRoot().getSNS().getDoctorSet()) {
             if (doctor.getIdentification() == this.getIdentification())
                 return;
         }

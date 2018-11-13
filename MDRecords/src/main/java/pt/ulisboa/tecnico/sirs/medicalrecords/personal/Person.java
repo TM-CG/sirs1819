@@ -4,24 +4,7 @@ import pt.ulisboa.tecnico.sirs.medicalrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
 public abstract class Person extends Person_Base {
- public Person() {
-        super();
-    }
-
-    public Person(String name, DateTime birthday, long identification) throws InvalidPersonException{
-        checkArguments(name, birthday, identification);
-        setName(name);
-        setBirthday(birthday);
-        setIdentification(identification);
-    }
-
-    public Person(String name, long identification) throws InvalidPersonException{
-        checkArguments(name, identification);
-        setName(name);
-        setIdentification(identification);
-    }
-
-    private void checkArguments(String name, DateTime birthday, long identification) throws InvalidPersonException{
+    public void checkArguments(String name, DateTime birthday, long identification) throws InvalidPersonException{
         checkArguments(name, identification);
         //check if birthday is in the future
         if (birthday == null) {

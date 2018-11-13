@@ -30,15 +30,20 @@ public class Nurse extends Nurse_Base {
     }
     
     /**
-     * Checks if a doctor already exists.
-     * @param identification of the doctor
-     * @throws InvalidPersonException if the such doctor exists with same id on the system.
+     * Checks if a nurse already exists.
+     * @param identification of the nurse
+     * @throws InvalidPersonException if the such nurse exists with same id on the system.
      */
     private void nurseAlreadyExists(long identification) throws InvalidPersonException {
         for (Nurse nurse: FenixFramework.getDomainRoot().getSNS().getNurseSet()) {
             if (nurse.getIdentification() == this.getIdentification())
                 return;
         }
-        throw new InvalidPersonException("Doctor: This doctor already exists!");
+        throw new InvalidPersonException("Nurse: This nurse already exists!");
     }
+
+    public void delete() {
+		setSNS(null);
+		deleteDomainObject();
+	}
 }

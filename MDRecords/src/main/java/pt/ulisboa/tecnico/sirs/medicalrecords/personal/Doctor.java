@@ -41,4 +41,11 @@ public class Doctor extends Doctor_Base {
         }
         throw new InvalidPersonException("Doctor: This doctor already exists!");
     }
+
+    /** Deletes Doctor from the SNS */
+    public void delete() {
+		setSNS(null);
+
+		deleteDomainObject();
+	}
 }

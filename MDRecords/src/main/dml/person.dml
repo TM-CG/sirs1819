@@ -14,3 +14,5 @@ relation DomainRootHasPersonApplication {
 		multiplicity 0..*;
 	}
 }
+
+class Nurse extends Person;

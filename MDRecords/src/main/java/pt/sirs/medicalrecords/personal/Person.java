@@ -3,7 +3,7 @@ package pt.sirs.medicalrecords.personal;
 import pt.sirs.medicalrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
-public class Person extends Person_Base {
+public abstract class Person extends Person_Base {
     
     public Person() {
         super();

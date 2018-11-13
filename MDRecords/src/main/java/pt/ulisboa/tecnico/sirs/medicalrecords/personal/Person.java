@@ -28,7 +28,7 @@ public abstract class Person extends Person_Base {
             throw new InvalidPersonException("Invalid Person's Name: name cannot be null");
         if (identification <= 0)
             throw new InvalidPersonException("Invalid Person's Identification: identification needs to be a valid number");
-        //TODO VERIFICAR SE A IDENTICACAO E UNICA
+        
                                                                                                                             
     }
     

@@ -1,4 +1,4 @@
-package pt.sirs.medicalrecords.personal;
+package pt.ulisboa.tecnico.sirs.medicalrecords.personal;
 
 class Person {
     String name;

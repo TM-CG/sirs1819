@@ -1,4 +1,4 @@
-package pt.sirs.medicalrecords.personal.exception;
+package pt.ulisboa.tecnico.sirs.medicalrecords.personal.exception;
 
 public class InvalidPersonException extends Exception {
 

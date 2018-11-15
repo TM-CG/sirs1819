@@ -8,11 +8,11 @@ import javax.jws.WebService;
  * @author Miguel Pardal
  *
  */
-@WebService(endpointInterface = "pt.ulisboa.tecnico.sdis.kerby.KerbyPortType",
+@WebService(endpointInterface = "pt.ulisboa.tecnico.sirs.kerby.KerbyPortType",
 wsdlLocation = "KerbyService.wsdl",
 name ="KerbyService",
 portName = "KerbyPort",
-targetNamespace="http://kerby.sdis.tecnico.ulisboa.pt/",
+targetNamespace="http://kerby.sirs.tecnico.ulisboa.pt/",
 serviceName = "KerbyService"
 )
 public class KerbyPortImpl implements KerbyPortType {

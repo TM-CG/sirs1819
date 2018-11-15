@@ -6,11 +6,18 @@ import java.security.Key;
 
 public class MDRecordsApp{
 
+    public static void main(String[] args) {
+
+        String uddiURL = null;
+        String wsName = null;
+        String wsURL = null;
+
+    }
     public MDRecordsApp(){
         SNS.getInstance();
     }
 
-   // MDRecordsEndpointManager endpoit = null;
+    private MDRecordsPortType portType;
 
 
     public boolean authenticateUser(Key key, long id){

@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>SIRS1819</artifactId>
+        <artifactId>mdrecords</artifactId>
         <groupId>pt.ulisboa.tecnico.sirs</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
@@ -14,19 +14,14 @@
 
     <artifactId>mdrecords-ws</artifactId>
 
-    <name>MDRecords</name>
+    <name>mdrecords-ws</name>
 
-    <build>
-        <plugins>
-            <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-            <plugin>
-				<groupId>pt.ist</groupId>
-				<artifactId>ff-maven-plugin</artifactId>
-			</plugin>
-        </plugins>
-    </build>
+    <dependencies>
+        <dependency>
+            <groupId>pt.ulisboa.tecnico.sirs</groupId>
+            <artifactId>mdrecords-lib</artifactId>
+            <version>0.1</version>
+        </dependency>
+    </dependencies>
 
 </project>

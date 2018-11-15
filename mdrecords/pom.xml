@@ -3,6 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- http://maven.apache.org/pom.html#Quick_Overview -->
 
+    <parent>
+        <artifactId>SIRS1819</artifactId>
+        <groupId>pt.ulisboa.tecnico.sirs</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
 	<groupId>pt.ulisboa.tecnico.sirs</groupId>
 	<artifactId>mdrecords</artifactId>
 	<version>0.1</version>
@@ -12,6 +18,7 @@
 		<!-- specify modules to include in the build reactor -->
 		<module>mdrecords-ws</module>
 		<module>mdrecords-cli</module>
+		<module>mdrecords-lib</module>
 	</modules>
 
 </project>

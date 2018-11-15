@@ -16,6 +16,15 @@
 
     <name>mdrecords-ws</name>
 
+    <properties>
+        <wsdl.dir>${basedir}/../mdrecords-contract/</wsdl.dir>
+
+        <mainclass>pt.ulisboa.tecnico.sirs.mdrecords.MDRecordsApp</mainclass>
+
+        <ws.name>mdrecords</ws.name>
+        <ws.url>http://localhost:8889/mdrecords</ws.url>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>pt.ulisboa.tecnico.sirs</groupId>
@@ -23,5 +32,54 @@
             <version>0.1</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- http://www.mojohaus.org/jaxws-maven-plugin/wsimport-mojo.html -->
+                    <wsdlDirectory>${wsdl.dir}</wsdlDirectory>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.sun.xml.ws</groupId>
+                        <artifactId>jaxws-tools</artifactId>
+                        <version>2.2.10</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

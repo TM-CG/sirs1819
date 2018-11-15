@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.sirs.medicalrecords.personal;
+package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;

@@ -1,6 +1,6 @@
-package pt.ulisboa.tecnico.sirs.medicalrecords.personal;
+package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
-import pt.ulisboa.tecnico.sirs.medicalrecords.personal.exception.*;
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
 public abstract class Person extends Person_Base {

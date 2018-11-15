@@ -12,8 +12,8 @@
 
     <packaging>jar</packaging>
 
-    <artifactId>MDRecords-cli</artifactId>
+    <artifactId>mdrecords-cli</artifactId>
 
-    <name>MDRecords-cli</name>
+    <name>mdrecords-cli</name>
 
 </project>

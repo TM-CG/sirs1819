@@ -14,8 +14,7 @@
     <modules>
         <module>uddi-naming</module>
         <module>kerby</module>
-        <module>MDRecords</module>
-        <module>MDRecords-cli</module>
+        <module>mdrecords</module>
     </modules>
 
     <properties>

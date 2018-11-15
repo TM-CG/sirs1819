@@ -1,7 +1,7 @@
-package pt.ulisboa.tecnico.sirs.medicalrecords.personal;
+package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.ulisboa.tecnico.sirs.medicalrecords.personal.exception.*;
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
 /** Class for describing Doctor entity */

@@ -18,8 +18,8 @@
 
             <xs:complexType name="requestRecord">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="patient_id" type="xs:string" />
-                    <xs:element minOccurs="0" name="personal_id" type="xs:string" />
+                    <xs:element minOccurs="0" name="patient_id" type="xs:long" />
+                    <xs:element minOccurs="0" name="personal_id" type="xs:long" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="requestRecordResponse">

@@ -26,6 +26,13 @@
     </properties>
 
     <dependencies>
+        <!-- UDDI Naming -->
+        <dependency>
+			<groupId>pt.ulisboa.tecnico.sirs</groupId>
+			<artifactId>uddi-naming</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+        <!-- Medicalrecords-lib-->
         <dependency>
             <groupId>pt.ulisboa.tecnico.sirs</groupId>
             <artifactId>mdrecords-lib</artifactId>

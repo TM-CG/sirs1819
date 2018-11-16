@@ -1,20 +1,22 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
-import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
 import java.security.Key;
 
 public class MDRecordsApp{
 
-    public static void main(String[] args) {
+    private static SNS sns;
+    public static void main(String[] args) throws Exception {
 
         String uddiURL = null;
         String wsName = null;
         String wsURL = null;
 
+        Doctor doctor = new Doctor("Vítor Nunes", 123456789);
     }
     public MDRecordsApp(){
-        SNS.getInstance();
+        sns = SNS.getInstance();
     }
 
     private MDRecordsPortType portType;

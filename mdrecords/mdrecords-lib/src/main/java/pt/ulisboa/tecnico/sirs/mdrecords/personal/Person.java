@@ -3,7 +3,7 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
-public abstract class Person extends Person_Base {
+public class Person extends Person_Base {
     /**
      * Checks if the Person's Arguments are correct
      * @param name of the person

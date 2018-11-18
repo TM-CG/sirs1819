@@ -11,6 +11,7 @@ public class MDRecordsApp{
     private static SNS sns;
     @Atomic(mode = TxMode.WRITE)
     public static void main(String[] args) throws Exception {
+        sns = SNS.getInstance();
 
         String uddiURL = null;
         String wsName = null;
@@ -18,10 +19,7 @@ public class MDRecordsApp{
 
         Doctor doctor = new Doctor("Vítor Nunes", 123456789);
     }
-    public MDRecordsApp(){
-        sns = SNS.getInstance();
-    }
-
+    
     private MDRecordsPortType portType;
 
 

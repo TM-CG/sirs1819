@@ -37,9 +37,9 @@ public class Nurse extends Nurse_Base {
     private void nurseAlreadyExists(long identification) throws InvalidPersonException {
         for (Nurse nurse: FenixFramework.getDomainRoot().getSNS().getNurseSet()) {
             if (nurse.getIdentification() == this.getIdentification())
-                return;
+            throw new InvalidPersonException("Nurse: This nurse already exists!");
         }
-        throw new InvalidPersonException("Nurse: This nurse already exists!");
+        return;
     }
 
     public void delete() {

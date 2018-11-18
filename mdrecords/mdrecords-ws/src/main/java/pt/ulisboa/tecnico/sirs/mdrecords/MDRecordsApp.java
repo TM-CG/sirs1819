@@ -16,10 +16,9 @@ public class MDRecordsApp{
         String wsName = null;
         String wsURL = null;
 
-        Doctor doctor = new Doctor("Vítor Nunes", 123456789);
-    }
-    public MDRecordsApp(){
         sns = SNS.getInstance();
+        
+        Doctor doctor = new Doctor("Vítor Nunes", 123456789);
     }
 
     private MDRecordsPortType portType;

@@ -86,6 +86,10 @@
                     </execution>
                 </executions>
             </plugin>
+   		  <plugin>
+		  	<groupId>pt.ist</groupId>
+			<artifactId>ff-maven-plugin</artifactId>
+                  </plugin>
             <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -101,6 +105,7 @@
 					<!-- to prevent deprecation warning: -->
 					<killAfter>-1</killAfter>
 					<mainClass>${mainclass}</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
 					<!--<arguments>
 						<argument>${ws.url}</argument>
 					</arguments>-->

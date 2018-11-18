@@ -36,10 +36,9 @@ public class Doctor extends Doctor_Base {
      */
     private void doctorAlreadyExists(long identification) throws InvalidPersonException {
         for (Doctor doctor: FenixFramework.getDomainRoot().getSns().getDoctorSet()) {
-            if (doctor.getIdentification() == this.getIdentification())
-                return;
+            if (doctor.getIdentification() == identification)
+                throw new InvalidPersonException("Doctor: This doctor already exists!");
         }
-        throw new InvalidPersonException("Doctor: This doctor already exists!");
     }
 
     /** Deletes Doctor from the SNS */

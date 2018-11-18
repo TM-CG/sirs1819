@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
 import java.security.Key;
@@ -9,18 +8,24 @@ import java.security.Key;
 public class MDRecordsApp{
 
     private static SNS sns;
-    @Atomic(mode = TxMode.WRITE)
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static void main(String[] args) throws Exception {
+
+        sns = getSNSInstance();
 
         String uddiURL = null;
         String wsName = null;
         String wsURL = null;
 
-        sns = SNS.getInstance();
-        
         Doctor doctor = new Doctor("Vítor Nunes", 123456789);
     }
 
+    @Atomic(mode = Atomic.TxMode.READ)
+    private static SNS getSNSInstance() {
+        return SNS.getInstance();
+    }
+    
     private MDRecordsPortType portType;
 
 

@@ -16,7 +16,7 @@ public class Nurse extends Nurse_Base {
         setBirthday(birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSNS().addNurse(this);
+        FenixFramework.getDomainRoot().getSns().addNurse(this);
     }
     
     public Nurse(String name, long identification) throws InvalidPersonException{
@@ -26,7 +26,7 @@ public class Nurse extends Nurse_Base {
         setName(name);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSNS().addNurse(this);
+        FenixFramework.getDomainRoot().getSns().addNurse(this);
     }
     
     /**
@@ -35,7 +35,7 @@ public class Nurse extends Nurse_Base {
      * @throws InvalidPersonException if the such nurse exists with same id on the system.
      */
     private void nurseAlreadyExists(long identification) throws InvalidPersonException {
-        for (Nurse nurse: FenixFramework.getDomainRoot().getSNS().getNurseSet()) {
+        for (Nurse nurse: FenixFramework.getDomainRoot().getSns().getNurseSet()) {
             if (nurse.getIdentification() == this.getIdentification())
                 return;
         }
@@ -43,7 +43,7 @@ public class Nurse extends Nurse_Base {
     }
 
     public void delete() {
-		setSNS(null);
+		setSns(null);
 		deleteDomainObject();
 	}
 }

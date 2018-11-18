@@ -12,7 +12,7 @@ relation DomainRootHasSNS {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
 		multiplicity 1..1;
 	}
-	SNS playsRole SNS {
+	SNS playsRole sns {
 		multiplicity 0..1;
 	}
 }
@@ -20,7 +20,7 @@ relation DomainRootHasSNS {
 class Patient extends Person;
 
 relation SNSHasPatitents{
-	SNS playsRole SNS{
+	SNS playsRole sns{
 		multiplicity 1..1;
 	}
 	Patient playsRole patient{
@@ -31,7 +31,7 @@ relation SNSHasPatitents{
 class Doctor extends Person;
 
 relation SNSHasDoctors{
-	SNS playsRole SNS{
+	SNS playsRole sns{
 		multiplicity 1..1;
 	}
 	Doctor playsRole doctor{
@@ -42,7 +42,7 @@ relation SNSHasDoctors{
 class Nurse extends Person;
 
 relation SNSHasNurses{
-	SNS playsRole SNS{
+	SNS playsRole sns{
 		multiplicity 1..1;
 	}
 	Nurse playsRole nurse{

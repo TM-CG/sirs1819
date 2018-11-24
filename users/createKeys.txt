@@ -1,0 +1,15 @@
+openssl genrsa \
+      -out intermediate/private/www.example.com.key.pem 2048
+# chmod 400 intermediate/private/www.example.com.key.pem
+
+# openssl req -config intermediate/openssl.cnf \
+      -key intermediate/private/www.example.com.key.pem \
+      -new -sha256 -out intermediate/csr/www.example.com.csr.pem
+
+openssl ca -config intermediate/openssl.cnf \
+      -extensions server_cert -days 375 -notext -md sha256 \
+      -in intermediate/csr/www.example.com.csr.pem \
+      -out intermediate/certs/www.example.com.cert.pem
+# chmod 444 intermediate/certs/www.example.com.cert.pem
+
+https://jamielinux.com/docs/openssl-certificate-authority/sign-server-and-client-certificates.html

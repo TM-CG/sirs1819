@@ -1,0 +1,2 @@
+V	191204143854Z		1000	unknown	/C=PT/ST=LX/L=Lisbon/O=Government of Portugal/OU=Sistema Nacional Saude/CN=sirs.mdrecords.com
+V	191204145621Z		1001	unknown	/C=PT/ST=LX/L=Lisbon/O=Government of Portugal/OU=Sistema Nacional Saude/CN=12345678

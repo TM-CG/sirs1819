@@ -2,28 +2,31 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
+
+import javax.crypto.SecretKey;
+
 import org.joda.time.DateTime;
 
 /** Class for describing Nurse entity */
 public class Nurse extends Nurse_Base {
     
     
-    public Nurse(String name, DateTime birthday, long identification) throws InvalidPersonException {
+    public Nurse(SecretKey serverKey, String name, DateTime birthday, long identification) throws InvalidPersonException {
         super.checkArguments(name, birthday, identification);
         nurseAlreadyExists(identification);
         
-        setName(name);
-        setBirthday(birthday);
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addNurse(this);
     }
     
-    public Nurse(String name, long identification) throws InvalidPersonException{
+    public Nurse(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
         super.checkArguments(name, identification);
         nurseAlreadyExists(identification);
 
-        setName(name);
+        setName(serverKey, name);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addNurse(this);

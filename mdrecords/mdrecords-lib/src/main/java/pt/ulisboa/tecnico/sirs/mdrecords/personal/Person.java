@@ -2,12 +2,15 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import javax.crypto.*;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 
 public class Person extends Person_Base {
     /**
@@ -65,10 +68,61 @@ public class Person extends Person_Base {
         }
     }
 
+     /**
+     * Secure setter to encrypt data in the database
+     * @param serverKey
+     * @param name
+     */
+    public void setBirthday(SecretKey serverKey, DateTime birthday) {
+        try {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            String str = birthday.toString(fmt);
+            String encryptedBirthday = SNS.encrypt(serverKey, str);
+            super.setBirthday(encryptedBirthday);
+
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getName(SecretKey serverKey) {
         String name = super.getName();
         try {
             return SNS.decrypt(serverKey, name);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public DateTime getBirthday(SecretKey serverKey) {
+        String birthday = super.getBirthday();
+        try {
+            String strBirthday = SNS.decrypt(serverKey, birthday);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+            return formatter.parseDateTime(strBirthday);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

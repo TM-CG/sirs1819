@@ -16,7 +16,7 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    public String requestRecord(Long patientId, Long personalId) throws BadRecordRequest_Exception {
+    public String requestRecord(Long patientId, Long personalId, String operationType) throws BadRecordRequest_Exception {
         return null;
     }
 

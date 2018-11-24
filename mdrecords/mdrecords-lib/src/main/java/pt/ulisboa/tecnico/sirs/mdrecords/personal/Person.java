@@ -3,6 +3,12 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
+import javax.crypto.*;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 public class Person extends Person_Base {
     /**
      * Checks if the Person's Arguments are correct
@@ -30,6 +36,53 @@ public class Person extends Person_Base {
             throw new InvalidPersonException("Invalid Person's Identification: identification needs to be a valid number");
         
                                                                                                                             
+    }
+
+    /**
+     * Secure setter to encrypt data in the database
+     * @param serverKey
+     * @param name
+     */
+    public void setName(SecretKey serverKey, String name) {
+        try {
+            String encryptedName = SNS.encrypt(serverKey, name);
+            super.setName(encryptedName);
+
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getName(SecretKey serverKey) {
+        String name = super.getName();
+        try {
+            return SNS.decrypt(serverKey, name);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

@@ -6,6 +6,9 @@ import pt.ist.fenixframework.FenixFramework;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+
+import org.omg.CORBA.Object;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.Base64;

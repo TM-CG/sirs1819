@@ -2,7 +2,7 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 class Person {
     String name;
-    DateTime birthday;
+    String birthday;
     long identification;
 }
 

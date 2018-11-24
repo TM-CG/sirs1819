@@ -8,35 +8,13 @@ import javax.crypto.SecretKey;
 
 /** Class for describing Doctor entity */
 public class Doctor extends Doctor_Base {
-    
-    
-    public Doctor(String name, DateTime birthday, long identification) throws InvalidPersonException {
-        checkArguments(name, birthday, identification);
-        doctorAlreadyExists(identification);
-        
-        setName(name);
-        setBirthday(birthday);
-        setIdentification(identification);
-
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
-    }
-    
-    public Doctor(String name, long identification) throws InvalidPersonException{
-        checkArguments(name, identification);
-        doctorAlreadyExists(identification);
-
-        setName(name);
-        setIdentification(identification);
-
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
-    }
 
     public Doctor(SecretKey serverKey, String name, DateTime birthday, long identification) throws InvalidPersonException {
         checkArguments(name, birthday, identification);
         doctorAlreadyExists(identification);
 
         setName(serverKey, name);
-        setBirthday(birthday);
+        setBirthday(serverKey, birthday);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addDoctor(this);

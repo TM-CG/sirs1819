@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
+import javax.crypto.SecretKey;
+
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -8,22 +10,22 @@ import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.InvalidPersonExcepti
 public class Patient extends Patient_Base {
     
 
-    public Patient(String name, DateTime birthday, long identification) throws InvalidPersonException{
+    public Patient(SecretKey serverKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
         super.checkArguments(name, birthday, identification);
         PatientAlreadyExists(identification);
 
-        setName(name);
-        setBirthday(birthday);
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addPatient(this);
     }
 
-    public Patient(String name, long identification) throws InvalidPersonException{
+    public Patient(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
         super.checkArguments(name, identification);
         PatientAlreadyExists(identification);
 
-        setName(name);
+        setName(serverKey, name);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addPatient(this);

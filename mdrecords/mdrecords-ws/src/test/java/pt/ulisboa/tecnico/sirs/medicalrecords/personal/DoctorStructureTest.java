@@ -18,7 +18,7 @@ public class DoctorStructureTest extends RollbackTestAbstractClass {
 
     }
 
-    @Test
+    /*@Test
     public void simpleDoctorSuccessTest() throws InvalidPersonException {
         this.doctor = new Doctor("Vítor Nunes", 12345678);
 
@@ -34,5 +34,5 @@ public class DoctorStructureTest extends RollbackTestAbstractClass {
         Assert.assertEquals(12345678, this.doctor.getIdentification());
 
         Assert.assertEquals("01/01/2000", this.doctor.getBirthday().toString("dd/MM/yyyy"));
-    }
+    }*/
 }

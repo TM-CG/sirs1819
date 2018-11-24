@@ -5,6 +5,9 @@ import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
 import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.util.Base64;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -92,22 +95,34 @@ public class SNS extends SNS_Base {
 	}
 
 	public static String encrypt(SecretKey serverKey, String data) throws NoSuchPaddingException,
-            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
+            UnsupportedEncodingException, InvalidAlgorithmParameterException {
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, serverKey);
-        byte[] encrypted = cipher.doFinal(data.getBytes());
+
+        //Check with Martinez
+        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        IvParameterSpec ivspec = new IvParameterSpec(iv);
+        cipher.init(Cipher.ENCRYPT_MODE, serverKey, ivspec);
+
+        byte[] encrypted = cipher.doFinal(data.getBytes("UTF-8"));
 
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
     public static String decrypt(SecretKey serverKey, String encryptedData) throws NoSuchPaddingException,
-            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
+            InvalidAlgorithmParameterException {
 
         byte[] encrypted = Base64.getDecoder().decode(encryptedData);
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, serverKey);
+
+        //Check with Martinez
+        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        IvParameterSpec ivspec = new IvParameterSpec(iv);
+
+        cipher.init(Cipher.DECRYPT_MODE, serverKey, ivspec);
         String data = new String(cipher.doFinal(encrypted));
 
         return data;

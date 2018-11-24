@@ -4,6 +4,8 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
+import javax.crypto.SecretKey;
+
 /** Class for describing Doctor entity */
 public class Doctor extends Doctor_Base {
     
@@ -24,6 +26,27 @@ public class Doctor extends Doctor_Base {
         doctorAlreadyExists(identification);
 
         setName(name);
+        setIdentification(identification);
+
+        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+    }
+
+    public Doctor(SecretKey serverKey, String name, DateTime birthday, long identification) throws InvalidPersonException {
+        checkArguments(name, birthday, identification);
+        doctorAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setBirthday(birthday);
+        setIdentification(identification);
+
+        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+    }
+
+    public Doctor(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
+        checkArguments(name, identification);
+        doctorAlreadyExists(identification);
+
+        setName(serverKey, name);
         setIdentification(identification);
 
         FenixFramework.getDomainRoot().getSns().addDoctor(this);

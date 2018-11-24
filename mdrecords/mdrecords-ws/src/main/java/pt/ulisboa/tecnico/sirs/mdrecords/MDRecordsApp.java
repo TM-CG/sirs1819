@@ -24,8 +24,13 @@ public class MDRecordsApp{
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size
         Key key = keyGen.generateKey();
+        SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
 
-        String dados = "Estes são os dados super secretos!";
+        Doctor doctor = new Doctor(k,"Vítor Nunes", 123456789);
+
+        System.out.println("O meu nome é: " + doctor.getName(k));
+
+        /*String dados = "Estes são os dados super secretos!";
         SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
         String encriptados = SNS.encrypt(k, dados);
 
@@ -33,9 +38,9 @@ public class MDRecordsApp{
 
         String desencriptados = SNS.decrypt(k, encriptados);
 
-        System.out.println("Dados desencriptados: " + desencriptados);
+        System.out.println("Dados desencriptados: " + desencriptados);*/
 
-        //Doctor doctor = new Doctor("Vítor Nunes", 123456789);
+
     }
 
     @Atomic(mode = Atomic.TxMode.READ)

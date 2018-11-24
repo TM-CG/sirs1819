@@ -3,6 +3,9 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+
 public class Person extends Person_Base {
     /**
      * Checks if the Person's Arguments are correct
@@ -30,6 +33,16 @@ public class Person extends Person_Base {
             throw new InvalidPersonException("Invalid Person's Identification: identification needs to be a valid number");
         
                                                                                                                             
+    }
+
+    /**
+     * Secure setter to encrypt data in the database
+     * @param serverKey
+     * @param name
+     */
+    public void setName(SecretKey serverKey, String name) {
+
+
     }
     
 }

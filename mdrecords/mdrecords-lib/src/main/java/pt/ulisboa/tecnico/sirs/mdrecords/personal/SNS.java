@@ -4,6 +4,11 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
+import javax.crypto.*;
+import java.util.Base64;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 /** Singleton Class for describing the SNS */
 public class SNS extends SNS_Base {
     
@@ -85,4 +90,26 @@ public class SNS extends SNS_Base {
 		}
 
 	}
+
+	public static String encrypt(SecretKey serverKey, String data) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, serverKey);
+        byte[] encrypted = cipher.doFinal(data.getBytes());
+
+        return Base64.getEncoder().encodeToString(encrypted);
+    }
+
+    public static String decrypt(SecretKey serverKey, String encryptedData) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        byte[] encrypted = Base64.getDecoder().decode(encryptedData);
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, serverKey);
+        String data = new String(cipher.doFinal(encrypted));
+
+        return data;
+    }
 }

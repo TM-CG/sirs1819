@@ -18,6 +18,7 @@
 
     <properties>
         <mainclass>pt.ulisboa.tecnico.sirs.RecordsClient</mainclass>
+        <wsdl.dir>${basedir}/../mdrecords-contract/</wsdl.dir>
     </properties>
 
     <dependencies>
@@ -51,6 +52,29 @@
                     </arguments>-->
                 </configuration>
             </plugin>
+        <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- http://www.mojohaus.org/jaxws-maven-plugin/wsimport-mojo.html -->
+					<wsdlDirectory>${wsdl.dir}</wsdlDirectory>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.sun.xml.ws</groupId>
+						<artifactId>jaxws-tools</artifactId>
+						<version>2.2.10</version>
+					</dependency>
+				</dependencies>
+			</plugin>
         </plugins>
     </build>
 </project>

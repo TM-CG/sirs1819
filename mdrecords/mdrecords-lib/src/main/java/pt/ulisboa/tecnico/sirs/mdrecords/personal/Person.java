@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
-import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

@@ -25,6 +25,17 @@ public class MDRecordsApp{
         String wsName = null;
         String wsURL = null;
 
+        //If no arguments were given just use the default one
+        if (args.length == 0) {
+            System.out.println("Missing arguments:");
+
+            return;
+        }
+        else {
+            wsURL = args[0];
+            wsName = args[1];
+        }
+
         sns = getSNSInstance();
 
         /*KeyGenerator keyGen = KeyGenerator.getInstance("AES");

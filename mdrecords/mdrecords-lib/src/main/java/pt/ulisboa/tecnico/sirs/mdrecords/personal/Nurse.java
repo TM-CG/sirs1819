@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.*;
 
 import javax.crypto.SecretKey;
 

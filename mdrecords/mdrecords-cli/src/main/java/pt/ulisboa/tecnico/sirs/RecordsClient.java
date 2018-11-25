@@ -13,7 +13,7 @@ public class RecordsClient {
 
         //If no arguments were given just use the default one
         if (args.length == 0) {
-            user = "vitor";
+            user = "12345678";
             kerbyPath = "http://localhost:8888/kerby";
             mdrecordsServerPath = "http://localhost:8889/mdrecords";
         }
@@ -28,11 +28,17 @@ public class RecordsClient {
         KerbyClient client = new KerbyClient(kerbyPath);
 
         //Request temp session key
-        SessionKeyAndTicketView result = client.requestTicket("alice@CXX.binas.org", "binas@CXX.binas.org",
-                new Random().nextLong(), 60 /* seconds */);
+        //SessionKeyAndTicketView result = client.requestTicket(user, "69696969",
+        //        new Random().nextLong(), 60 /* seconds */);
                 
-        System.out.println("SessionKey: " + result.getSessionKey());
+        //System.out.println("SessionKey: " + result.getSessionKey());
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
+        
+        System.out.println("Let me invoke requestRecord.");
+        String response = recordsClient.requestRecord(new Long(1234), new Long(45456), "hahaha");
+        
+        System.out.println("RESPONSE: " + response);
+
     }
 }

@@ -6,7 +6,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Doctor;
-import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.InvalidPersonException;
 
 public class DoctorStructureTest extends RollbackTestAbstractClass {
     private Doctor doctor;

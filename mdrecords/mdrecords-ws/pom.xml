@@ -106,9 +106,10 @@
 					<killAfter>-1</killAfter>
 					<mainClass>${mainclass}</mainClass>
                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
-					<!--<arguments>
+					<arguments>
 						<argument>${ws.url}</argument>
-					</arguments>-->
+                        <argument>${ws.name}</argument>
+					</arguments>
 				</configuration>
 			</plugin>
         </plugins>

@@ -5,7 +5,6 @@ import javax.crypto.SecretKey;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.ulisboa.tecnico.sirs.mdrecords.personal.exception.InvalidPersonException;
 
 public class Patient extends Patient_Base {
     

@@ -69,7 +69,7 @@ public class KerbyManager {
 			/* Create and Cipher the Ticket */
 			Ticket ticket = createTicket(client, server, ticketDuration, clientServerKey);
 			CipheredView cipheredTicket = ticket.cipher(serverKey);
-			
+
 			/* Create and Cipher the Session Key */
 			SessionKey sessionKey = new SessionKey(clientServerKey, nounce);
 			CipheredView cipheredSessionKey = sessionKey.cipher(clientKey);

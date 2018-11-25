@@ -34,7 +34,7 @@ public class Ticket {
 		view.setTime2(XMLHelper.dateToXML(time2));
 		view.setEncodedKeyXY(key.getEncoded());
 		//TODO NOT SURE ABOUT THIS
-		view.setDataPrivacyKey(dataPrivacyKey.getEncoded());
+		//view.setDataPrivacyKey(dataPrivacyKey.getEncoded());
 	}
 
 	// TODO create constructor without key (one is generated)

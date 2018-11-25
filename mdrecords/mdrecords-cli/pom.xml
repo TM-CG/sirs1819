@@ -16,4 +16,41 @@
 
     <name>mdrecords-cli</name>
 
+    <properties>
+        <mainclass>pt.ulisboa.tecnico.sirs.RecordsClient</mainclass>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>pt.ulisboa.tecnico.sirs</groupId>
+                    <artifactId>kerby-ws-cli</artifactId>
+                    <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- to prevent deprecation warning: -->
+                    <killAfter>-1</killAfter>
+                    <mainClass>${mainclass}</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                    <!--<arguments>
+                        <argument>${ws.url}</argument>
+                    </arguments>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

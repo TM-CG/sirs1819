@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.kerby;
 
 import java.io.*;
+import java.net.URL;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
@@ -99,10 +100,15 @@ public class KerbyManager {
 		if(line != null && !line.trim().isEmpty())
 			salt = line;
 	}
-	
-	public void initKeysCert(String certificateFolderName) throws Exception{
-		File folder = new File(certificateFolderName);
+
+	public void initKeysCert() throws Exception{
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL url = loader.getResource("certificates");
+		String path = url.getPath();
+
+		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
+
 		for (File file : listOfFiles){
 			if(file.isFile()){
 				FileInputStream is = new FileInputStream(file);
@@ -115,6 +121,7 @@ public class KerbyManager {
 				String[] subjectInfo = subject.split(",", 2);
 				String[] commonName = subjectInfo[0].split("=", 2);
 
+				System.out.println(commonName[1]);
 				knownKeys.put(commonName[1], key);
 			}
 		}

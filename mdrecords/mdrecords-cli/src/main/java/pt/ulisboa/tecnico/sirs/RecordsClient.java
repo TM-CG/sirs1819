@@ -9,15 +9,18 @@ public class RecordsClient {
     public static void main(String[] args) throws Exception {
         String kerbyPath;
         String user;
+        String mdrecordsServerPath;
 
         //If no arguments were given just use the default one
         if (args.length == 0) {
             user = "vitor";
             kerbyPath = "http://localhost:8888/kerby";
+            mdrecordsServerPath = "http://localhost:8889/mdrecords";
         }
         else {
             user = args[0];
             kerbyPath = args[1];
+            mdrecordsServerPath = args[2];
         }
         
         
@@ -29,5 +32,7 @@ public class RecordsClient {
                 new Random().nextLong(), 60 /* seconds */);
                 
         System.out.println("SessionKey: " + result.getSessionKey());
+
+        MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
     }
 }

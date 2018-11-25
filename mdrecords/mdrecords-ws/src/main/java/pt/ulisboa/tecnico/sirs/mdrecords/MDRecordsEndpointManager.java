@@ -51,6 +51,11 @@ public class MDRecordsEndpointManager {
 		this.wsURL = wsURL;
 	}
 
+	public MDRecordsEndpointManager(String wsName, String wsURL) {
+		this.wsName = wsName;
+		this.wsURL = wsURL;
+	}
+
 	/** constructor with provided web service URL */
 	public MDRecordsEndpointManager(String wsURL) {
 		if (wsURL == null)

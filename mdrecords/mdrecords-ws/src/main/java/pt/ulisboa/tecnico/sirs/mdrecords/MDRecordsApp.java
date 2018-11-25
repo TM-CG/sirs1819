@@ -20,14 +20,14 @@ public class MDRecordsApp{
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static void main(String[] args) throws Exception {
-
-        sns = getSNSInstance();
-
+        
         String uddiURL = null;
         String wsName = null;
         String wsURL = null;
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        sns = getSNSInstance();
+
+        /*KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size
         Key key = keyGen.generateKey();
         SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
@@ -38,7 +38,7 @@ public class MDRecordsApp{
         Doctor doctor = new Doctor(k,"Vítor Nunes", dt, 123456789);
 
         System.out.println("O meu nome é: " + doctor.getName(k));
-        System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));
+        System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));*/
 
 
         /*String dados = "Estes são os dados super secretos!";
@@ -51,6 +51,27 @@ public class MDRecordsApp{
 
         System.out.println("Dados desencriptados: " + desencriptados);*/
 
+        MDRecordsEndpointManager endpoint;
+        if (uddiURL == null) {
+			endpoint = new MDRecordsEndpointManager(wsName, wsURL);
+		}
+		else {
+			endpoint = new MDRecordsEndpointManager(uddiURL, wsName, wsURL);
+        }
+        
+        System.out.println("MDRecords Server is running!");
+		
+		try {
+			endpoint.start();
+
+			endpoint.awaitConnections();
+			
+		} catch(Exception e) {
+			System.out.println("Connection error");
+		}
+		finally {
+			endpoint.stop();
+		}
 
     }
 

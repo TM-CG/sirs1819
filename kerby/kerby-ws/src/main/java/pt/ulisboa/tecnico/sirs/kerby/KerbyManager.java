@@ -1,10 +1,12 @@
 package pt.ulisboa.tecnico.sirs.kerby;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -98,7 +100,33 @@ public class KerbyManager {
 		if(line != null && !line.trim().isEmpty())
 			salt = line;
 	}
-	
+
+	public void initKeysCert() throws Exception{
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL url = loader.getResource("certificates");
+		String path = url.getPath();
+
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles){
+			if(file.isFile()){
+				FileInputStream is = new FileInputStream(file);
+
+				CertificateFactory fact = CertificateFactory.getInstance("X.509");
+				X509Certificate cer = (X509Certificate) fact.generateCertificate(is);
+				PublicKey key = cer.getPublicKey();
+
+				String subject = cer.getSubjectDN().getName();
+				String[] subjectInfo = subject.split(",", 2);
+				String[] commonName = subjectInfo[0].split("=", 2);
+
+				System.out.println(commonName[1]);
+				knownKeys.put(commonName[1], key);
+			}
+		}
+	}
+
 	/** Reads Passwords from the given file, generates all keys and stores them in memory. */
 	public void initKeys(String passwordFilename) throws Exception {
 		InputStream inputStream = KerbyManager.class.getResourceAsStream(passwordFilename);

@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
+
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 

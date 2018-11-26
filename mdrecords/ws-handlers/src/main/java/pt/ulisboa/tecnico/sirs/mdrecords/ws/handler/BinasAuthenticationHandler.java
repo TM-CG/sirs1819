@@ -33,7 +33,7 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
     public static final String PASSWORD_CHARLIE = "t2zJL5X";
     public static final String PASSWORD_EVE = "iyPmrVk";
 
-    public static final int MARGIN_ERROR = 1000; // time in ms
+    public static final int MARGIN_ERROR = 5000; // time in ms
     Set<Date> timeRequests = new TreeSet<Date>();
 
     //

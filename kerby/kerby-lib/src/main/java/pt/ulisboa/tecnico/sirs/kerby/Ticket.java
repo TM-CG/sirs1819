@@ -6,6 +6,8 @@ import java.net.URL;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -28,20 +30,27 @@ public class Ticket {
 	/** Ticket data container. After creation, cannot be null. */
 	private TicketView view;
 
-	private static Key dataPrivacyKey;
+    private Key dataPrivacyKey = null;
 
 	// ticket creation -------------------------------------------------------
 
 	/** Create ticket from arguments. */
 	public Ticket(String x, String y, Date time1, Date time2, Key key) {
+        try {
+            dataPrivacyKey = SecurityHelper.generateKeyFromPassword("A564CC6E84FB5B77DAA4A2");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
 
-		view = new TicketView();
+        view = new TicketView();
 		view.setX(x);
 		view.setY(y);
 		view.setTime1(XMLHelper.dateToXML(time1));
 		view.setTime2(XMLHelper.dateToXML(time2));
 		view.setEncodedKeyXY(key.getEncoded());
-		view.setDataPrivacyKey(null);
+		view.setDataPrivacyKey(dataPrivacyKey.getEncoded());
 	}
 
 	// TODO create constructor without key (one is generated)
@@ -125,6 +134,14 @@ public class Ticket {
 		byte[] encodedKey = keyXY.getEncoded();
 		view.setEncodedKeyXY(encodedKey);
 	}
+
+    public Key getDataPrivacyKey() {
+        return dataPrivacyKey;
+    }
+
+    public void setDataPrivacyKey(Key dataPrivacyKey) {
+        this.dataPrivacyKey = dataPrivacyKey;
+    }
 
 	// object methods --------------------------------------------------------
 

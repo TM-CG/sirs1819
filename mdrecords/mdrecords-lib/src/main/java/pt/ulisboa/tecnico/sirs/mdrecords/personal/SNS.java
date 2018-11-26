@@ -11,13 +11,16 @@ import org.omg.CORBA.Object;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
+import java.security.Key;
 import java.util.Base64;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 /** Singleton Class for describing the SNS */
 public class SNS extends SNS_Base {
-    
+    public static Key encryptKey;
+
+
     private SNS() {
         setRoot(FenixFramework.getDomainRoot());
     }

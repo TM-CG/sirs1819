@@ -78,7 +78,7 @@ public class SecurityHelper {
 
 	private static Cipher initCipher(int opmode, Key key)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
-		Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
+		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(opmode, key);
 		return cipher;
 	}
@@ -107,10 +107,14 @@ public class SecurityHelper {
 
 		try {
 			Cipher cipher = initCipher(key);
+
+			//TODO NULL AQUI
 			byte[] cipherBytes = cipher.doFinal(plainBytes);
 
 			CipheredView cipheredView = new CipheredView();
+
 			cipheredView.setData(cipherBytes);
+
 			return cipheredView;
 
 		} catch (Exception e) {

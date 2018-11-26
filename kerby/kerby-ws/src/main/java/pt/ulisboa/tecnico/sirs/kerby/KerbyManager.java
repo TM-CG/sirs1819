@@ -62,19 +62,25 @@ public class KerbyManager {
 			/* Get Previously Generated Client and Server Keys */
 			Key clientKey = knownKeys.get(client);
 			Key serverKey = knownKeys.get(server);
-			
+
 			/* Generate a new key for Client-Server communication */
 			Key clientServerKey = SecurityHelper.generateKey();
 			
 			/* Create and Cipher the Ticket */
 			Ticket ticket = createTicket(client, server, ticketDuration, clientServerKey);
-			CipheredView cipheredTicket = ticket.cipher(serverKey);
+
+            CipheredView cipheredTicket = ticket.cipher(serverKey);
+            System.out.println("allgucci2");
 
 			/* Create and Cipher the Session Key */
 			SessionKey sessionKey = new SessionKey(clientServerKey, nounce);
-			CipheredView cipheredSessionKey = sessionKey.cipher(clientKey);
-			
-			/* Create SessionKeyAndTicketView */
+            System.out.println("allgucci3");
+
+            CipheredView cipheredSessionKey = sessionKey.cipher(clientKey);
+            System.out.println("allgucci4");
+
+
+            /* Create SessionKeyAndTicketView */
 			SessionKeyAndTicketView response = new SessionKeyAndTicketView();
 			response.setTicket(cipheredTicket);
 			response.setSessionKey(cipheredSessionKey);

@@ -38,7 +38,7 @@ public class KerbyClientApp {
 		// the actual tests are made using JUnit
 
 		System.out.println("Invoke dummy()...");
-		SessionKeyAndTicketView result = client.requestTicket("alice@CXX.binas.org", "binas@CXX.binas.org",
+		SessionKeyAndTicketView result = client.requestTicket("12345678", "87654321",
 				new Random().nextLong(), 60 /* seconds */);
 		System.out.print("Result: ");
 		System.out.println(result);

@@ -19,6 +19,7 @@
 		<module>mdrecords-ws</module>
 		<module>mdrecords-cli</module>
 		<module>mdrecords-lib</module>
+		<module>ws-handlers</module>
 	</modules>
 
 </project>

@@ -38,6 +38,12 @@
             <artifactId>mdrecords-lib</artifactId>
             <version>0.1</version>
         </dependency>
+        <!-- ws-handlers -->
+        <dependency>
+	        <groupId>pt.ulisboa.tecnico.sirs</groupId>
+	        <artifactId>ws-handlers</artifactId>
+	        <version>1.1-SNAPSHOT</version>
+    	</dependency>
     </dependencies>
     <build>
         <plugins>

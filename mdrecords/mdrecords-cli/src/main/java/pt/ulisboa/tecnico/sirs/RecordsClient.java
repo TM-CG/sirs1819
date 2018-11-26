@@ -28,10 +28,10 @@ public class RecordsClient {
         KerbyClient client = new KerbyClient(kerbyPath);
 
         //Request temp session key
-        SessionKeyAndTicketView result = client.requestTicket(user, "69696969",
+        SessionKeyAndTicketView result = client.requestTicket(user, "mdrecords.pt",
                 new Random().nextLong(), 60 /* seconds */);
                 
-        //System.out.println("SessionKey: " + result.getSessionKey());
+        System.out.println("SessionKey: " + result.getSessionKey());
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
         

@@ -36,3 +36,5 @@ bin/
 
 # Maven
 target/
+
+.factorypath

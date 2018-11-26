@@ -1,9 +1,16 @@
 package pt.ulisboa.tecnico.sirs.kerby;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.Date;
 
+
+import javax.crypto.KeyGenerator;
 import javax.xml.bind.JAXBException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
@@ -21,19 +28,20 @@ public class Ticket {
 	/** Ticket data container. After creation, cannot be null. */
 	private TicketView view;
 
-	//private Key dataPrivacyKey;
+	private static Key dataPrivacyKey;
 
 	// ticket creation -------------------------------------------------------
 
 	/** Create ticket from arguments. */
-	public Ticket(String x, String y, Date time1, Date time2, Key key) {
+	public Ticket(String x, String y, Date time1, Date time2, Key key) throws Exception{
+
 		view = new TicketView();
 		view.setX(x);
 		view.setY(y);
 		view.setTime1(XMLHelper.dateToXML(time1));
 		view.setTime2(XMLHelper.dateToXML(time2));
 		view.setEncodedKeyXY(key.getEncoded());
-		//view.setDataPrivacyKey(null);
+		view.setDataPrivacyKey(null);
 	}
 
 	// TODO create constructor without key (one is generated)

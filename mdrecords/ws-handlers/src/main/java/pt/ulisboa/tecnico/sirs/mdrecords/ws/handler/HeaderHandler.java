@@ -16,8 +16,6 @@ import javax.xml.ws.handler.MessageContext.Scope;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import static javax.xml.bind.DatatypeConverter.printBase64Binary;
-
 /**
  * This SOAPHandler shows how to set/get values from headers in inbound/outbound
  * SOAP messages.
@@ -56,11 +54,6 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 
 		try {
 			if (outboundElement.booleanValue()) {
-				byte[] ticket = (byte[]) smc.get("ticket");
-				byte[] sessionKey = (byte[])smc.get("sessionkey");
-				byte[] auth = (byte[])smc.get("auth");
-
-
 				System.out.println("Writing header to OUTbound SOAP message...");
 
 				// get SOAP envelope
@@ -74,27 +67,19 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 					sh = se.addHeader();
 
 				// add header element (name, namespace prefix, namespace)
-				Name name = se.createName("sessionKey", "d", "http://demo");
+				Name name = se.createName("myHeader", "d", "http://demo");
 				SOAPHeaderElement element = sh.addHeaderElement(name);
-				String binSessionKey = printBase64Binary(sessionKey);
-				element.addTextNode(binSessionKey);
 
-				name = se.createName("ticket", "d", "http://demo");
-				element = sh.addHeaderElement(name);
-				String binTicket = printBase64Binary(ticket);
-				element.addTextNode(binTicket);
-
-				name = se.createName("auth", "d", "http://demo");
-				element = sh.addHeaderElement(name);
-				String binAuth = printBase64Binary(auth);
-				element.addTextNode(binAuth);
-
+				// add header element value
+				int value = 22;
+				String valueString = Integer.toString(value);
+				element.addTextNode(valueString);
 
 			} else {
 				System.out.println("Reading header from INbound SOAP message...");
 
 				// get SOAP envelope header
-				/*SOAPMessage msg = smc.getMessage();
+				SOAPMessage msg = smc.getMessage();
 				SOAPPart sp = msg.getSOAPPart();
 				SOAPEnvelope se = sp.getEnvelope();
 				SOAPHeader sh = se.getHeader();
@@ -106,7 +91,7 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 				}
 
 				// get first header element
-				Name name = se.createName("secureHeader", "d", "http://demo");
+				Name name = se.createName("myHeader", "d", "http://demo");
 				Iterator<?> it = sh.getChildElements(name);
 				// check header element
 				if (!it.hasNext()) {
@@ -115,16 +100,18 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 				}
 				SOAPElement element = (SOAPElement) it.next();
 
-				//KerberosServerHandler.setSession
+				// get header element value
+				String valueString = element.getValue();
+				int value = Integer.parseInt(valueString);
 
 				// print received header
-				//System.out.println("Header value is " + value);
+				System.out.println("Header value is " + value);
 
 				// put header in a property context
-				//smc.put(CONTEXT_PROPERTY, value);
+				smc.put(CONTEXT_PROPERTY, value);
 				// set property scope to application client/server class can
 				// access it
-				smc.setScope(CONTEXT_PROPERTY, Scope.APPLICATION);*/
+				smc.setScope(CONTEXT_PROPERTY, Scope.APPLICATION);
 
 			}
 		} catch (Exception e) {

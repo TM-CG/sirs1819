@@ -1,4 +1,4 @@
-package example.ws.handler;
+package pt.ulisboa.tecnico.sirs.mdrecords.ws.handler;
 
 import java.io.ByteArrayInputStream;
 

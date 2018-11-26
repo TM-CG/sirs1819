@@ -47,7 +47,7 @@
           <xs:element minOccurs="0" name="time1" type="xs:dateTime" />
           <xs:element minOccurs="0" name="time2" type="xs:dateTime" />
           <xs:element minOccurs="0" name="encodedKeyXY" type="xs:base64Binary" />
-          <xs:element minOccurs="0" name="dataPrivacyKey" type="xs:base64Binary" />
+          <!--<xs:element minOccurs="0" name="dataPrivacyKey" type="xs:base64Binary" />-->
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="requestTicket">

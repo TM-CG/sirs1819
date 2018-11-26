@@ -29,7 +29,7 @@ public class KerbyApp {
 			else
 				System.out.println("WARNING: Using default Salt from kerby-lib for Key Generation.");
 
-			KerbyManager.getInstance().initKeysCert();
+			KerbyManager.getInstance().initKeys(args[1]);
 						
 			endpoint = new KerbyEndpointManager(wsURL);
 
@@ -42,7 +42,7 @@ public class KerbyApp {
 			else
 				System.out.println("WARNING: Using default Salt from kerby-lib for Key Generation.");
 
-			KerbyManager.getInstance().initKeysCert();
+			KerbyManager.getInstance().initKeys(args[3]);
 			
 			endpoint = new KerbyEndpointManager(uddiURL, wsName, wsURL);
 			endpoint.setVerbose(true);

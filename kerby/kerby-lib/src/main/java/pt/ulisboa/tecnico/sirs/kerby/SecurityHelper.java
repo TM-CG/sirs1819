@@ -21,13 +21,13 @@ public class SecurityHelper {
 
 	private static final String CIPHER_ALGO = "AES";
 	private static final int CIPHER_KEY_SIZE = 128;
-	
+
 	private static final String KDF_ALGORITHM = "PBKDF2WithHmacSHA256";
 	private static final int KDF_ITERATIONS = 2048;
-	
+
 	private static final String DEFAULT_SALT = "F2BdmZEp8q";
-	
-	
+
+
 
 	// keys ------------------------------------------------------------------
 
@@ -45,30 +45,30 @@ public class SecurityHelper {
 		Key key = keyGen.generateKey();
 		return key;
 	}
-	
+
 	/** Generates a Key from a Password using a Key Derivation Function and a Default Salt.
 	 * @param password The Password to use. */
-	public static Key generateKeyFromPassword(String password) 
+	public static Key generateKeyFromPassword(String password)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		
+
 		return generateKeyFromPassword(password, DEFAULT_SALT);
 	}
-	
+
 	/** Generates a Key from a Password and a Salt using a Key Derivation Function.
 	 * @param password The Password to use.
 	 * @param salt The Salt to use. */
-	public static Key generateKeyFromPassword(String password, String salt) 
+	public static Key generateKeyFromPassword(String password, String salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		
+
 		char[] passwordCharArray = password.toCharArray();
-		byte[] saltByteArray = salt.getBytes(); 
+		byte[] saltByteArray = salt.getBytes();
 		PBEKeySpec spec = new PBEKeySpec(passwordCharArray, saltByteArray, KDF_ITERATIONS, CIPHER_KEY_SIZE);
 		SecretKeyFactory skf = SecretKeyFactory.getInstance(KDF_ALGORITHM);
 		SecretKey tmp = skf.generateSecret(spec);
 		SecretKey secret = new SecretKeySpec(tmp.getEncoded(), CIPHER_ALGO);
-        return secret;
+		return secret;
 	}
-	
+
 
 	public static Key recodeKey(byte[] encodedKey) {
 		return new SecretKeySpec(encodedKey, CIPHER_ALGO);
@@ -78,7 +78,7 @@ public class SecurityHelper {
 
 	private static Cipher initCipher(int opmode, Key key)
 			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
-		Cipher cipher = Cipher.getInstance("RSA");
+		Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
 		cipher.init(opmode, key);
 		return cipher;
 	}
@@ -107,14 +107,10 @@ public class SecurityHelper {
 
 		try {
 			Cipher cipher = initCipher(key);
-
-			//TODO NULL AQUI
 			byte[] cipherBytes = cipher.doFinal(plainBytes);
 
 			CipheredView cipheredView = new CipheredView();
-
 			cipheredView.setData(cipherBytes);
-
 			return cipheredView;
 
 		} catch (Exception e) {

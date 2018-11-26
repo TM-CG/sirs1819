@@ -1,10 +1,10 @@
 package pt.ulisboa.tecnico.sirs.kerby;
 
+import javax.security.auth.x500.X500Principal;
 import java.io.*;
 import java.net.URL;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
@@ -19,7 +19,7 @@ public class KerbyManager {
 	private static final int MIN_TICKET_DURATION = 10;
 	private static final int MAX_TICKET_DURATION = 300;
 	private static Set<UserNouncePair> previousNounces = Collections.synchronizedSet(new HashSet<UserNouncePair>());
-	private static ConcurrentHashMap<String, Key> knownKeys = new ConcurrentHashMap<String, Key>();
+	private static ConcurrentHashMap<String, PublicKey> knownKeys = new ConcurrentHashMap<String, PublicKey>();
 	private static String salt;
 	
 	// Singleton -------------------------------------------------------------
@@ -102,7 +102,17 @@ public class KerbyManager {
 	}
 
 	public void initKeysCert() throws Exception{
+
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+		URL caURL = loader.getResource("ca");
+		String path_ca = caURL.getPath() + "/root_ca.pem";
+		File ca = new File(path_ca);
+        FileInputStream istream = new FileInputStream(ca);
+
+        CertificateFactory fact = CertificateFactory.getInstance("X.509");
+        X509Certificate rootCA = (X509Certificate) fact.generateCertificate(istream);
+
 		URL url = loader.getResource("certificates");
 		String path = url.getPath();
 
@@ -111,24 +121,45 @@ public class KerbyManager {
 
 		for (File file : listOfFiles){
 			if(file.isFile()){
-				FileInputStream is = new FileInputStream(file);
 
-				CertificateFactory fact = CertificateFactory.getInstance("X.509");
+                FileInputStream is= new FileInputStream(file);
+
 				X509Certificate cer = (X509Certificate) fact.generateCertificate(is);
-				PublicKey key = cer.getPublicKey();
+				if(verifySignature(cer, rootCA)) {
+                    PublicKey key = cer.getPublicKey();
 
-				String subject = cer.getSubjectDN().getName();
-				String[] subjectInfo = subject.split(",", 2);
-				String[] commonName = subjectInfo[0].split("=", 2);
+                    String subject = cer.getSubjectDN().getName();
+                    String[] subjectInfo = subject.split(",", 2);
+                    String[] commonName = subjectInfo[0].split("=", 2);
 
-				System.out.println(commonName[1]);
-				knownKeys.put(commonName[1], key);
+                    System.out.println(commonName[1]);
+                    knownKeys.put(commonName[1], key);
+                }else{
+                    System.out.println("Certificate not valid");
+                }
 			}
 		}
+		System.out.println("Numero de chaves inseridas: " + knownKeys.size());
+	}
+
+	public static boolean verifySignature(X509Certificate certificate, X509Certificate issuingCertificate) {
+		X500Principal subject = certificate.getSubjectX500Principal();
+		X500Principal expectedIssuerSubject = certificate.getIssuerX500Principal();
+		X500Principal issuerSubject = issuingCertificate.getSubjectX500Principal();
+		PublicKey publicKeyForSignature = issuingCertificate.getPublicKey();
+
+		try {
+			certificate.verify(publicKeyForSignature);
+			return true;
+		} catch (InvalidKeyException | CertificateException | NoSuchAlgorithmException |
+				NoSuchProviderException | SignatureException e) {
+		}
+
+		return false;
 	}
 
 	/** Reads Passwords from the given file, generates all keys and stores them in memory. */
-	public void initKeys(String passwordFilename) throws Exception {
+	/*public void initKeys(String passwordFilename) throws Exception {
 		InputStream inputStream = KerbyManager.class.getResourceAsStream(passwordFilename);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		String line;
@@ -145,7 +176,7 @@ public class KerbyManager {
 			}
 			knownKeys.put(values[0], key);
 		}
-	}
+	}*/
 	
 	private Ticket createTicket(String client, String server, int ticketDuration, Key clientServerKey) {
 		final Calendar calendar = Calendar.getInstance();

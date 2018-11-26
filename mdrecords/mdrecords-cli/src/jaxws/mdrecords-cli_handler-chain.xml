@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
 <handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
     <!--
 		 A handler chain defines which handlers are called.
@@ -18,15 +16,15 @@
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.PrettyLogHandler</handler-class>
         </handler>
-        <!--<handler>
-            <handler-class>example.ws.handler.BinasAuthenticationHandler</handler-class>
-        </handler>-->
-        <!--<handler>
-            <handler-class>example.ws.handler.MacHandler</handler-class>
-        </handler>-->
         <handler>
-            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosServerHandler</handler-class>
+            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosClientHandler</handler-class>
         </handler>
+        <!--<handler>
+            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.MacHandler</handler-class>
+        </handler>-->
+        <!--<handler>
+            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.MessageManipulatorHandler</handler-class>
+        </handler>-->
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.PrettyLogHandler</handler-class>
         </handler>

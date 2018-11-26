@@ -33,7 +33,7 @@ public class Ticket {
 	// ticket creation -------------------------------------------------------
 
 	/** Create ticket from arguments. */
-	public Ticket(String x, String y, Date time1, Date time2, Key key) throws Exception{
+	public Ticket(String x, String y, Date time1, Date time2, Key key) {
 
 		view = new TicketView();
 		view.setX(x);

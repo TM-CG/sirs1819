@@ -8,7 +8,7 @@ import javax.xml.ws.BindingProvider;
 
 import pt.ulisboa.tecnico.sirs.mdrecords.BadRecordRequest_Exception;
 import pt.ulisboa.tecnico.sirs.mdrecords.*;
-import pt.ulisboa.tecnico.sirs.ws.uddi.UDDINaming;
+//import pt.ulisboa.tecnico.sirs.ws.uddi.UDDINaming;
 
 public class MDRecordsClient implements MDRecordsPortType {
 
@@ -52,12 +52,12 @@ public class MDRecordsClient implements MDRecordsPortType {
 	public MDRecordsClient(String uddiURL, String wsName) throws MDRecordsClientException {
 		this.uddiURL = uddiURL;
 		this.wsName = wsName;
-		uddiLookup();
+		//uddiLookup();
 		createStub();
     }
     
     /** UDDI lookup */
-	private void uddiLookup() throws MDRecordsClientException {
+	/*private void uddiLookup() throws MDRecordsClientException {
 		try {
 			if (verbose)
 				System.out.printf("Contacting UDDI at %s%n", uddiURL);
@@ -76,7 +76,7 @@ public class MDRecordsClient implements MDRecordsPortType {
 			String msg = String.format("Service with name %s not found on UDDI at %s", wsName, uddiURL);
 			throw new MDRecordsClientException(msg);
 		}
-	}
+	}*/
 
 	/** Stub creation and configuration */
 	private void createStub() {

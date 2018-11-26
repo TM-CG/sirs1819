@@ -32,10 +32,10 @@ import java.util.Date;
 
 public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
 
-    private static String currentUser = null;
-    private static String currentPassword = null;
+    private static String currentUser = "12345678";
+    private static String currentPassword = "Zd8hqDu23t";
 
-    private static final String SERVER_NAME = "binas@A40.binas.org";
+    private static final String SERVER_NAME = "mdrecords.pt";
 
     //
     // Handler interface implementation
@@ -68,11 +68,11 @@ public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
 
                 Key clientKey = SecurityHelper.generateKeyFromPassword(currentPassword);
 
-                KerbyClient client = new KerbyClient("http://sec.sd.rnl.tecnico.ulisboa.pt:8888/kerby");
+                KerbyClient client = new KerbyClient("http://localhost:8888/kerby");
 
                 SecureRandom randomGenerator = new SecureRandom();
                 long nounce = randomGenerator.nextLong();
-                SessionKeyAndTicketView result = client.requestTicket(currentUser, SERVER_NAME , nounce, 30);
+                SessionKeyAndTicketView result = client.requestTicket(currentUser, SERVER_NAME , nounce, 60);
 
                 CipherClerk cipherClerk = new CipherClerk();
 

@@ -1,10 +1,5 @@
 package pt.ulisboa.tecnico.sirs;
 
-import java.util.Random;
-
-import pt.ulisboa.tecnico.sirs.kerby.cli.KerbyClient;
-import pt.ulisboa.tecnico.sirs.kerby.SessionKeyAndTicketView;
-
 public class RecordsClient {
     public static void main(String[] args) throws Exception {
         String kerbyPath;
@@ -25,13 +20,6 @@ public class RecordsClient {
         
         
         System.out.println("Connecting at kerby server at: " + kerbyPath + " using user: " + user);
-        KerbyClient client = new KerbyClient(kerbyPath);
-
-        //Request temp session key
-        SessionKeyAndTicketView result = client.requestTicket(user, "mdrecords.pt",
-                new Random().nextLong(), 60 /* seconds */);
-                
-        System.out.println("SessionKey: " + result.getSessionKey());
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
         

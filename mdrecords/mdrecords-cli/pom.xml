@@ -19,13 +19,20 @@
     <properties>
         <mainclass>pt.ulisboa.tecnico.sirs.RecordsClient</mainclass>
         <wsdl.dir>${basedir}/../mdrecords-contract/</wsdl.dir>
+        <wsdl.filename>MDRecordsService.wsdl</wsdl.filename>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.2.10</version>
+        </dependency>
+        <!-- ws-handlers -->
+        <dependency>
             <groupId>pt.ulisboa.tecnico.sirs</groupId>
-                    <artifactId>kerby-ws-cli</artifactId>
-                    <version>1.0</version>
+            <artifactId>ws-handlers</artifactId>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -75,6 +82,12 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+            <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.4.1</version> <executions> <execution> <goals> <goal>wsimport</goal>
+                </goals> </execution> </executions> <configuration> <wsdlDirectory>${wsdl.dir}</wsdlDirectory>
+                    <wsdlFiles> <wsdlFile>${wsdl.filename}</wsdlFile> </wsdlFiles> </configuration>
+                <dependencies> <dependency> <groupId>com.sun.xml.ws</groupId> <artifactId>jaxws-tools</artifactId>
+                    <version>2.2.10</version> </dependency> </dependencies> </plugin>
         </plugins>
     </build>
 </project>

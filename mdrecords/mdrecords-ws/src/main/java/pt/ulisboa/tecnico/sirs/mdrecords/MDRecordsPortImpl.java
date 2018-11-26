@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 /**
@@ -17,6 +18,7 @@ import javax.jws.WebService;
         targetNamespace="http://mdrecords.org",
         serviceName = "MDRecordsService"
 )
+@HandlerChain(file = "/mdrecords-ws_handler-chain.xml")
  public class MDRecordsPortImpl implements MDRecordsPortType {
 
     // end point manager

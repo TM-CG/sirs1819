@@ -91,9 +91,6 @@ public class MDRecordsApp{
         return SNS.getInstance();
     }
     
-    private MDRecordsPortType portType;
-
-
     public boolean authenticateUser(Key key, long id){
         return true;
     }

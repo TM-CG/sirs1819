@@ -19,9 +19,9 @@
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosClientHandler</handler-class>
         </handler>
-        <!--<handler>
+        <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.MacHandler</handler-class>
-        </handler>-->
+        </handler>
         <!--<handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.MessageManipulatorHandler</handler-class>
         </handler>-->

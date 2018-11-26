@@ -21,7 +21,7 @@ import java.util.*;
  */
 public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
 
-    public static final String PASSWORD_BINAS = "Na3f4aHHv";
+    public static final String PASSWORD_MDRECORDS = "z5Pqwhi";
 
     public static final String CLASS_NAME = KerberosServerHandler.class.getSimpleName();
 
@@ -55,7 +55,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
             // inbound message
             try {
 
-                Key serverKey = SecurityHelper.generateKeyFromPassword(PASSWORD_BINAS);
+                Key serverKey = SecurityHelper.generateKeyFromPassword(PASSWORD_MDRECORDS);
 
                 // get SOAP envelope header
                 SOAPMessage msg = smc.getMessage();

@@ -44,6 +44,12 @@
 	        <artifactId>ws-handlers</artifactId>
 	        <version>1.1-SNAPSHOT</version>
     	</dependency>
+        <dependency>
+            <groupId>org.ow2.authzforce</groupId>
+            <artifactId>authzforce-ce-core-pdp-engine</artifactId>
+            <version>10.2.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

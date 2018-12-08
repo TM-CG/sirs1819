@@ -18,15 +18,21 @@
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.PrettyLogHandler</handler-class>
         </handler>
-        <handler>
+        <!--<handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.BinasAuthenticationHandler</handler-class>
-        </handler>
+        </handler>-->
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.MacHandler</handler-class>
         </handler>
+        <!--<handler>
+            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.ConfidentialityHandler</handler-class>
+        </handler>-->
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosServerHandler</handler-class>
         </handler>
+        <!--<handler>
+            <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.ConfidentialityHandler</handler-class>
+        </handler>-->
         <handler>
             <handler-class>pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.PrettyLogHandler</handler-class>
         </handler>

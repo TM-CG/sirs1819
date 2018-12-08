@@ -18,7 +18,6 @@ import java.security.NoSuchAlgorithmException;
 
 /** Singleton Class for describing the SNS */
 public class SNS extends SNS_Base {
-    public static Key encryptKey;
 
 
     private SNS() {

@@ -20,7 +20,8 @@ public class MDRecordsApp{
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static void main(String[] args) throws Exception {
-        
+        sns = getSNSInstance();
+
         String uddiURL = null;
         String wsName = null;
         String wsURL = null;
@@ -36,7 +37,7 @@ public class MDRecordsApp{
             wsName = args[1];
         }
 
-        sns = getSNSInstance();
+
 
         /*KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size

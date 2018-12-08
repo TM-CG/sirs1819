@@ -1,11 +1,23 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.ws.handler;
 
+import pt.ulisboa.tecnico.sirs.kerby.CipherClerk;
+import pt.ulisboa.tecnico.sirs.kerby.CipheredView;
+import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
+
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.Set;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
-import javax.xml.soap.SOAPBody;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.*;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
@@ -32,19 +44,87 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 	public boolean handleMessage(SOAPMessageContext smc) {
         Boolean outboundElement = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-        SOAPMessage message = smc.getMessage();
-        try {
-            SOAPBody body = message.getSOAPBody();
+        //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt!
+        if (smc.get("sessionKey") == null) {
+        	return true;
+		}
 
-        } catch (SOAPException e) {
-            e.printStackTrace();
-        }
+			try {
+				SOAPMessage soapMessage = smc.getMessage();
+				SOAPEnvelope soapEnvelope = soapMessage.getSOAPPart().getEnvelope();
+				SOAPBody soapBody = soapEnvelope.getBody();
 
-        // == OUTBOUND ==
-        /*if(outboundElement.booleanValue()) {
-            //Encrypt Body using session key
+				@SuppressWarnings("unchecked")
+				Iterator<SOAPBodyElement> elements = soapBody.getChildElements();
 
-        }*/
+				//Gets the session key from the context
+				Key sessionKey = (Key) smc.get("sessionKey");
+
+				CipherClerk cipherClerk = new CipherClerk();
+
+				//traverse the body elements
+				while (elements.hasNext()) {
+					SOAPBodyElement element = elements.next();
+
+					@SuppressWarnings("unchecked")
+					Iterator<SOAPBodyElement> params = element.getChildElements();
+					while (params.hasNext()) {
+						SOAPBodyElement param = params.next();
+						String paramValue = null;
+
+
+						try {
+
+							if (outboundElement) {
+								paramValue = param.getValue();
+
+								Cipher cipher = SecurityHelper.initCipher(sessionKey);
+								byte[] cipherBytes = cipher.doFinal(paramValue.getBytes());
+
+								String encryptedParam = DatatypeConverter.printBase64Binary(cipherBytes);
+
+								//Replace the plaintext body argument value with the encrypted one
+								//param.setValue(encryptedParam);
+							}
+							else {
+								System.out.println("Decrypt: " + param.getValue());
+								/*byte[] cipherBytes = DatatypeConverter.parseBase64Binary(param.getValue());
+
+								Cipher cipher = SecurityHelper.initCipher(sessionKey);
+								byte[] bytes = cipher.doFinal(cipherBytes);
+
+								paramValue = new String(bytes);
+
+								//Replace the encrypted body argument value with the plaintext one
+								param.setValue(paramValue);*/
+
+							}
+
+
+								//Ciphers the content of the parameter using session key
+								//And convert them to base 64 (textual representation)
+
+
+
+						} catch (NoSuchAlgorithmException e) {
+							e.printStackTrace();
+						} catch (InvalidKeyException e) {
+							e.printStackTrace();
+						} catch (NoSuchPaddingException e) {
+							e.printStackTrace();
+						} catch (BadPaddingException e) {
+							e.printStackTrace();
+						} catch (IllegalBlockSizeException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+
+			} catch (SOAPException e) {
+				e.printStackTrace();
+			}
+
 		return true;
 	}
 

@@ -49,3 +49,24 @@ relation SNSHasNurses{
 		multiplicity 0..*;
 	}
 }
+
+class Record {
+    long personalId;
+    long clientId;
+    LocalDate timeStamp;
+    String speciality;
+    String description;
+}
+
+class GenericInformation extends Record;
+
+class Report extends Record;
+
+class Medication extends Record {
+    String drugName;
+    float dosage;
+}
+
+class Exam extends Record {
+    String examName;
+}

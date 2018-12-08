@@ -30,8 +30,11 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    public String requestRecord(Long patientId, Long personalId, String operationType) throws BadRecordRequest_Exception {
+    /*public String requestRecord(Long patientId, Long personalId, String operationType) throws BadRecordRequest_Exception {
         return "Hello! This is the requestRecord reply of patient: " + patientId + " by personal: " + personalId + " operation: " + operationType;
+    }*/
+    public String readRecord(Long patientId, Long personalId, String recordType) throws BadReadRecord_Exception{
+        return "";
     }
 
  }

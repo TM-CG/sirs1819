@@ -96,9 +96,9 @@ public class MDRecordsClient implements MDRecordsPortType {
     
     // remote invocation methods ----------------------------------------------
 
-    public String requestRecord(Long patientId, Long personalId, String operationType)
-            throws BadRecordRequest_Exception {
-        return port.requestRecord(patientId, personalId, operationType);
+    public String readRecord(Long patientId, Long personalId, String recordType)
+            throws BadReadRecord_Exception {
+        return port.readRecord(patientId, personalId, recordType);
 	}
     
 }

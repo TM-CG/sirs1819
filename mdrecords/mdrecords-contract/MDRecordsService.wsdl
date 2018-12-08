@@ -12,55 +12,128 @@
     <!--  XML Schema Definition (XSD) of data types. -->
     <types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mdrecords.sirs.tecnico.ulisboa.pt/" version="1.0">
-            <xs:element name="BadRecordRequest" type="tns:BadRecordRequest" />
-            <xs:element name="requestRecord" type="tns:requestRecord" />
-            <xs:element name="requestRecordResponse" type="tns:requestRecordResponse" />
+            <xs:element name="BadReadRecord" type="tns:BadReadRecord" />
+            <xs:element name="readRecord" type="tns:readRecord" />
+            <xs:element name="readRecordResponse" type="tns:readRecordResponse" />
 
-            <xs:complexType name="requestRecord">
+            <xs:complexType name="readRecord">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="patient_id" type="xs:long" />
                     <xs:element minOccurs="0" name="personal_id" type="xs:long" />
-                    <xs:element minOccurs="0" name="operation_type" type="xs:string" />
+                    <xs:element minOccurs="0" name="recordType" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="requestRecordResponse">
+            <xs:complexType name="readRecordResponse">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="return" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="BadRecordRequest">
+            <xs:complexType name="BadReadRecord">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="message" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
+<!--
+            <xs:complexType name="writeRecord">
+                <xs:sequence>
+                     <xs:element minOccurs="0" name="patient_id" type="xs:long" />
+                    <xs:element minOccurs="0" name="personal_id" type="xs:long" />
+                    <xs:element minOccurs="0" name="recordType" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="writeRecordResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadWriteRecord">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="createPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="personType" type="xs:string" />
+                    <xs:element minOccurs="0" name="name" type="xs:string" />
+                    <xs:element minOccurs="0" name="birthday" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="identification" type="xs:long" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createPersonResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadcreatePerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="createNursePatientRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="patient_id" type="xs:long" />
+                    <xs:element minOccurs="0" name="nurse_id" type="xs:long" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createNursePatientRelationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadCreateNursePatientRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="createDoctorPatientRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="patient_id" type="xs:long" />
+                    <xs:element minOccurs="0" name="nurse_id" type="xs:long" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createDoctorPatientRelationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadCreateDoctorPatientRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            -->
+
         </xs:schema>
     </types>
 
     <!--  Messages use elements defined in the schema. -->
-    <message name="requestRecord">
-        <part element="tns:requestRecord" name="parameters" />
+    <message name="readRecord">
+        <part element="tns:readRecord" name="parameters" />
     </message>
-    <message name="requestRecordResponse">
-        <part element="tns:requestRecordResponse" name="parameters" />
+    <message name="readRecordResponse">
+        <part element="tns:readRecordResponse" name="parameters" />
     </message>
-    <message name="BadRecordRequest">
-        <part element="tns:BadRecordRequest" name="fault" />
+    <message name="BadReadRecord">
+        <part element="tns:BadReadRecord" name="fault" />
     </message>
 
     <!--  Port type (interface). -->
     <!--  Each operation has input, output and fault messages. -->
     <portType name="MDRecordsPortType">
-        <operation name="requestRecord">
-            <input message="tns:requestRecord" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestRecordRequest" />
-            <output message="tns:requestRecordResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestRecordResponse" />
-            <fault message="tns:BadRecordRequest" name="BadRecordRequest" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestRecord/Fault/BadRecordRequest" />
+        <operation name="readRecord">
+            <input message="tns:readRecord" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord" />
+            <output message="tns:readRecordResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecordResponse" />
+            <fault message="tns:BadReadRecord" name="BadReadRecord" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadReadRecord" />
         </operation>
     </portType>
 
     <!--  Binding defines the actual technologies to use. -->
     <binding name="MDRecordsPortBinding" type="tns:MDRecordsPortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-        <operation name="requestRecord">
+        <operation name="readRecord">
             <soap:operation soapAction="" />
             <input>
                 <soap:body use="literal" />
@@ -68,8 +141,8 @@
             <output>
                 <soap:body use="literal" />
             </output>
-            <fault name="BadRecordRequest">
-                <soap:fault name="BadRecordRequest" use="literal" />
+            <fault name="BadReadRecord">
+                <soap:fault name="BadReadRecord" use="literal" />
             </fault>
         </operation>
     </binding>

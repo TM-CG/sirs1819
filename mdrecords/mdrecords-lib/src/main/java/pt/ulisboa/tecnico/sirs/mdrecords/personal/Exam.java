@@ -11,7 +11,9 @@ public class Exam extends Exam_Base {
         super();
     }
 
-    public Exam(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
+    public Exam(long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);
@@ -21,7 +23,9 @@ public class Exam extends Exam_Base {
     }
 
     public Exam(long personalId, long patientId, DateTime timeStamp, String speciality, String description,
-                String examName) {
+                String examName) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);

@@ -11,7 +11,9 @@ public class Medication extends Medication_Base {
         super();
     }
 
-    public Medication(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
+    public Medication(long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);
@@ -20,7 +22,9 @@ public class Medication extends Medication_Base {
     }
 
     public Medication(long personalId, long patientId, DateTime timeStamp, String speciality, String description,
-                      String drugName, float dosage) {
+                      String drugName, float dosage) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);

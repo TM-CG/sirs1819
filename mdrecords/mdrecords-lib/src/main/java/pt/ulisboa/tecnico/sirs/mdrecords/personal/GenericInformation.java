@@ -11,7 +11,9 @@ public class GenericInformation extends GenericInformation_Base {
         super();
     }
 
-    public GenericInformation(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
+    public GenericInformation(long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);

@@ -11,13 +11,25 @@ public class Record extends Record_Base {
         super();
     }
 
-    public Record(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
+    public Record(long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+        checkArguments(personalId, patientId, timeStamp, speciality, description);
+
         setPersonalId(personalId);
         setPatientId(patientId);
         setTimeStamp(timeStamp);
         setSpeciality(speciality);
         setDescription(description);
 
+    }
+
+    protected void checkArguments(long personalId, long patientId, DateTime timeStamp, String speciality, String description)
+    throws InvalidRecordException {
+        if (personalId < 0)
+            throw new InvalidRecordException("Invalid Personal ID in Record!");
+        if (patientId < 0)
+            throw new InvalidRecordException("Invalid Patient ID in Record!");
+        if (timeStamp.isAfterNow())
+            throw new InvalidRecordException("Invalid timeStamp ID in Record, it is from future!");
     }
     
 }

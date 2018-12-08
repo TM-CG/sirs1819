@@ -53,6 +53,14 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         Key sessionKey = (Key) smc.get("sessionKey");
+
+        //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
+        //in a close future
+        if (smc.get("alreadyHaveSessionKey") == null) {
+            System.out.println("MAC HANDLER Ignore");
+            return true;
+        }
+
         try {
             SOAPMessage msg = smc.getMessage();
             SOAPPart sp = msg.getSOAPPart();
@@ -87,6 +95,9 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
                 // add header element value
                 element.addTextNode(DatatypeConverter.printBase64Binary(digest));
             } else { // if message is inbound -> validate integrity
+
+                //just remove the flag for next request
+                smc.remove("alreadyHaveSessionKey");
 
                   // get hash
                 Name name = se.createName("mac", "m", "http://mac");

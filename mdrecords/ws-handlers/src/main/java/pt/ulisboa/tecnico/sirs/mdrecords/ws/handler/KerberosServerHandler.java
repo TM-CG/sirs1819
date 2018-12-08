@@ -49,7 +49,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
         if (outbound) {
 
-
+            smc.put("alreadyHaveSessionKey", true);
 
         } else {
             // inbound message
@@ -90,6 +90,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
                 smc.put("encryptKey", encryptKey);
 
                 smc.put("sessionKey", sessionKey);
+                smc.put("alreadyHaveSessionKey", true);
                 // set property scope to application so that server class can
                 // access property
                 smc.setScope("sessionKey", Scope.HANDLER);

@@ -108,6 +108,7 @@ public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
 
                 //Put sessionKey on messageContext so MacHandler can use it to digest the message
                 smc.put("sessionKey", sessionKey.getKeyXY());
+                smc.put("alreadyHaveSessionKey", true);
 
             } catch (NoSuchAlgorithmException | InvalidKeySpecException | BadTicketRequest_Exception
                     | KerbyClientException | SOAPException | JAXBException | KerbyException e) {

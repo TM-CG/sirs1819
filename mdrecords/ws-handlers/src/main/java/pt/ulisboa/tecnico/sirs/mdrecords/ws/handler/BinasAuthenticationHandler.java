@@ -57,6 +57,13 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
     public boolean handleMessage(SOAPMessageContext smc) {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
+        //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
+        //in a close future
+        if (smc.get("sessionKey") == null) {
+            System.out.println("BINAS HANDLER Ignore");
+            return true;
+        }
+
         if(outbound) {
             try {
 
@@ -104,6 +111,9 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
                         throw new RuntimeException("Invalid Access to operation");
                     }
                 }
+
+                //just remove the flag for next request
+                smc.remove("alreadyHaveSessionKey");
 
                 Auth auth = (Auth) smc.get("auth");
 

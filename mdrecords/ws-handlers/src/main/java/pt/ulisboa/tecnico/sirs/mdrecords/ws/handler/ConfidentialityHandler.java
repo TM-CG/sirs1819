@@ -44,8 +44,10 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 	public boolean handleMessage(SOAPMessageContext smc) {
         Boolean outboundElement = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-        //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt!
-        if (smc.get("sessionKey") == null) {
+		//vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
+		//in a close future
+        if (smc.get("alreadyHaveSessionKey") == null) {
+        	System.out.println("CONF HANDLER Ignore");
         	return true;
 		}
 
@@ -84,37 +86,37 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 								String encryptedParam = DatatypeConverter.printBase64Binary(cipherBytes);
 
 								//Replace the plaintext body argument value with the encrypted one
-								//param.setValue(encryptedParam);
+								param.setValue(encryptedParam);
+								//just remove the flag for next request
+								smc.remove("alreadyHaveSessionKey");
 							}
 							else {
-								System.out.println("Decrypt: " + param.getValue());
-								/*byte[] cipherBytes = DatatypeConverter.parseBase64Binary(param.getValue());
+									byte[] cipherBytes = DatatypeConverter.parseBase64Binary(param.getValue());
 
-								Cipher cipher = SecurityHelper.initCipher(sessionKey);
-								byte[] bytes = cipher.doFinal(cipherBytes);
+									Cipher cipher = SecurityHelper.initDecipher(sessionKey);
+									byte[] bytes = cipher.doFinal(cipherBytes);
 
-								paramValue = new String(bytes);
+									paramValue = new String(bytes);
 
-								//Replace the encrypted body argument value with the plaintext one
-								param.setValue(paramValue);*/
+									//Replace the encrypted body argument value with the plaintext one
+									param.setValue(paramValue);
 
 							}
 
-
-								//Ciphers the content of the parameter using session key
-								//And convert them to base 64 (textual representation)
-
-
-
 						} catch (NoSuchAlgorithmException e) {
+							System.out.println("** CONFIDENTIALITY HANDLER: Wrong algorithm!");
 							e.printStackTrace();
 						} catch (InvalidKeyException e) {
+							System.out.println("** CONFIDENTIALITY HANDLER: Invalid Key!");
 							e.printStackTrace();
 						} catch (NoSuchPaddingException e) {
+							System.out.println("** CONFIDENTIALITY HANDLER: No such padding!");
 							e.printStackTrace();
 						} catch (BadPaddingException e) {
+							System.out.println("** CONFIDENTIALITY HANDLER: Wrong padding!");
 							e.printStackTrace();
 						} catch (IllegalBlockSizeException e) {
+							System.out.println("** CONFIDENTIALITY HANDLER: Wrong block size!");
 							e.printStackTrace();
 						}
 
@@ -122,6 +124,7 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 				}
 
 			} catch (SOAPException e) {
+				System.out.println("** CONFIDENTIALITY HANDLER: SOAP error!");
 				e.printStackTrace();
 			}
 

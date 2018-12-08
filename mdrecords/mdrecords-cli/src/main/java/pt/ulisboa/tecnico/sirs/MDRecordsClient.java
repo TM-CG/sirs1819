@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.xml.ws.BindingProvider;
 
-import pt.ulisboa.tecnico.sirs.mdrecords.BadRecordRequest_Exception;
 import pt.ulisboa.tecnico.sirs.mdrecords.*;
 //import pt.ulisboa.tecnico.sirs.ws.uddi.UDDINaming;
 

@@ -81,6 +81,11 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
 
             byte[] msgToDigest = DatatypeConverter.parseBase64Binary(bodyStr);
             byte[] digest = mac.doFinal(msgToDigest);
+            
+            System.out.println("**************************");
+            System.out.println(DatatypeConverter.printBase64Binary(digest));
+            System.out.println("**************************");
+
 
             if (outbound) { //if message is outbound -> add mac to soap envelope
 

@@ -49,7 +49,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
         if (outbound) {
 
-
+            smc.put("alreadyHaveSessionKey", true);
 
         } else {
             // inbound message

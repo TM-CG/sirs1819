@@ -128,6 +128,9 @@ public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
 
                 Name name = se.createName("myTreq", "treq", "http://treq");
                 Iterator it = sh.getChildElements(name);
+
+                smc.put("alreadyHaveSessionKey", true);
+
                 // check header element
                 if (!it.hasNext()) {
                     return true;

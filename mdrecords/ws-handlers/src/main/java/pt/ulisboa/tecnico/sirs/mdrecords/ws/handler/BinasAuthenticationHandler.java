@@ -59,7 +59,7 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
 
         //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
         //in a close future
-        if (smc.get("sessionKey") == null) {
+        if (smc.get("alreadyHaveSessionKey") == null) {
             System.out.println("BINAS HANDLER Ignore");
             return true;
         }

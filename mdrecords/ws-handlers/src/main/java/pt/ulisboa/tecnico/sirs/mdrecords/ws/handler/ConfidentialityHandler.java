@@ -62,12 +62,11 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 				//Gets the session key from the context
 				Key sessionKey = (Key) smc.get("sessionKey");
 
-				CipherClerk cipherClerk = new CipherClerk();
-
+				System.out.println("Ó Vitor olha isto: " + elements);
 				//traverse the body elements
 				while (elements.hasNext()) {
 					SOAPBodyElement element = elements.next();
-
+					System.out.println("Ó Zé olha isto: " + element.getTagName());
 					@SuppressWarnings("unchecked")
 					Iterator<SOAPBodyElement> params = element.getChildElements();
 					while (params.hasNext()) {

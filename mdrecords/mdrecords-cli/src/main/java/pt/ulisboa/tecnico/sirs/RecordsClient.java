@@ -23,10 +23,12 @@ public class RecordsClient {
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
         
-        //System.out.println("Let me invoke requestRecord.");
-        //String response = recordsClient.requestRecord(new Long(1234), new Long(45456), "hahaha");
+        System.out.println("Let me invoke readRecord");
+        Long patientId = new Long(123456788);
+        Long personalId = new Long(123456789);
+        String response = recordsClient.readRecord(patientId, personalId, "Report");
         
-        //System.out.println("RESPONSE: " + response);
+        System.out.println("RESPONSE: " + response);
 
     }
 }

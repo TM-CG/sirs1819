@@ -8,6 +8,8 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 
 import org.omg.CORBA.Object;
+import org.joda.time.DateTime;
+
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -18,7 +20,6 @@ import java.security.NoSuchAlgorithmException;
 
 /** Singleton Class for describing the SNS */
 public class SNS extends SNS_Base {
-
 
     private SNS() {
         setRoot(FenixFramework.getDomainRoot());
@@ -132,4 +133,117 @@ public class SNS extends SNS_Base {
 
         return data;
     }
-}
+
+    public Record readRecord(Long personalId, Long patientId, String recordType){
+        SNS sns = SNS.getInstance();
+        Record newestRecord = null;
+        boolean isFirst = true;
+        //switch(recordType){
+
+            if(recordType == "Record"){
+                    if(sns.getDoctorById(personalId).getPatientSet().contains(sns.getPatientById(patientId))){
+                        for (Record record : sns.getRecordSet()) {
+                            
+
+                            if(recordType.equals(record.getClass().getSimpleName()) && 
+                            personalId.equals(record.getPersonalId()) && patientId.equals(record.getPatientId())){
+                                if(isFirst){
+                                    newestRecord = record;
+                                    isFirst = false;
+                                }
+                                else {
+                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                        newestRecord = record;
+                                    } 
+                                }
+                            }
+                        }
+                    }
+                    //nurse case
+                    else if(getNurseSet().contains(personalId)){
+                        for (Record record: getRecordSet()){
+                            if(recordType == record.getClass().getName() && personalId == record.getPersonalId()
+                            && patientId == record.getPatientId()){
+                                if(isFirst){
+                                    newestRecord = record;
+                                    isFirst = false;
+                                }
+                                else {
+                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                        newestRecord = record;
+                                    }  
+                                }
+                            }
+                            
+                        }
+                    }
+                    //patient case
+                    else if(patientId == personalId){
+                        for (Record record: getRecordSet()){
+                            if(record.getPatientId() == patientId){
+                                if(isFirst){
+                                    newestRecord = record;
+                                    isFirst = false;
+                                }
+                                else {
+                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                        newestRecord = record;
+                                    }  
+                                }
+                            }
+                        }
+                    }   
+                    return newestRecord;
+                
+                
+                
+            }
+            else {
+                return null;
+            }   
+            
+            //TODO if we have time
+            /*case "genericInformation":
+                switch(personalId){
+                    //doctor case
+                    case getDoctorSet().contains(patientId):
+                        break;
+                    //nurse case
+                    case getNurseSet().contains(patientId):
+                        break;
+                    //patient case
+                    case patientId == personalId:
+                        break;
+                }
+                break;
+            case "medication":
+                switch(personalId){
+                    //doctor case
+                    case getDoctorSet().contains(patientId):
+                        break;
+                    //nurse case
+                    case getNurseSet().contains(patientId):
+                        break;
+                    //patient case
+                    case patientId == personalId:
+                        break;
+                }
+                break;
+            case "exam":
+                switch(personalId){
+                    //doctor case
+                    case getDoctorSet().contains(patientId):
+                        break;
+                    //nurse case
+                    case getNurseSet().contains(patientId):
+                        break;
+                    //patient case
+                    case patientId == personalId:
+                        break;
+                }
+                break;
+            */
+        }
+        
+    }
+

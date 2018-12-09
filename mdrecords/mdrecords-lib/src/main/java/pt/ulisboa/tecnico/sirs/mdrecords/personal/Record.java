@@ -1,4 +1,5 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
+import pt.ist.fenixframework.FenixFramework;
 
 import org.joda.time.DateTime;
 
@@ -19,6 +20,8 @@ public class Record extends Record_Base {
         setTimeStamp(timeStamp);
         setSpeciality(speciality);
         setDescription(description);
+
+        FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
 

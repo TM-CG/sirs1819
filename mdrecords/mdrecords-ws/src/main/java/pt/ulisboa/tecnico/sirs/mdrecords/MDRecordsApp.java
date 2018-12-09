@@ -3,16 +3,18 @@ package pt.ulisboa.tecnico.sirs.mdrecords;
 import pt.ist.fenixframework.Atomic;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormat;
 
+import java.security.*;
 
-import java.security.Key;
+import static pt.ulisboa.tecnico.sirs.mdrecords.personal.CertificateHelper.*;
+
 
 public class MDRecordsApp{
 
@@ -20,6 +22,8 @@ public class MDRecordsApp{
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static void main(String[] args) throws Exception {
+
+
         sns = getSNSInstance();
 
         String uddiURL = null;
@@ -38,8 +42,7 @@ public class MDRecordsApp{
         }
 
 
-
-        /*KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size
         Key key = keyGen.generateKey();
         SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
@@ -50,9 +53,31 @@ public class MDRecordsApp{
         Doctor doctor = new Doctor(k,"Vítor Nunes", dt, 123456789);
 
         System.out.println("O meu nome é: " + doctor.getName(k));
-        System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));*/
+        System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));
 
 
+        /** ===========Begin============= RECORD DIGEST TEST ===========Begin============= **/
+        /*Patient patient = new Patient(k, "Afadílio Vieira", dt, 321);
+
+        Record record = new Record(123456789,321, new DateTime(), "Clinica geral", "É alérigico a peras");
+
+        byte[] digest = record.calcDigest();
+
+        System.out.println("Ó Zé olha o digest: " + digest);
+
+        RecordView recordView = record.getView();
+
+        record.setDigest(createRecordDigest("../../users/Vitor/vitor.key.pem", recordView));
+
+        System.out.println("Ó Zé olha o digest encriptado: " + record.getDigest());
+
+        System.out.println("Ó Afadílio topa-me isto: " + record.checkAuthenticity(readPublicKey("vitor.cert.pem")));*/
+
+
+        /** ===========End============= RECORD DIGEST TEST ===========End============= **/
+
+
+        /** ===========Begin============= SERVER DATABASE ENCRYPTION ===========Begin============= **/
         /*String dados = "Estes são os dados super secretos!";
         SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
         String encriptados = SNS.encrypt(k, dados);
@@ -62,6 +87,8 @@ public class MDRecordsApp{
         String desencriptados = SNS.decrypt(k, encriptados);
 
         System.out.println("Dados desencriptados: " + desencriptados);*/
+
+        /** ===========End============= SERVER DATABASE ENCRYPTION ===========End============= **/
 
         MDRecordsEndpointManager endpoint;
         if (uddiURL == null) {

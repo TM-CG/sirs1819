@@ -11,6 +11,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>pt.ulisboa.tecnico.sirs</groupId>
+            <artifactId>kerby-lib</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.50</version>
+        </dependency>
+    </dependencies>
 
     <artifactId>mdrecords-lib</artifactId>
 

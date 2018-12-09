@@ -70,3 +70,21 @@ class Medication extends Record {
 class Exam extends Record {
     String examName;
 }
+
+relation DoctorFollowingPatient {
+    Doctor playsRole doctor {
+        multiplicity 0..*;
+    }
+    Patient playsRole patient {
+        multiplicity 0..*;
+    }
+}
+
+relation SNSHasRecords {
+    SNS playsRole sns{
+    		multiplicity 1..1;
+    	}
+    Record playsRole record{
+        multiplicity 0..*;
+    }
+}

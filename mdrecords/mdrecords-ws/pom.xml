@@ -7,7 +7,7 @@
         <groupId>pt.ulisboa.tecnico.sirs</groupId>
         <version>0.1</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>jar</packaging>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.ow2.authzforce</groupId>
             <artifactId>authzforce-ce-core-pdp-engine</artifactId>
-            <version>10.2.0</version>
+            <version>13.2.0</version>
         </dependency>
 
     </dependencies>

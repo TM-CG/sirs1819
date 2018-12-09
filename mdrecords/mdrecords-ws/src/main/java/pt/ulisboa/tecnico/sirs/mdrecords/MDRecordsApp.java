@@ -41,7 +41,6 @@ public class MDRecordsApp{
             wsName = args[1];
         }
 
-
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size
         Key key = keyGen.generateKey();
@@ -51,6 +50,19 @@ public class MDRecordsApp{
         DateTime dt = formatter.parseDateTime("01/01/2000");
 
         Doctor doctor = new Doctor(k,"Vítor Nunes", dt, 123456789);
+
+        //System.out.println("O meu nome é: " + doctor.getName(k));
+        //System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));*/
+
+        Patient patient = new Patient(k, "miquelina de belém", dt, 123456788);
+
+        //relação criada
+        doctor.addPatient(patient);
+        //instante atual
+        DateTime ts = new DateTime();
+        Record record = new Record(123456789, 123456788, ts, "pichologia", "penis muy mirradito");
+        Record novo = sns.readRecord(new Long(123456789), new Long(123456788),"Record");
+        System.out.println(novo.getDescription());
 
         System.out.println("O meu nome é: " + doctor.getName(k));
         System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));

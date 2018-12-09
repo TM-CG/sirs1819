@@ -1,4 +1,5 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
+import pt.ist.fenixframework.FenixFramework;
 
 import org.joda.time.DateTime;
 import pt.ist.fenixframework.FenixFramework;

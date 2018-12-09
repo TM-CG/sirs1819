@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.Patient;
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.Record;
 
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
@@ -30,11 +32,17 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    /*public String requestRecord(Long patientId, Long personalId, String operationType) throws BadRecordRequest_Exception {
-        return "Hello! This is the requestRecord reply of patient: " + patientId + " by personal: " + personalId + " operation: " + operationType;
-    }*/
     public String readRecord(Long patientId, Long personalId, String recordType) throws BadReadRecord_Exception{
-        return "";
+       
+        if(!recordType.equals("Report")){
+            return "At the moment the only recordType available at the system is 'Report'";
+        }
+
+        Record record = SNS.getInstance().readRecord(patientId, personalId, recordType);
+        if(record.equals(null)){
+            return "No records available";
+        }
+        return record.getDescription();
     }
 
  }

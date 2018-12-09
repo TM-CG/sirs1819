@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import org.joda.time.DateTime;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * A class for describing Medication of patients.
@@ -19,6 +20,8 @@ public class Medication extends Medication_Base {
         setTimeStamp(timeStamp);
         setSpeciality(speciality);
         setDescription(description);
+
+        FenixFramework.getDomainRoot().getSns().addRecord(this);
     }
 
     public Medication(long personalId, long patientId, DateTime timeStamp, String speciality, String description,
@@ -33,6 +36,8 @@ public class Medication extends Medication_Base {
 
         setDrugName(drugName);
         setDosage(dosage);
+
+        FenixFramework.getDomainRoot().getSns().addRecord(this);
     }
     
 }

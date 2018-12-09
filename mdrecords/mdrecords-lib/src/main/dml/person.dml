@@ -56,6 +56,7 @@ class Record {
     DateTime timeStamp;
     String speciality;
     String description;
+    String digest;
 }
 
 class GenericInformation extends Record;
@@ -82,7 +83,7 @@ relation DoctorFollowingPatient {
 
 relation SNSHasRecords {
     SNS playsRole sns{
-    		multiplicity 1..1;
+    		multiplicity 0..1;
     	}
     Record playsRole record{
         multiplicity 0..*;

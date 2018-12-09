@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import org.joda.time.DateTime;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * A class for describing patient exams data.
@@ -20,6 +21,8 @@ public class Exam extends Exam_Base {
         setSpeciality(speciality);
         setDescription(description);
 
+        FenixFramework.getDomainRoot().getSns().addRecord(this);
+
     }
 
     public Exam(long personalId, long patientId, DateTime timeStamp, String speciality, String description,
@@ -33,6 +36,8 @@ public class Exam extends Exam_Base {
         setDescription(description);
 
         setExamName(examName);
+
+        FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
     

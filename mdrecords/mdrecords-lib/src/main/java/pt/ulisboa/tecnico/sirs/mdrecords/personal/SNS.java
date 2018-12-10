@@ -7,13 +7,9 @@ import pt.ist.fenixframework.FenixFramework;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 
-import org.omg.CORBA.Object;
-import org.joda.time.DateTime;
-
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
-import java.security.Key;
 import java.util.Base64;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -80,6 +76,7 @@ public class SNS extends SNS_Base {
             if(administrative.getIdentification() == identification)
                 return administrative;
         }
+        return null;
     }
 
 
@@ -103,6 +100,10 @@ public class SNS extends SNS_Base {
         for (Nurse nurse : getNurseSet()) {
 			nurse.delete();
 		}
+
+        for (Administrative administrative: getAdministrativeSet()) {
+            administrative.delete();
+        }
 
 	}
 

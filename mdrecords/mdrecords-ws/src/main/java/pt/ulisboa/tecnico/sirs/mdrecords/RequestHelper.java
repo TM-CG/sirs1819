@@ -14,7 +14,7 @@ public class RequestHelper {
 
     public static RecordView requestInformation(SecretKey secretKey, String requestType, String requestObject,
                                                 String myType, long myId, long requestWhomId) throws IOException {
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        /*SNS sns = FenixFramework.getDomainRoot().getSns();
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
@@ -51,7 +51,7 @@ public class RequestHelper {
 
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType))
                 return patient.getRecord(requestObject);
-        }
+        }*/
         return null;
     }
 

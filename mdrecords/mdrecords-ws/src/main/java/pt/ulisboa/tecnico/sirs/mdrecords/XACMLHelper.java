@@ -42,8 +42,8 @@ public class XACMLHelper {
         Optional<String> empty = Optional.empty();
 
         // Add subject ID attribute (access-subject category), no issuer, string value "john"
-        final AttributeFqn subjectIdAttributeId = AttributeFqns.newInstance(XACML_1_0_ACCESS_SUBJECT.value(),
-                empty, XacmlAttributeId.XACML_1_0_SUBJECT_ID.value());
+        final AttributeFqn subjectIdAttributeId = AttributeFqns.newInstance("subject-role",
+                empty, "subject-role");
         final AttributeBag<?> subjectIdAttributeValues = Bags.singletonAttributeBag(StandardDatatypes.STRING,
                 new StringValue(personType));
         requestBuilder.putNamedAttributeIfAbsent(subjectIdAttributeId, subjectIdAttributeValues);
@@ -55,12 +55,17 @@ public class XACMLHelper {
                 new StringValue(operationType));
         requestBuilder.putNamedAttributeIfAbsent(reportAttributeId, reportAttributeValues);
 
+        final AttributeFqn followingstatus = AttributeFqns.newInstance("following-category",
+                empty, "following-status");
+        final AttributeBag<?> followingAttributeValues = Bags.singletonAttributeBag(StandardDatatypes.STRING,
+                new StringValue("true"));
+        requestBuilder.putNamedAttributeIfAbsent(followingstatus, followingAttributeValues);
 
         // Add action ID attribute (action category), no issuer, string value "GET"
         final AttributeFqn actionIdAttributeId = AttributeFqns.newInstance("action-category", empty,
                 "action-id");
         final AttributeBag<?> actionIdAttributeValues = Bags.singletonAttributeBag(StandardDatatypes.STRING,
-                new StringValue(readWrite));
+                new StringValue("write"));
         requestBuilder.putNamedAttributeIfAbsent(actionIdAttributeId, actionIdAttributeValues);
 
 

@@ -159,7 +159,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     } 
                                 }
@@ -176,7 +176,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }
@@ -193,7 +193,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }

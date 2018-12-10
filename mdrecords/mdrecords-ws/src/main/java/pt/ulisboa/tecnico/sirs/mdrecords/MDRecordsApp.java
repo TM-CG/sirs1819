@@ -59,8 +59,12 @@ public class MDRecordsApp{
         //relação criada
         doctor.addPatient(patient);
         //instante atual
+        Record record = new Record(k, 123456789, 123456788, dt, "pichologia", "penis muy mirradito");
+
         DateTime ts = new DateTime();
-        Record record = new Record(k, 123456789, 123456788, ts, "pichologia", "penis muy mirradito");
+        record = new Record(k, 123456789, 123456788, ts, "cardiologia", "my corazon");
+
+
         Record novo = sns.readRecord(k, new Long(123456789), new Long(123456788),"Record");
 
         System.out.println(novo.getSpeciality(k));

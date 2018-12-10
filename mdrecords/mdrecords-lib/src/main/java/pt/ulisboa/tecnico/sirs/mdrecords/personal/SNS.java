@@ -75,6 +75,12 @@ public class SNS extends SNS_Base {
         return null;
     }
 
+    public Administrative getAdministrativeById(long identification){
+        for (Administrative administrative : getAdministrativeSet()){
+            if(administrative.getIdentification() == identification)
+                return administrative;
+        }
+    }
 
 
     public void delete() {

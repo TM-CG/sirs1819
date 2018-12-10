@@ -225,7 +225,7 @@ public class Record extends Record_Base {
     public void setDescription(SecretKey serverKey, String description) {
         try {
             String encryptedDescription = SNS.encrypt(serverKey, description);
-            super.setSpeciality(encryptedDescription);
+            super.setDescription(encryptedDescription);
 
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
@@ -252,7 +252,6 @@ public class Record extends Record_Base {
     public String getDescription(SecretKey serverKey) {
         String description = super.getDescription();
         try {
-            System.out.println("Aoi " + description);
             return SNS.decrypt(serverKey, description);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();

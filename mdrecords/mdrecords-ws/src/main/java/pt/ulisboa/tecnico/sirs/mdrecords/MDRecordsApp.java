@@ -62,7 +62,9 @@ public class MDRecordsApp{
         DateTime ts = new DateTime();
         Record record = new Record(k, 123456789, 123456788, ts, "pichologia", "penis muy mirradito");
         Record novo = sns.readRecord(k, new Long(123456789), new Long(123456788),"Record");
-        System.out.println(novo.getDescription());
+
+        System.out.println(novo.getSpeciality(k));
+        System.out.println(novo.getDescription(k));
 
         System.out.println("O meu nome é: " + doctor.getName(k));
         System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));

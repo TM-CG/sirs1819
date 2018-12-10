@@ -41,6 +41,26 @@ relation SNSHasDoctors{
 
 class Nurse extends Person;
 
+class Administrative extends Person;
+
+relation SNSHasAdministrative{
+    SNS playsRole sns{
+            multiplicity 1..1;
+        }
+    Administrative playsRole administrative{
+        multiplicity 0..*;
+    }
+}
+
+relation NursesFollowPatient {
+    Nurse playsRole nurse{
+    	multiplicity 0..*;
+    }
+    Patient playsRole patient{
+        multiplicity 0..*;
+    }
+}
+
 relation SNSHasNurses{
 	SNS playsRole sns{
 		multiplicity 1..1;

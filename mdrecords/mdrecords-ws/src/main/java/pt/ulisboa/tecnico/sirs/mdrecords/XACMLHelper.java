@@ -122,5 +122,5 @@ public class XACMLHelper {
 
         return result.getDecision() == DecisionType.PERMIT;
 
-    }*/
+    }
 }

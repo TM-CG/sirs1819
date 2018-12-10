@@ -58,14 +58,38 @@ public class RequestHelper {
         return null;
     }
 
-    /******************************************* CHECK FOLOWING STATUS ************************************************/
+    /******************************************* CHECK FOLLOWING STATUS ***********************************************/
 
+    private boolean checkFollowingStatus(Doctor doc, Patient patient){
+        return patient.getDoctorSet().contains(doc);
+    }
 
-    /******************************************* ADD FOLOWING RELATION ************************************************/
+    private boolean checkFollowingStatus(Nurse nurse, Patient patient){
+        return patient.getNurseSet().contains(nurse);
+    }
 
+    private boolean checkFollowingStatus(Patient myself, Patient patient){
+        return (myself.getIdentification() == patient.getIdentification());
 
+    }
 
+    /******************************************* ADD FOLLOWING RELATION ***********************************************/
 
+    public void addFollowingRelation(String myType, long myId, long patientId){
+        SNS sns = FenixFramework.getDomainRoot().getSns();
+
+        if(myType.equals("Doctor")){
+            Doctor doc = sns.getDoctorById(myId);
+            Patient patient = sns.getPatientById(patientId);
+            return addFolowingRelation(doc, patient);
+        }
+        else if(myType.equals("Nurse")){
+            Nurse nurse = sns.getNurseById(myId);
+            Patient patient = sns.getPatientById(patientId);
+            return addFolowingRelation(nurse, patient);
+        }
+    }
+    
     /***********************************************CREATORS***********************************************************/
     public static void createIdentity(String type, SecretKey secretKey, String name, DateTime birthday, long identification){
         if (type.equals("Doctor")){

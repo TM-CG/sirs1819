@@ -134,7 +134,7 @@ public class SNS extends SNS_Base {
         return data;
     }
 
-    public Record readRecord(Long personalId, Long patientId, String recordType){
+    public Record readRecord(SecretKey serverKey, Long personalId, Long patientId, String recordType){
         SNS sns = SNS.getInstance();
         Record newestRecord = null;
         boolean isFirst = true;
@@ -152,7 +152,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     } 
                                 }
@@ -169,7 +169,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }
@@ -186,7 +186,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isBefore(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }

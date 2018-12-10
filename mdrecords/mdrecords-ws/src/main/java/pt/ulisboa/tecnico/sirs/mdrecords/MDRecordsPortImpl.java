@@ -38,7 +38,8 @@ import javax.jws.WebService;
             return "At the moment the only recordType available at the system is 'Report'";
         }
 
-        Record record = SNS.getInstance().readRecord(patientId, personalId, recordType);
+        //TODO: Need server encryption key
+        Record record = SNS.getInstance().readRecord(null, patientId, personalId, recordType);
         if(record.equals(null)){
             return "No records available";
         }

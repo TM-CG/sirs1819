@@ -46,15 +46,14 @@ public class Record extends Record_Base {
             throw new InvalidRecordException("Invalid timeStamp ID in Record, it is from future!");
     }
 
-    @Override
-    public String toString() {
+    public String toString(SecretKey serverKey) {
         String res = "<Record ";
 
         res += getPersonalId() + ", ";
         res += getPatientId() + ", ";
-        res += getTimeStamp() + ", ";
-        res += "\"" + getSpeciality() + "\", ";
-        res += "\"" + getDescription() + "\"";
+        res += getTimeStamp(serverKey) + ", ";
+        res += "\"" + getSpeciality(serverKey) + "\", ";
+        res += "\"" + getDescription(serverKey) + "\"";
 
         res = ">";
         return res;
@@ -65,10 +64,10 @@ public class Record extends Record_Base {
      * @return a base64 textual representation of the digest
      * @throws NoSuchAlgorithmException
      */
-    public byte[] calcDigest() throws NoSuchAlgorithmException {
+    public byte[] calcDigest(SecretKey serverKey) throws NoSuchAlgorithmException {
 
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] digestBytes = digest.digest(toString().getBytes());
+        byte[] digestBytes = digest.digest(toString(serverKey).getBytes());
 
         return digestBytes;
     }
@@ -83,14 +82,14 @@ public class Record extends Record_Base {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
      */
-    public boolean checkAuthenticity(Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+    public boolean checkAuthenticity(SecretKey serverKey, Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         if (getDigest() == null || getDigest().equals(""))
             return false;
 
         /**Starts by calculating the digest**/
-       byte[] digest = calcDigest();
+       byte[] digest = calcDigest(serverKey);
 
        /** Deciphers the stored digest using the author's public key**/
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -253,6 +252,7 @@ public class Record extends Record_Base {
     public String getDescription(SecretKey serverKey) {
         String description = super.getDescription();
         try {
+            System.out.println("Aoi " + description);
             return SNS.decrypt(serverKey, description);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();

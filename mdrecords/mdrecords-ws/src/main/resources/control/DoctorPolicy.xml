@@ -6,7 +6,7 @@
     <Target/>
     <Rule Effect="Permit" RuleId="doctor-nofollower:rule">
         <Description>
-            Doctors rule for acesso to a report while not following patient.
+            Doctors rule for access to a report while not following patient.
         </Description>
         <Target>
             <AnyOf>

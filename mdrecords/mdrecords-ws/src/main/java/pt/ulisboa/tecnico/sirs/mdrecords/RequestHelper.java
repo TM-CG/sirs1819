@@ -21,7 +21,7 @@ public class RequestHelper {
 
             if(XACMLHelper.checkPersonPermission("Doctor",requestObject,requestType) ||
                     XACMLHelper.checkPersonPermission("Doctor", requestObject, requestType,
-                            checkFollowingStatus(myId, requestWhomId))){
+                            checkFollowingStatus(myself, patient))){
                 return patient.getRecord(requestObject);
             }
         }
@@ -31,7 +31,7 @@ public class RequestHelper {
 
             if(XACMLHelper.checkPersonPermission("Nurse",requestObject,requestType) ||
                     XACMLHelper.checkPersonPermission("Nurse", requestObject, requestType,
-                            checkFollowingStatus(myId, requestWhomId))){
+                            checkFollowingStatus(myself, patient))){
                 return patient.getRecord(requestObject);
             }
         }
@@ -41,55 +41,79 @@ public class RequestHelper {
 
             if(XACMLHelper.checkPersonPermission("Patient",requestObject,requestType) ||
                     XACMLHelper.checkPersonPermission("Patient", requestObject, requestType,
-                            checkFollowingStatus(myId, requestWhomId))){
+                            checkFollowingStatus(myself, patient))){
                 return patient.getRecord(requestObject);
             }
         }
-        /*else if(myType.equals("Administrative")){
-            Administrative myself = sns.getPatientById(myId);
+        else if(myType.equals("Administrative")){
+            Administrative myself = sns.getAdministrativeById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
             if(XACMLHelper.checkPersonPermission("Administrative",requestObject,requestType) ||
                     XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType,
-                            checkFollowingStatus(myId, requestWhomId))){
+                            checkFollowingStatus(myself, patient))){
                 return patient.getRecord(requestObject);
             }
         }*/
         return null;
     }
 
-    /******************************************* CHECK FOLLOWING STATUS ***********************************************/
 
-    private boolean checkFollowingStatus(Doctor doc, Patient patient){
-        return patient.getDoctorSet().contains(doc);
+    /******************************************* CHECK FOLLOWING STATUS ************************************************/
+
+    private static String checkFollowingStatus(Doctor doc, Patient patient){
+        if(patient.getDoctorSet().contains(doc)){
+            return "true";
+        }
+        else{
+            return "false";
+        }
     }
 
-    private boolean checkFollowingStatus(Nurse nurse, Patient patient){
-        return patient.getNurseSet().contains(nurse);
+    private static String checkFollowingStatus(Nurse nurse, Patient patient){
+        if(patient.getNurseSet().contains(nurse)){
+            return "true";
+        }
+        else{
+            return "false";
+        }
     }
 
-    private boolean checkFollowingStatus(Patient myself, Patient patient){
-        return (myself.getIdentification() == patient.getIdentification());
-
+    private static String checkFollowingStatus(Patient myself, Patient patient){
+        if(myself.getIdentification() == patient.getIdentification()){
+            return "true";
+        }
+        else{
+            return "false";
+        }
     }
 
     /******************************************* ADD FOLLOWING RELATION ***********************************************/
 
-    public void addFollowingRelation(String myType, long myId, long patientId){
+    public static void addFollowingRelation(String myType, long myId, long patientId){
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor doc = sns.getDoctorById(myId);
             Patient patient = sns.getPatientById(patientId);
-            return addFolowingRelation(doc, patient);
+            addFolowingRelation(doc, patient);
         }
         else if(myType.equals("Nurse")){
             Nurse nurse = sns.getNurseById(myId);
             Patient patient = sns.getPatientById(patientId);
-            return addFolowingRelation(nurse, patient);
+            addFolowingRelation(nurse, patient);
         }
     }
-    
+
+    private static void addFolowingRelation(Doctor doc, Patient patient){
+            patient.addDoctor(doc);
+    }
+
+    private static void addFolowingRelation(Nurse nurse, Patient patient){
+        patient.addNurse(nurse);
+    }
+
+
     /***********************************************CREATORS***********************************************************/
     public static void createIdentity(String type, SecretKey secretKey, String name, DateTime birthday, long identification){
         if (type.equals("Doctor")){
@@ -134,12 +158,12 @@ public class RequestHelper {
     }
 
     private static void createAdministrative(SecretKey secretKey, String name, DateTime birthday, long identification){
-        /*try{
+        try{
             new Patient(secretKey, name, birthday, identification);
         }catch(InvalidPersonException e){
             System.out.println("Patient Information invalid.");
             System.out.println(e.getMessage());
-        }*/
+        }
     }
 
 

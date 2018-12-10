@@ -45,16 +45,13 @@ public class RequestHelper {
                 return patient.getRecord(requestObject);
             }
         }
-        else if(myType.equals("Administrative")){
+        else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
-            if(XACMLHelper.checkPersonPermission("Administrative",requestObject,requestType) ||
-                    XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType,
-                            checkFollowingStatus(myself, patient))){
+            if (XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType))
                 return patient.getRecord(requestObject);
-            }
-        }*/
+        }
         return null;
     }
 
@@ -87,6 +84,8 @@ public class RequestHelper {
             return "false";
         }
     }
+
+
 
     /******************************************* ADD FOLLOWING RELATION ***********************************************/
 

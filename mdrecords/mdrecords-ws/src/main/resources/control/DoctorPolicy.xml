@@ -4,16 +4,16 @@
         Doctors Policy.
     </Description>
     <Target/>
-    <Rule Effect="Permit" RuleId="urn:oasis:names:tc:xacml:2.0:mdrecords:doctor:rule">
+    <Rule Effect="Permit" RuleId="doctor-nofollower:rule">
         <Description>
-            Doctors policies
+            Doctors rule for acesso to a report while not following patient.
         </Description>
         <Target>
             <AnyOf>
                 <AllOf>
                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Doctor</AttributeValue>
-                        <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                        <AttributeDesignator AttributeId="subject-role" Category="subject-role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
                     </Match>
                 </AllOf>
             </AnyOf>
@@ -29,6 +29,49 @@
                 <AllOf>
                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                        <AttributeDesignator AttributeId="action-id" Category="action-category" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+    </Rule>
+    <Rule RuleId="doctor-report-follower" Effect="Permit">
+        <Description>Doctors rule for access to a report while following patient</Description>
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Doctor</AttributeValue>
+                        <AttributeDesignator AttributeId="subject-role" Category="subject-role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Report</AttributeValue>
+                        <AttributeDesignator AttributeId="report-id" Category="report-id-category" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+                        <AttributeDesignator AttributeId="following-status" Category="following-category" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                        <AttributeDesignator AttributeId="action-id" Category="action-category" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Match>
+                </AllOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
                         <AttributeDesignator AttributeId="action-id" Category="action-category" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
                     </Match>
                 </AllOf>

@@ -286,19 +286,31 @@ public class RequestHelper {
 
     /******************************************* ADD FOLLOWING RELATION ***********************************************/
 
-    public static void addFollowingRelation(String myType, long myId, long patientId){
+    public static String addFollowingRelation(String myType, long myId, long patientId) throws BadAddRelationException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor doc = sns.getDoctorById(myId);
             Patient patient = sns.getPatientById(patientId);
-            addFolowingRelation(doc, patient);
+            if(doc != null && patient != null){
+                addFolowingRelation(doc, patient);
+                return "Doctor: " + myId + " now follows patient: " + patient + ".";
+            }
+            else
+                throw new BadAddRelationException("One of the subjects does not exist.");
         }
-        else if(myType.equals("Nurse")){
+       else if(myType.equals("Nurse")){
             Nurse nurse = sns.getNurseById(myId);
             Patient patient = sns.getPatientById(patientId);
-            addFolowingRelation(nurse, patient);
+            if(nurse != null && patient != null){
+                addFolowingRelation(nurse, patient);
+                return "Doctor: " + myId + " now follows patient: " + patient + ".";
+            }
+            else
+                throw new BadAddRelationException("One of the subjects does not exist.");
         }
+
+        return null;
     }
 
     private static void addFolowingRelation(Doctor doc, Patient patient){

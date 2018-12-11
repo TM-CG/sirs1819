@@ -40,11 +40,26 @@ import org.joda.time.DateTime;
     }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
-        return "";
+        return RequestHelper.addFollowingRelation(myType, myId, patientId);
     }
 
-    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception {
-        return "";
+    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday){
+        try{
+            return RequestHelper.createIdentity(secretKey, type, name, identification, this.convert(birthday));
+        }catch (BadAddRelationException e){
+            throwBadAddRelationException(e.getMessage());
+
+        }
     }
 
+    public DateTime convert(final XMLGregorianCalendar xmlgc) {
+        return new DateTime(xmlgc.toGregorianCalendar().getTime());
+    }
+
+    private void throwBadAddRelationException(final String message)
+            throws BadAddRelation_Exception {
+        BadAddRelation faultInfo = new BadAddRelation();
+        faultInfo.setMessage(message);
+        throw new BadAddRelation_Exception(message, faultInfo);
+    }
  }

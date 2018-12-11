@@ -214,7 +214,7 @@ public class Medication extends Medication_Base {
         res += "\"" + getDrugName(serverKey) + "\"";
         res += "\"" + getDosage(serverKey) + "\"";
 
-        res = ">";
+        res += ">";
         return res;
     }
     

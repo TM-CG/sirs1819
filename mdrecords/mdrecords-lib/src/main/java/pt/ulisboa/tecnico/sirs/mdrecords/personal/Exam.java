@@ -148,7 +148,7 @@ public class Exam extends Exam_Base {
 
     @Override
     public String toString(SecretKey serverKey) {
-        String res = "<Medication ";
+        String res = "<Exam ";
 
         res += getPersonalId() + ", ";
         res += getPatientId() + ", ";
@@ -157,7 +157,7 @@ public class Exam extends Exam_Base {
         res += "\"" + getDescription(serverKey) + "\"";
         res += "\"" + getExamName(serverKey) + "\"";
 
-        res = ">";
+        res += ">";
         return res;
     }
 }

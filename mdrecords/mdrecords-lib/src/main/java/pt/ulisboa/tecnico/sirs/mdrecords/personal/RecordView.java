@@ -36,7 +36,7 @@ public class RecordView {
         res += "\"" + this.speciality + "\", ";
         res += "\"" + this.description + "\"";
 
-        res = ">";
+        res += ">";
         return res;
     }
 

@@ -27,6 +27,8 @@ public class Report extends Report_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+        setDigest(digest);
+
         try {
             checkIncomingDigest(serverKey, personalId);
 
@@ -46,7 +48,7 @@ public class Report extends Report_Base {
             throw new InvalidRecordException(e.getMessage());
         }
 
-        setDigest(digest);
+
 
         setPatient(patient);
     }

@@ -69,6 +69,20 @@ public class RecordsClient {
 
         int option;
         int option2;
+
+        dt = new DateTime();
+        System.out.println(dt);
+
+        ReportView aaa = new ReportView(identification, new Long(987654321), dt , "fgfdgfd", "fgdfgvg");
+
+        System.out.println("report: " + aaa);
+
+        digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), aaa);
+
+        System.out.println("AAAAA: " + digest);
+
+
+
         do {
             option = menu.display();
 

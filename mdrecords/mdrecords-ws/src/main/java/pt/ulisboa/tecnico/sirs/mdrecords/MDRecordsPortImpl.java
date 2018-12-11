@@ -74,6 +74,7 @@ import java.io.IOException;
     }
 
     public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddReport_Exception{
+        System.out.println("DIGEST PIMP: " + digest);
         try{
             return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest);
         }catch (BadRecordException e){

@@ -1,4 +1,5 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
+import org.bouncycastle.asn1.dvcs.Data;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.omg.CORBA.DynAnyPackage.Invalid;
@@ -8,6 +9,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
 
+import javax.activation.DataContentHandler;
 import javax.crypto.*;
 import javax.xml.bind.DatatypeConverter;
 import java.io.FileNotFoundException;
@@ -36,6 +38,7 @@ public class Record extends Record_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+        setDigest(digest);
 
         try {
             checkIncomingDigest(serverKey, personalId);
@@ -56,7 +59,7 @@ public class Record extends Record_Base {
             throw new InvalidRecordException(e.getMessage());
         }
 
-        setDigest(digest);
+
 
     }
 
@@ -91,7 +94,7 @@ public class Record extends Record_Base {
         res += "\"" + getSpeciality(serverKey) + "\", ";
         res += "\"" + getDescription(serverKey) + "\"";
 
-        res = ">";
+        res += ">";
         return res;
     }
 
@@ -104,6 +107,8 @@ public class Record extends Record_Base {
 
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] digestBytes = digest.digest(toString(serverKey).getBytes());
+
+        System.out.println("CALC DIGEST:" + DatatypeConverter.printBase64Binary(digestBytes));
 
         return digestBytes;
     }

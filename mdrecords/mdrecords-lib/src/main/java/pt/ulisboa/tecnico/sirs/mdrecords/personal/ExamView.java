@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import org.joda.time.DateTime;
 
+import javax.crypto.SecretKey;
+
 public class ExamView extends RecordView {
 
     public String examName;
@@ -16,5 +18,19 @@ public class ExamView extends RecordView {
         super(personalId, patientId, timeStamp, speciality, description);
 
         this.examName = examName;
+    }
+
+    public String toString(SecretKey serverKey) {
+        String res = "<Exam ";
+
+        res += this.personalId + ", ";
+        res += this.patientId + ", ";
+        res += this.timeStamp + ", ";
+        res += "\"" + this.speciality + "\", ";
+        res += "\"" + this.description + "\"";
+        res += "\"" + this.examName + "\"";
+
+        res += ">";
+        return res;
     }
 }

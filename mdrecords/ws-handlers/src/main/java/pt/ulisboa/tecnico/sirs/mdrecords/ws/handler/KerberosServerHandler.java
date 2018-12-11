@@ -89,6 +89,8 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
                 smc.setScope("user", Scope.HANDLER);
                 smc.put("encryptKey", encryptKey);
 
+                System.out.println("Ó Zé olha a EncryptKey: " + encryptKey);
+
                 smc.put("sessionKey", sessionKey);
                 smc.put("alreadyHaveSessionKey", true);
                 // set property scope to application so that server class can

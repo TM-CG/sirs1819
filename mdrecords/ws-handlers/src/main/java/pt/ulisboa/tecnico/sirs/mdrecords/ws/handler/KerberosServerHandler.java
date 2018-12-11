@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.sirs.mdrecords.ws.handler;
 
 import pt.ulisboa.tecnico.sirs.kerby.*;
 
+import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
@@ -25,7 +26,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
 
     public static final String CLASS_NAME = KerberosServerHandler.class.getSimpleName();
 
-
+    public static SecretKey serverKey = null;
 
     //
     // Handler interface implementation
@@ -89,7 +90,7 @@ public class KerberosServerHandler implements SOAPHandler<SOAPMessageContext> {
                 smc.setScope("user", Scope.HANDLER);
                 smc.put("encryptKey", encryptKey);
 
-                System.out.println("Ó Zé olha a EncryptKey: " + encryptKey);
+                KerberosServerHandler.serverKey = (SecretKey) encryptKey;
 
                 smc.put("sessionKey", sessionKey);
                 smc.put("alreadyHaveSessionKey", true);

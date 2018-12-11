@@ -26,7 +26,7 @@ public class RecordsClient {
         System.out.println("Let me invoke readRecord");
         Long patientId = new Long(123456788);
         Long personalId = new Long(123456789);
-        String response = recordsClient.readRecord(patientId, personalId, "Report");
+        String response = recordsClient.readRecord(patientId, personalId, "Record");
         
         System.out.println("RESPONSE: " + response);
 

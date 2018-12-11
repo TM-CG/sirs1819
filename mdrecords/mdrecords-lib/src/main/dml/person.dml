@@ -85,7 +85,7 @@ class Report extends Record;
 
 class Medication extends Record {
     String drugName;
-    float dosage;
+    String dosage;
 }
 
 class Exam extends Record {

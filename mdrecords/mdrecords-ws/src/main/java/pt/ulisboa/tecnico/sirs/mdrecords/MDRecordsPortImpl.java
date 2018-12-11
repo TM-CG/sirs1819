@@ -46,10 +46,11 @@ import org.joda.time.DateTime;
         } catch (BadAddRelationException e) {
             throwBadAddRelationException(e.getMessage());
         }
+        return null;
     }
 
 
-    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) {
+    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday){
       /*  try{
             SecretKey secretKey = null;
             return RequestHelper.createIdentity(secretKey, type, name, identification, this.convert(birthday));
@@ -69,5 +70,19 @@ import org.joda.time.DateTime;
         BadAddRelation faultInfo = new BadAddRelation();
         faultInfo.setMessage(message);
         throw new BadAddRelation_Exception(message, faultInfo);
+    }
+
+    private void throwBadRequestInformation (final String message)
+            throws BadRequestInformation_Exception {
+        BadRequestInformation faultInfo = new BadRequestInformation();
+        faultInfo.setMessage(message);
+        throw new BadRequestInformation_Exception(message, faultInfo);
+    }
+
+    private void throwBadAddIdentityException(final String message)
+            throws BadAddIdentity_Exception {
+        BadAddIdentity faultInfo = new BadAddIdentity();
+        faultInfo.setMessage(message);
+        throw new BadAddIdentity_Exception(message, faultInfo);
     }
  }

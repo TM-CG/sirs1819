@@ -23,5 +23,10 @@ public class Report extends Report_Base {
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
+
+    @Override
+    public ReportView getView(SecretKey serverKey) {
+        return new ReportView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey));
+    }
     
 }

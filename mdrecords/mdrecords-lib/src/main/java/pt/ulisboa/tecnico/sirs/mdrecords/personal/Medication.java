@@ -42,5 +42,10 @@ public class Medication extends Medication_Base {
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
     }
+
+    @Override
+    public MedicationView getView(SecretKey serverKey) {
+        return new MedicationView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey), getDrugName(), getDosage());
+    }
     
 }

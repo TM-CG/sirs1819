@@ -26,5 +26,10 @@ public class GenericInformation extends GenericInformation_Base {
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
-    
+
+    @Override
+    public GenericInformationView getView(SecretKey serverKey) {
+        return new GenericInformationView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey));
+    }
+
 }

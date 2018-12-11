@@ -92,6 +92,42 @@ class Exam extends Record {
     String examName;
 }
 
+relation PatientHasReport{
+    Patient playsRole patient{
+        multiplicity 1..1;
+    }
+    Report playsRole report{
+        multiplicity 0..*;
+    }
+}
+
+relation PatientHasMedication{
+    Patient playsRole patient{
+        multiplicity 1..1;
+    }
+    Medication playsRole medication{
+        multiplicity 0..*;
+    }
+}
+
+relation PatientHasExam{
+    Patient playsRole patient{
+        multiplicity 1..1;
+    }
+    Exam playsRole exam{
+        multiplicity 0..*;
+    }
+}
+
+relation PatientHasGeneric{
+    Patient playsRole patient{
+        multiplicity 1..1;
+    }
+    GenericInformation playsRole genericinformation{
+        multiplicity 0..*;
+    }
+}
+
 relation DoctorFollowingPatient {
     Doctor playsRole doctor {
         multiplicity 0..*;

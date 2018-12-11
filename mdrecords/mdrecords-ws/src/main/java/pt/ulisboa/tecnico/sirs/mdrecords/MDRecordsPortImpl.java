@@ -52,10 +52,6 @@ import java.io.IOException;
        return null;
     }
 
-    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddReport_Exception {
-        return "";
-    }
-
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
         try {
             return RequestHelper.addFollowingRelation(myType, myId, patientId);
@@ -76,7 +72,7 @@ import java.io.IOException;
       return null;
     }
 
-    public String addReport(String myType, long personalId, long patientId, String speciality, String description) throws BadAddReport_Exception{
+    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddReport_Exception{
         try{
             return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description);
         }catch (BadRecordException e){
@@ -87,7 +83,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addMedication(String myType, long personalId, long patientId, String speciality, String description, String drug, float usage) throws BadAddMedication_Exception{
+    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String drug, Float usage) throws BadAddMedication_Exception{
         try{
             return RequestHelper.addMedication(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, drug, usage);
         }catch (BadRecordException e){
@@ -98,7 +94,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addGeneric(String myType, long personalId, long patientId, String speciality, String description) throws BadAddGeneric_Exception{
+    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddGeneric_Exception{
         try{
             return RequestHelper.addGeneric(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description);
         }catch (BadRecordException e){
@@ -109,7 +105,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addExam(String myType, long personalId, long patientId, String speciality, String description) throws BadAddExam_Exception{
+    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddExam_Exception{
         try{
             return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description);
         }catch (BadRecordException e){

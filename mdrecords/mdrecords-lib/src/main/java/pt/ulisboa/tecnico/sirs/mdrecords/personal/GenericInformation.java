@@ -51,8 +51,6 @@ public class GenericInformation extends GenericInformation_Base {
 
         setDigest(digest);
 
-        SNS.getInstance().addRecord(this);
-
     }
 
     @Override

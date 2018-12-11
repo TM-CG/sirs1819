@@ -52,9 +52,6 @@ public class Exam extends Exam_Base {
         }
 
         setDigest(digest);
-
-        SNS.getInstance().addRecord(this);
-
     }
 
     public Exam(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description,
@@ -89,8 +86,6 @@ public class Exam extends Exam_Base {
         setDigest(digest);
 
         setExamName(serverKey, examName);
-
-        SNS.getInstance().addRecord(this);
 
     }
 

@@ -53,8 +53,6 @@ public class Medication extends Medication_Base {
 
         setDigest(digest);
 
-        SNS.getInstance().addRecord(this);
-
     }
 
     public Medication(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description,
@@ -91,8 +89,7 @@ public class Medication extends Medication_Base {
         setDrugName(serverKey, drugName);
         setDosage(serverKey, dosage);
 
-        SNS.getInstance().addRecord(this);
-    }
+   }
 
     /**
      * Secure setter for medication drug name

@@ -12,7 +12,7 @@
     <!--  XML Schema Definition (XSD) of data types. -->
     <types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mdrecords.sirs.tecnico.ulisboa.pt/" version="1.0">
-            <xs:element name="BadRequestInformation" type="tns:BadRequestInformation" />
+            <xs:element name="BadAddReport" type="tns:BadRequestInformation" />
             <xs:element name="requestInformation" type="tns:requestInformation" />
             <xs:element name="requestInformationResponse" type="tns:requestInformationResponse" />
 
@@ -31,6 +31,30 @@
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="BadRequestInformation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="BadAddReport" type="tns:BadRequestInformation" />
+            <xs:element name="addReport" type="tns:addReport" />
+            <xs:element name="addReportResponse" type="tns:addReportResponse" />
+
+            <xs:complexType name="addReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="personalId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                    <xs:element minOccurs="0" name="speciality" type="xs:string" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addReportResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddRecord">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="message" type="xs:string" />
                 </xs:sequence>
@@ -96,6 +120,16 @@
         <part element="tns:BadRequestInformation" name="fault" />
     </message>
 
+    <message name="addReport">
+        <part element="tns:addReport" name="parameters" />
+    </message>
+    <message name="addReportResponse">
+        <part element="tns:addReportResponse" name="parameters" />
+    </message>
+    <message name="BadAddRecord">
+        <part element="tns:BadAddRecord" name="fault" />
+    </message>
+
     <message name="addRelation">
         <part element="tns:addRelation" name="parameters" />
     </message>
@@ -125,6 +159,12 @@
             <fault message="tns:BadRequestInformation" name="BadRequestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadRequestInformation" />
         </operation>
 
+         <operation name="addReport">
+            <input message="tns:addReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport" />
+            <output message="tns:addReportResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReportResponse" />
+            <fault message="tns:BadAddRecord" name="BadRequestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddRecord" />
+        </operation>
+
         <operation name="addRelation">
             <input message="tns:addRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelation" />
             <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
@@ -151,6 +191,19 @@
             </output>
             <fault name="BadRequestInformation">
                 <soap:fault name="BadRequestInformation" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addReport">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddRecord">
+                <soap:fault name="BadAddRecord" use="literal" />
             </fault>
         </operation>
 

@@ -58,7 +58,7 @@ public class Record extends Record_Base {
 
         setDigest(digest);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 

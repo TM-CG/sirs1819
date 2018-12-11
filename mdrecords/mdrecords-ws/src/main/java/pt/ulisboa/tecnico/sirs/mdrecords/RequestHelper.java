@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
 import org.joda.time.DateTime;
+import pt.ist.fenixframework.Atomic;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -15,7 +16,7 @@ public class RequestHelper {
     public static RecordView requestInformation(SecretKey secretKey, String requestObject,
                                                 String myType, long myId, long requestWhomId) throws IOException, BadRequestInformationException {
 
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(myId);
@@ -93,7 +94,7 @@ public class RequestHelper {
 
     /****************************************** ADD METHODS ***********************************************************/
     public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest) throws BadRecordException, IOException{
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
@@ -160,7 +161,7 @@ public class RequestHelper {
     }
 
     public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest, String drug, float usage) throws BadRecordException, IOException{
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
@@ -229,7 +230,7 @@ public class RequestHelper {
     }
 
     public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest) throws BadRecordException, IOException{
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
@@ -298,7 +299,7 @@ public class RequestHelper {
     }
 
     public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest, String examName) throws BadRecordException, IOException{
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
@@ -401,7 +402,7 @@ public class RequestHelper {
     /******************************************* ADD FOLLOWING RELATION ***********************************************/
 
     public static String addFollowingRelation(String myType, long myId, long patientId) throws BadAddRelationException{
-        SNS sns = FenixFramework.getDomainRoot().getSns();
+        SNS sns = SNS.getInstance();
 
         if(myType.equals("Doctor")){
             Doctor doc = sns.getDoctorById(myId);
@@ -458,21 +459,25 @@ public class RequestHelper {
 
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void createDoctor(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
-        new Doctor(secretKey, name, birthday, identification);
+       new Doctor(secretKey, name, birthday, identification);
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void createNurse(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
         new Nurse(secretKey, name, birthday, identification);
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void createPatient(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
         new Patient(secretKey, name, birthday, identification);
 
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void createAdministrative(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
-        new Patient(secretKey, name, birthday, identification);
+        new Administrative(secretKey, name, birthday, identification);
     }
 
 

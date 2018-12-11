@@ -65,6 +65,7 @@ import java.io.IOException;
     public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception{
         try{
             return RequestHelper.createIdentity(type, KerberosServerHandler.serverKey, name, this.convert(birthday), identification);
+
         }catch (BadAddIdentityException e){
             throwBadAddIdentityException(e.getMessage());
 

@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import org.joda.time.DateTime;
 
@@ -16,7 +17,7 @@ public class Doctor extends Doctor_Base {
         setBirthday(serverKey, birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+        SNS.getInstance().addDoctor(this);
     }
 
     public Doctor(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
@@ -28,7 +29,7 @@ public class Doctor extends Doctor_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+        SNS.getInstance().addDoctor(this);
     }
 
     public Doctor(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
@@ -39,7 +40,7 @@ public class Doctor extends Doctor_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+        SNS.getInstance().addDoctor(this);
     }
 
     public Doctor(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
@@ -49,7 +50,7 @@ public class Doctor extends Doctor_Base {
         setName(serverKey, name);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+        SNS.getInstance().addDoctor(this);
     }
     
     /**
@@ -58,10 +59,10 @@ public class Doctor extends Doctor_Base {
      * @throws InvalidPersonException if the such doctor exists with same id on the system.
      */
     private void doctorAlreadyExists(long identification) throws InvalidPersonException {
-        for (Doctor doctor: FenixFramework.getDomainRoot().getSns().getDoctorSet()) {
-            if (doctor.getIdentification() == identification)
-                throw new InvalidPersonException("Doctor: This doctor already exists!");
-        }
+            for (Doctor doctor : SNS.getInstance().getDoctorSet()) {
+                if (doctor.getIdentification() == identification)
+                    throw new InvalidPersonException("Doctor: This doctor already exists!");
+            }
     }
 
     /** Deletes Doctor from the SNS */

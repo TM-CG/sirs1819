@@ -3,9 +3,7 @@ package pt.ulisboa.tecnico.sirs.mdrecords.ws.handler;
 
 
 import javax.crypto.Mac;
-import javax.xml.bind.DatatypeConverter;
 
-import org.w3c.dom.Document;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
 import javax.xml.transform.*;
@@ -15,8 +13,11 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -78,11 +79,14 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
             if (sh == null)
                 sh = se.addHeader();
 
-            byte[] msgToDigest = DatatypeConverter.parseBase64Binary(bodyStr);
+            BASE64Decoder decoder = new BASE64Decoder();
+            BASE64Encoder encoder = new BASE64Encoder();
+
+            byte[] msgToDigest = decoder.decodeBuffer(bodyStr);
             byte[] digest = mac.doFinal(msgToDigest);
             
             System.out.println("**************************");
-            System.out.println(DatatypeConverter.printBase64Binary(digest));
+            System.out.println(encoder.encodeBuffer(digest));
             System.out.println("**************************");
 
 
@@ -92,7 +96,7 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
                 SOAPHeaderElement element = sh.addHeaderElement(name);
 
                 // add header element value
-                element.addTextNode(DatatypeConverter.printBase64Binary(digest));
+                element.addTextNode(encoder.encodeBuffer(digest));
             } else { // if message is inbound -> validate integrity
 
                 //just remove the flag for next request
@@ -109,7 +113,7 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
 
                 SOAPElement element = (SOAPElement) it.next();
 
-                byte[] expected = DatatypeConverter.parseBase64Binary(element.getValue());
+                byte[] expected = decoder.decodeBuffer(element.getValue());
 
                 if (Arrays.equals(expected, digest)) {
                     return true;
@@ -122,6 +126,8 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return true;

@@ -17,7 +17,7 @@ public class Patient extends Patient_Base {
         setBirthday(serverKey, birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addPatient(this);
+        SNS.getInstance().addPatient(this);
     }
 
     public Patient(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException{
@@ -29,7 +29,7 @@ public class Patient extends Patient_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addPatient(this);
+        SNS.getInstance().addPatient(this);
     }
 
     public Patient(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
@@ -39,7 +39,7 @@ public class Patient extends Patient_Base {
         setName(serverKey, name);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addPatient(this);
+        SNS.getInstance().addPatient(this);
     }
 
     public Patient(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
@@ -50,7 +50,7 @@ public class Patient extends Patient_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addPatient(this);
+        SNS.getInstance().addPatient(this);
     }
         
     /**
@@ -59,7 +59,7 @@ public class Patient extends Patient_Base {
      * @throws InvalidPersonException if the such Patient exists with same id on the system.
      */
     private void PatientAlreadyExists(long identification) throws InvalidPersonException {
-        for (Patient Patient: FenixFramework.getDomainRoot().getSns().getPatientSet()) {
+        for (Patient Patient: SNS.getInstance().getPatientSet()) {
             if (Patient.getIdentification() == identification)
                 throw new InvalidPersonException("Patient: This patient already exists!");
         }

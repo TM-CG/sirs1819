@@ -18,7 +18,7 @@ public class Nurse extends Nurse_Base {
         setBirthday(serverKey, birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addNurse(this);
+        SNS.getInstance().addNurse(this);
     }
 
     public Nurse(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
@@ -30,7 +30,7 @@ public class Nurse extends Nurse_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addNurse(this);
+        SNS.getInstance().addNurse(this);
     }
 
     public Nurse(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
@@ -40,7 +40,7 @@ public class Nurse extends Nurse_Base {
         setName(serverKey, name);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addNurse(this);
+        SNS.getInstance().addNurse(this);
     }
 
     public Nurse(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
@@ -51,7 +51,7 @@ public class Nurse extends Nurse_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addNurse(this);
+        SNS.getInstance().addNurse(this);
     }
     
     /**
@@ -60,7 +60,7 @@ public class Nurse extends Nurse_Base {
      * @throws InvalidPersonException if the such nurse exists with same id on the system.
      */
     private void nurseAlreadyExists(long identification) throws InvalidPersonException {
-        for (Nurse nurse: FenixFramework.getDomainRoot().getSns().getNurseSet()) {
+        for (Nurse nurse: SNS.getInstance().getNurseSet()) {
             if (nurse.getIdentification() == identification)
             throw new InvalidPersonException("Nurse: This nurse already exists!");
         }

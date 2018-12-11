@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
@@ -67,7 +68,7 @@ public class MDRecordsApp{
 
     }
 
-    @Atomic(mode = Atomic.TxMode.READ)
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static SNS getSNSInstance() {
         return SNS.getInstance();
     }

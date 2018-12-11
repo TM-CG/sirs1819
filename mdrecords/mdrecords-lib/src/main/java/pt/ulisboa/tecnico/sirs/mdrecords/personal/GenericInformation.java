@@ -51,7 +51,7 @@ public class GenericInformation extends GenericInformation_Base {
 
         setDigest(digest);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 

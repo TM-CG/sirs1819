@@ -74,7 +74,7 @@ public class Person extends Person_Base {
      */
     public void setBirthday(SecretKey serverKey, DateTime birthday) {
         try {
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
             String str = birthday.toString(fmt);
             String encryptedBirthday = SNS.encrypt(serverKey, str);
             super.setBirthday(encryptedBirthday);
@@ -120,8 +120,8 @@ public class Person extends Person_Base {
         String birthday = super.getBirthday();
         try {
             String strBirthday = SNS.decrypt(serverKey, birthday);
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
-            return formatter.parseDateTime(strBirthday);
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+            return fmt.parseDateTime(strBirthday);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

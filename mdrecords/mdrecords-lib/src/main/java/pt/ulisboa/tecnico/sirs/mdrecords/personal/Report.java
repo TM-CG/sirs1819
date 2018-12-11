@@ -48,7 +48,7 @@ public class Report extends Report_Base {
 
         setDigest(digest);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 

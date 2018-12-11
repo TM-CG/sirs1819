@@ -53,7 +53,7 @@ public class Exam extends Exam_Base {
 
         setDigest(digest);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 
@@ -90,7 +90,7 @@ public class Exam extends Exam_Base {
 
         setExamName(serverKey, examName);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 

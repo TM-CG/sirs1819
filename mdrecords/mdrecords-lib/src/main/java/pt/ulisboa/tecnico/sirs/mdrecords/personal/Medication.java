@@ -53,7 +53,7 @@ public class Medication extends Medication_Base {
 
         setDigest(digest);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
 
     }
 
@@ -91,7 +91,7 @@ public class Medication extends Medication_Base {
         setDrugName(serverKey, drugName);
         setDosage(serverKey, dosage);
 
-        FenixFramework.getDomainRoot().getSns().addRecord(this);
+        SNS.getInstance().addRecord(this);
     }
 
     /**

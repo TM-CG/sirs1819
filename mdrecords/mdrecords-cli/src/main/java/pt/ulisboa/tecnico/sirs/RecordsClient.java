@@ -1,7 +1,10 @@
 package pt.ulisboa.tecnico.sirs;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.GregorianCalendar;
@@ -35,7 +38,8 @@ public class RecordsClient {
         calendar.setTimeInMillis(dateTime.getMillis());
         XMLGregorianCalendar birthday = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
 
-        recordsClient.addIdentity("Doctor","Vítor Nunes", new Long(123456789), null);
+        recordsClient.addIdentity("Doctor","Vítor Nunes", new Long(123456789), birthday);
+
 
     }
 }

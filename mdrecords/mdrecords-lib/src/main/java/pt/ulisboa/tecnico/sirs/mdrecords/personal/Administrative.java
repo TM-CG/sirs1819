@@ -16,7 +16,7 @@ public class Administrative extends Administrative_Base {
         setBirthday(serverKey, birthday);
         setIdentification(identification);
 
-        FenixFramework.getDomainRoot().getSns().addAdministrative(this);
+        SNS.getInstance().addAdministrative(this);
     }
 
     public Administrative(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
@@ -28,7 +28,7 @@ public class Administrative extends Administrative_Base {
         setIdentification(identification);
         setCertificateFileName(certificateFileName);
 
-        FenixFramework.getDomainRoot().getSns().addAdministrative(this);
+        SNS.getInstance().addAdministrative(this);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Administrative extends Administrative_Base {
      * @throws InvalidPersonException
      */
     private void administrativeAlreadyExists(long identification) throws InvalidPersonException {
-        for (Administrative administrative: FenixFramework.getDomainRoot().getSns().getAdministrativeSet()) {
+        for (Administrative administrative: SNS.getInstance().getAdministrativeSet()) {
             if (administrative.getIdentification() == identification)
                 throw new InvalidPersonException("Administrative: This person already exists!");
         }

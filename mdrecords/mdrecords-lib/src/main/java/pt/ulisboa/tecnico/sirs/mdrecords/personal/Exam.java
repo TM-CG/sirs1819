@@ -42,5 +42,10 @@ public class Exam extends Exam_Base {
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
+
+    @Override
+    public ExamView getView(SecretKey serverKey) {
+        return new ExamView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey), getExamName());
+    }
     
 }

@@ -67,7 +67,7 @@ public class Patient extends Patient_Base {
 
     public void addReport(SecretKey secretKey, long personalId, String speciality, String description, DateTime timeStamp, String digest) {
         try {
-            this.addReport(new Report(secretKey, personalId, this.getIdentification(), timeStamp, speciality, description, digest));
+            new Report(secretKey, personalId, this.getIdentification(), timeStamp, speciality, description, digest, this);
         } catch (InvalidRecordException e) {
             System.out.println("Invalid data on Records");
             System.out.println(e.getMessage());

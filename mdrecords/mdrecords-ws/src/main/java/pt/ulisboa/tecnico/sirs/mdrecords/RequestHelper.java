@@ -13,6 +13,7 @@ public class RequestHelper {
 
     /*******************************************REQUEST INFORMATION ***************************************************/
 
+    @Atomic(mode = Atomic.TxMode.READ)
     public static RecordView requestInformation(SecretKey secretKey, String requestObject,
                                                 String myType, long myId, long requestWhomId) throws IOException, BadRequestInformationException {
 

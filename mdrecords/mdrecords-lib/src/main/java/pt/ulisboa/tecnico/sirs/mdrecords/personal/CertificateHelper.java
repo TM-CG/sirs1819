@@ -68,6 +68,7 @@ public class CertificateHelper {
      */
     public static PublicKey readPublicKey(String publicKeyFile) throws FileNotFoundException, CertificateException {
 
+
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
         URL caURL = loader.getResource("ca");

@@ -75,9 +75,11 @@ public class RequestHelper {
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(myId);
+            if(myself == null)
+                throw new BadRequestInformationException("Administrative does not exist");
             Patient patient = sns.getPatientById(requestWhomId);
             if(patient == null){
-                throw new BadRequestInformationException("Administrative does not exist");
+                throw new BadRequestInformationException("Patient does not exist");
             }
 
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, "read"))
@@ -90,12 +92,17 @@ public class RequestHelper {
     }
 
     /****************************************** ADD METHODS ***********************************************************/
-    public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws IOException{
+    public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Doctor does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Doctor","Report","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Report", "write",
@@ -106,7 +113,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Nurse does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Nurse","Report","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Report", "write",
@@ -117,7 +129,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Myself does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Patient","Report","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Report", "write",
@@ -128,7 +145,11 @@ public class RequestHelper {
          }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Administrative does not exist");
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Report", "write")) {
                 patient.addReport(secretKey, personalId, speciality, description);
@@ -138,12 +159,17 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
-    public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String drug, float usage) throws IOException{
+    public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String drug, float usage) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Doctor does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Doctor","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Medication", "write",
@@ -154,7 +180,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Nurse does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Nurse","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Medication", "write",
@@ -165,7 +196,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Myself does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Patient","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Medication", "write",
@@ -176,7 +212,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Administrative does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Medication", "write")) {
                 patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
@@ -187,12 +228,17 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
-    public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws IOException{
+    public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Doctor does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Doctor","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Generic", "write",
@@ -203,7 +249,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Nurse does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Nurse","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Generic", "write",
@@ -214,7 +265,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Myself does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Patient","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Generic", "write",
@@ -225,7 +281,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Administrative does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Generic", "write")) {
                 patient.addGeneric(secretKey, personalId, speciality, description);
@@ -236,12 +297,17 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
-    public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String examName) throws IOException{
+    public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String examName) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Doctor does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Doctor","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Exam", "write",
@@ -252,7 +318,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Nurse does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Nurse","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Exam", "write",
@@ -263,7 +334,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Myself does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Patient","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Exam", "write",
@@ -274,7 +350,12 @@ public class RequestHelper {
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(personalId);
+            if(myself == null)
+                throw new BadRecordException("Administrative does not exist");
+
             Patient patient = sns.getPatientById(patientId);
+            if(patient == null)
+                throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Exam", "write")) {
                 patient.addExam(secretKey, personalId, speciality, description, examName);

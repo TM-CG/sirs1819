@@ -58,8 +58,6 @@ public class Record extends Record_Base {
 
         setDigest(digest);
 
-        SNS.getInstance().addRecord(this);
-
     }
 
     protected void checkIncomingDigest(SecretKey serverKey, long personalId) throws IllegalBlockSizeException,

@@ -95,7 +95,7 @@ class Exam extends Record {
 
 relation PatientHasReport{
     Patient playsRole patient{
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
     Report playsRole report{
         multiplicity 0..*;
@@ -134,15 +134,6 @@ relation DoctorFollowingPatient {
         multiplicity 0..*;
     }
     Patient playsRole patient {
-        multiplicity 0..*;
-    }
-}
-
-relation SNSHasRecords {
-    SNS playsRole sns{
-    		multiplicity 0..1;
-    	}
-    Record playsRole record{
         multiplicity 0..*;
     }
 }

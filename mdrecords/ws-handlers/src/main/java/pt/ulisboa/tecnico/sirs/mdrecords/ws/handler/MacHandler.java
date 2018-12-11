@@ -57,7 +57,6 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
         //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
         //in a close future
         if (smc.get("alreadyHaveSessionKey") == null) {
-            System.out.println("MAC HANDLER Ignore");
             return true;
         }
 
@@ -84,11 +83,6 @@ public class MacHandler implements SOAPHandler<SOAPMessageContext> {
 
             byte[] msgToDigest = decoder.decodeBuffer(bodyStr);
             byte[] digest = mac.doFinal(msgToDigest);
-            
-            System.out.println("**************************");
-            System.out.println(encoder.encodeBuffer(digest));
-            System.out.println("**************************");
-
 
             if (outbound) { //if message is outbound -> add mac to soap envelope
 

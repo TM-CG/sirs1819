@@ -47,7 +47,6 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 		//vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
 		//in a close future
         if (smc.get("alreadyHaveSessionKey") == null) {
-        	System.out.println("CONF HANDLER Ignore");
         	return true;
 		}
 
@@ -62,12 +61,9 @@ public class ConfidentialityHandler implements SOAPHandler<SOAPMessageContext> {
 				//Gets the session key from the context
 				Key sessionKey = (Key) smc.get("sessionKey");
 
-				System.out.println("Ó Vitor olha isto: " + elements);
 				//traverse the body elements
 				while (elements.hasNext()) {
 					SOAPBodyElement element = elements.next();
-					System.out.println("Ó Zé olha isto: " + element.getTagName());
-					@SuppressWarnings("unchecked")
 					Iterator<SOAPBodyElement> params = element.getChildElements();
 					while (params.hasNext()) {
 						SOAPBodyElement param = params.next();

@@ -39,7 +39,7 @@ public class CertificateHelper {
         URL caURL = loader.getResource("privatekeys");
         String path_ca = caURL.getPath() + "/" + privateKeyPath + ".key.pem";
 
-        FileReader fileReader = new FileReader(privateKeyPath);
+        FileReader fileReader = new FileReader(path_ca);
         PEMParser keyReader = new PEMParser(fileReader);
 
         JcaPEMKeyConverter converter = new JcaPEMKeyConverter();

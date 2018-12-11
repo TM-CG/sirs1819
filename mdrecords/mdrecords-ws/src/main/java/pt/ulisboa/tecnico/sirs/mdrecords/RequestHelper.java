@@ -93,6 +93,7 @@ public class RequestHelper {
     }
 
     /****************************************** ADD METHODS ***********************************************************/
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, DateTime timeStamp, String digest) throws BadRecordException, IOException{
         SNS sns = SNS.getInstance();
 
@@ -160,6 +161,7 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, DateTime timeStamp, String digest, String drug, float usage) throws BadRecordException, IOException{
         SNS sns = SNS.getInstance();
 
@@ -229,6 +231,7 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, DateTime timeStamp, String digest) throws BadRecordException, IOException{
         SNS sns = SNS.getInstance();
 
@@ -298,6 +301,7 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, DateTime timeStamp, String digest, String examName) throws BadRecordException, IOException{
         SNS sns = SNS.getInstance();
 
@@ -370,6 +374,7 @@ public class RequestHelper {
 
     /******************************************* CHECK FOLLOWING STATUS ************************************************/
 
+    @Atomic(mode = Atomic.TxMode.READ)
     private static String checkFollowingStatus(Doctor doc, Patient patient){
         if(patient.getDoctorSet().contains(doc)){
             return "true";
@@ -379,6 +384,7 @@ public class RequestHelper {
         }
     }
 
+    @Atomic(mode = Atomic.TxMode.READ)
     private static String checkFollowingStatus(Nurse nurse, Patient patient){
         if(patient.getNurseSet().contains(nurse)){
             return "true";
@@ -388,6 +394,7 @@ public class RequestHelper {
         }
     }
 
+    @Atomic(mode = Atomic.TxMode.READ)
     private static String checkFollowingStatus(Patient myself, Patient patient){
         if(myself.getIdentification() == patient.getIdentification()){
             return "true";
@@ -396,7 +403,6 @@ public class RequestHelper {
             return "false";
         }
     }
-
 
 
     /******************************************* ADD FOLLOWING RELATION ***********************************************/

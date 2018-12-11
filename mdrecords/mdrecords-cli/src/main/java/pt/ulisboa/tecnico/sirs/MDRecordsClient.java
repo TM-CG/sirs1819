@@ -111,20 +111,20 @@ public class MDRecordsClient implements MDRecordsPortType {
 		return port.addIdentity(type,name,identification,birthday);
 	}
 
-	public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, String digest) throws BadAddReport_Exception {
-		return port.addReport(myType, personalId, patientId, speciality, description, digest);
+	public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddReport_Exception {
+		return port.addReport(myType, personalId, patientId, speciality, description, timestamp, digest);
 	}
 
-	public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String digest, String drug, Float usage) throws BadAddMedication_Exception {
-		return port.addMedication(myType, personalId, patientId, speciality, description, digest, drug, usage);
+	public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String drug, Float usage) throws BadAddMedication_Exception {
+		return port.addMedication(myType, personalId, patientId, speciality, description, timestamp, digest, drug, usage);
 	}
 
-	public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, String digest) throws BadAddGeneric_Exception {
-		return port.addGeneric(myType, personalId, patientId, speciality, description, digest);
+	public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddGeneric_Exception {
+		return port.addGeneric(myType, personalId, patientId, speciality, description, timestamp, digest);
 	}
 
-	public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String digest, String examName) throws BadAddExam_Exception {
-		return port.addExam(myType, personalId, patientId, speciality, description, digest, examName);
+	public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String examName) throws BadAddExam_Exception {
+		return port.addExam(myType, personalId, patientId, speciality, description, timestamp, digest, examName);
 	}
 
 	/*public XMLGregorianCalendar convert(DateTime d) throws DatatypeConfigurationException{

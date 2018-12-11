@@ -47,6 +47,7 @@
                     <xs:element minOccurs="0" name="patientId" type="xs:long" />
                     <xs:element minOccurs="0" name="speciality" type="xs:string" />
                     <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
                     <xs:element minOccurs="0" name="digest" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
@@ -72,6 +73,7 @@
                     <xs:element minOccurs="0" name="patientId" type="xs:long" />
                     <xs:element minOccurs="0" name="speciality" type="xs:string" />
                     <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
                     <xs:element minOccurs="0" name="digest" type="xs:string" />
                     <xs:element minOccurs="0" name="drug" type="xs:string" />
                     <xs:element minOccurs="0" name="usage" type="xs:float" />
@@ -99,6 +101,7 @@
                     <xs:element minOccurs="0" name="patientId" type="xs:long" />
                     <xs:element minOccurs="0" name="speciality" type="xs:string" />
                     <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
                     <xs:element minOccurs="0" name="digest" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
@@ -124,6 +127,7 @@
                     <xs:element minOccurs="0" name="patientId" type="xs:long" />
                     <xs:element minOccurs="0" name="speciality" type="xs:string" />
                     <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
                     <xs:element minOccurs="0" name="digest" type="xs:string" />
                     <xs:element minOccurs="0" name="examName" type="xs:string" />
                 </xs:sequence>

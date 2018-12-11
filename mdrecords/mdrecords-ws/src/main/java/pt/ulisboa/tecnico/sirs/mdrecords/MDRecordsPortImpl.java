@@ -73,9 +73,9 @@ import java.io.IOException;
       return null;
     }
 
-    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, String digest) throws BadAddReport_Exception{
+    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddReport_Exception{
         try{
-            return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, digest);
+            return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest);
         }catch (BadRecordException e){
             throwBadAddReportException(e.getMessage());
         }catch (IOException e) {
@@ -84,9 +84,9 @@ import java.io.IOException;
         return null;
     }
 
-    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String digest, String drug, Float usage) throws BadAddMedication_Exception{
+    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String drug, Float usage) throws BadAddMedication_Exception{
         try{
-            return RequestHelper.addMedication(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, digest, drug, usage);
+            return RequestHelper.addMedication(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest, drug, usage);
         }catch (BadRecordException e){
             throwBadAddMedicationException(e.getMessage());
         }catch (IOException e) {
@@ -95,9 +95,9 @@ import java.io.IOException;
         return null;
     }
 
-    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, String digest) throws BadAddGeneric_Exception{
+    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddGeneric_Exception{
         try{
-            return RequestHelper.addGeneric(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, digest);
+            return RequestHelper.addGeneric(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest);
         }catch (BadRecordException e){
             throwBadAddGenericException(e.getMessage());
         }catch (IOException e) {
@@ -106,9 +106,9 @@ import java.io.IOException;
         return null;
     }
 
-    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String digest, String exameName) throws BadAddExam_Exception{
+    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String exameName) throws BadAddExam_Exception{
         try{
-            return RequestHelper.addExam(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, digest, exameName);
+            return RequestHelper.addExam(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest, exameName);
         }catch (BadRecordException e){
             throwBadAddExamException(e.getMessage());
         }catch (IOException e) {

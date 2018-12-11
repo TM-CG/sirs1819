@@ -65,36 +65,36 @@ public class Patient extends Patient_Base {
         }
     }
 
-    public void addReport(SecretKey secretKey, long personalId, String speciality, String description, String digest) {
+    public void addReport(SecretKey secretKey, long personalId, String speciality, String description, DateTime timeStamp, String digest) {
         try {
-            this.addReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, digest));
+            this.addReport(new Report(secretKey, personalId, this.getIdentification(), timeStamp, speciality, description, digest));
         } catch (InvalidRecordException e) {
             System.out.println("Invalid data on Records");
             System.out.println(e.getMessage());
         }
     }
 
-    public void addMedication(SecretKey secretKey, long personalId, String speciality, String description, String digest, String drug, float usage) {
+    public void addMedication(SecretKey secretKey, long personalId, String speciality, String description, DateTime timestamp, String digest, String drug, float usage) {
         try {
-            this.addMedication(new Medication(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, digest, drug, usage));
+            this.addMedication(new Medication(secretKey, personalId, this.getIdentification(), timestamp, speciality, description, digest, drug, usage));
         } catch (InvalidRecordException e) {
             System.out.println("Invalid data on Medication");
             System.out.println(e.getMessage());
         }
     }
 
-    public void addGeneric(SecretKey secretKey, long personalId, String speciality, String description, String digest) {
+    public void addGeneric(SecretKey secretKey, long personalId, String speciality, String description, DateTime timeStamp, String digest) {
         try {
-            this.addGenericinformation(new GenericInformation(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, digest));
+            this.addGenericinformation(new GenericInformation(secretKey, personalId, this.getIdentification(), timeStamp, speciality, description, digest));
         } catch (InvalidRecordException e) {
             System.out.println("Invalid data on Generic Information");
             System.out.println(e.getMessage());
         }
     }
 
-    public void addExam(SecretKey secretKey, long personalId, String speciality, String description, String digest, String examName){
+    public void addExam(SecretKey secretKey, long personalId, String speciality, String description, DateTime timeStamp, String digest, String examName){
         try {
-            this.addExam(new Exam(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, digest, examName));
+            this.addExam(new Exam(secretKey, personalId, this.getIdentification(), timeStamp, speciality, description, digest, examName));
         } catch (InvalidRecordException e) {
             System.out.println("Invalid data on Exam");
             System.out.println(e.getMessage());

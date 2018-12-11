@@ -57,6 +57,7 @@ public class RecordsClient {
         GregorianCalendar cal;
         XMLGregorianCalendar xmlGregCal;
         MenuUI loginMenu;
+        DateTime dt;
 
         String speciality;
         String description;
@@ -293,11 +294,21 @@ public class RecordsClient {
                             speciality = new BoxUI("What is the speciality?").showAndGet();
                             description = new BoxUI("What is the description?").showAndGet();
 
-                            ReportView reportView = new ReportView(identification, identification2, new DateTime(), speciality, description);
+                            dt = new DateTime();
+
+                            format = new SimpleDateFormat("yyyy-MM-dd");
+                            date = format.parse(dt.toString());
+
+                            cal = new GregorianCalendar();
+                            cal.setTime(date);
+
+                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+
+                            ReportView reportView = new ReportView(identification, identification2, dt , speciality, description);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), reportView);
 
-                            recordsClient.addReport(type, identification, identification2, speciality, description, digest);
+                            recordsClient.addReport(type, identification, identification2, speciality, description, xmlGregCal, digest);
 
                             break;
 
@@ -309,11 +320,21 @@ public class RecordsClient {
                             description = new BoxUI("What is the description?").showAndGet();
                             examName = new BoxUI("What is the exam name?").showAndGet();
 
-                            ExamView examView = new ExamView(identification, identification2, new DateTime(), speciality, description, examName);
+                            dt = new DateTime();
+
+                            format = new SimpleDateFormat("yyyy-MM-dd");
+                            date = format.parse(dt.toString());
+
+                            cal = new GregorianCalendar();
+                            cal.setTime(date);
+
+                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+
+                            ExamView examView = new ExamView(identification, identification2, dt, speciality, description, examName);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), examView);
 
-                            recordsClient.addExam(type, identification, identification2, speciality, description, digest, examName);
+                            recordsClient.addExam(type, identification, identification2, speciality, description, xmlGregCal, digest, examName);
 
                             break;
 
@@ -323,13 +344,22 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
                             speciality = new BoxUI("What is the speciality?").showAndGet();
                             description = new BoxUI("What is the description?").showAndGet();
-                            examName = new BoxUI("What is the exam name?").showAndGet();
 
-                            GenericInformationView genericView = new GenericInformationView(identification, identification2, new DateTime(), speciality, description);
+                            dt = new DateTime();
+
+                            format = new SimpleDateFormat("yyyy-MM-dd");
+                            date = format.parse(dt.toString());
+
+                            cal = new GregorianCalendar();
+                            cal.setTime(date);
+
+                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+
+                            GenericInformationView genericView = new GenericInformationView(identification, identification2, dt, speciality, description);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), genericView);
 
-                            recordsClient.addGeneric(type, identification, identification2, speciality, description, digest);
+                            recordsClient.addGeneric(type, identification, identification2, speciality, description, xmlGregCal, digest);
 
                             break;
 
@@ -342,11 +372,21 @@ public class RecordsClient {
                             drugName = new BoxUI("What is the drug name?").showAndGet();
                             dosage = Long.parseLong(new BoxUI("How much is the dosage?").showAndGet());
 
-                            MedicationView medicationView = new MedicationView(identification, identification2, new DateTime(), speciality, description, drugName, dosage);
+                            dt = new DateTime();
+
+                            format = new SimpleDateFormat("yyyy-MM-dd");
+                            date = format.parse(dt.toString());
+
+                            cal = new GregorianCalendar();
+                            cal.setTime(date);
+
+                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+
+                            MedicationView medicationView = new MedicationView(identification, identification2, dt, speciality, description, drugName, dosage);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), medicationView);
 
-                            recordsClient.addMedication(type, identification, identification2, speciality, description, digest, drugName, dosage);
+                            recordsClient.addMedication(type, identification, identification2, speciality, description, xmlGregCal, digest, drugName, dosage);
 
                             break;
 

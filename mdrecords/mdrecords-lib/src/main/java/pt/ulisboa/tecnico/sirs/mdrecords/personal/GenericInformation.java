@@ -14,7 +14,7 @@ public class GenericInformation extends GenericInformation_Base {
         super();
     }
 
-    public GenericInformation(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public GenericInformation(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -22,6 +22,8 @@ public class GenericInformation extends GenericInformation_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 

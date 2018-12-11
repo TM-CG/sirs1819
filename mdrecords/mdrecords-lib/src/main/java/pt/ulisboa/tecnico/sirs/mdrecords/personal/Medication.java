@@ -21,7 +21,7 @@ public class Medication extends Medication_Base {
         super();
     }
 
-    public Medication(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public Medication(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -29,13 +29,15 @@ public class Medication extends Medication_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
 
     public Medication(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description,
-                      String drugName, float dosage) throws InvalidRecordException {
+                      String digest, String drugName, float dosage) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -43,6 +45,8 @@ public class Medication extends Medication_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         setDrugName(serverKey, drugName);
         setDosage(serverKey, dosage);
@@ -159,6 +163,22 @@ public class Medication extends Medication_Base {
     @Override
     public MedicationView getView(SecretKey serverKey) {
         return new MedicationView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey), getDrugName(serverKey), getDosage(serverKey));
+    }
+
+    @Override
+    public String toString(SecretKey serverKey) {
+        String res = "<Medication ";
+
+        res += getPersonalId() + ", ";
+        res += getPatientId() + ", ";
+        res += getTimeStamp(serverKey) + ", ";
+        res += "\"" + getSpeciality(serverKey) + "\", ";
+        res += "\"" + getDescription(serverKey) + "\"";
+        res += "\"" + getDrugName(serverKey) + "\"";
+        res += "\"" + getDosage(serverKey) + "\"";
+
+        res = ">";
+        return res;
     }
     
 }

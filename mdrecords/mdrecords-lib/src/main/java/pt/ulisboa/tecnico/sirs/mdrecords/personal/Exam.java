@@ -21,7 +21,7 @@ public class Exam extends Exam_Base {
         super();
     }
 
-    public Exam(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public Exam(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -29,13 +29,15 @@ public class Exam extends Exam_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
 
     public Exam(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description,
-                String examName) throws InvalidRecordException {
+                String digest, String examName) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -43,6 +45,8 @@ public class Exam extends Exam_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         setExamName(serverKey, examName);
 
@@ -106,5 +110,19 @@ public class Exam extends Exam_Base {
     public ExamView getView(SecretKey serverKey) {
         return new ExamView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey), getExamName(serverKey));
     }
-    
+
+    @Override
+    public String toString(SecretKey serverKey) {
+        String res = "<Medication ";
+
+        res += getPersonalId() + ", ";
+        res += getPatientId() + ", ";
+        res += getTimeStamp(serverKey) + ", ";
+        res += "\"" + getSpeciality(serverKey) + "\", ";
+        res += "\"" + getDescription(serverKey) + "\"";
+        res += "\"" + getExamName(serverKey) + "\"";
+
+        res = ">";
+        return res;
+    }
 }

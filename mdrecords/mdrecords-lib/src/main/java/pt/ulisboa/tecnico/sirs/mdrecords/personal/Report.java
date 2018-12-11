@@ -11,7 +11,7 @@ public class Report extends Report_Base {
         super();
     }
 
-    public Report(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public Report(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -19,6 +19,8 @@ public class Report extends Report_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 

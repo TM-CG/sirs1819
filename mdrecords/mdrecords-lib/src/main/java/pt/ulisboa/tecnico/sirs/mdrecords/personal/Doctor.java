@@ -19,6 +19,29 @@ public class Doctor extends Doctor_Base {
         FenixFramework.getDomainRoot().getSns().addDoctor(this);
     }
 
+    public Doctor(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
+        checkArguments(name, birthday, identification);
+        doctorAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
+
+        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+    }
+
+    public Doctor(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
+        checkArguments(name, identification);
+        doctorAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
+
+        FenixFramework.getDomainRoot().getSns().addDoctor(this);
+    }
+
     public Doctor(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
         checkArguments(name, identification);
         doctorAlreadyExists(identification);

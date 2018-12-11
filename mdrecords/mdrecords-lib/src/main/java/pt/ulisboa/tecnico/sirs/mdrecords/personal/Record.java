@@ -23,7 +23,7 @@ public class Record extends Record_Base {
         super();
     }
 
-    public Record(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public Record(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -31,6 +31,8 @@ public class Record extends Record_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+
+        setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 

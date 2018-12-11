@@ -20,13 +20,36 @@ public class Nurse extends Nurse_Base {
 
         FenixFramework.getDomainRoot().getSns().addNurse(this);
     }
-    
+
+    public Nurse(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
+        super.checkArguments(name, birthday, identification);
+        nurseAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
+
+        FenixFramework.getDomainRoot().getSns().addNurse(this);
+    }
+
     public Nurse(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
         super.checkArguments(name, identification);
         nurseAlreadyExists(identification);
 
         setName(serverKey, name);
         setIdentification(identification);
+
+        FenixFramework.getDomainRoot().getSns().addNurse(this);
+    }
+
+    public Nurse(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
+        super.checkArguments(name, identification);
+        nurseAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
 
         FenixFramework.getDomainRoot().getSns().addNurse(this);
     }

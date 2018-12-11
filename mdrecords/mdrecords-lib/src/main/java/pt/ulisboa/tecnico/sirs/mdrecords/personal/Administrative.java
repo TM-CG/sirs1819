@@ -19,6 +19,18 @@ public class Administrative extends Administrative_Base {
         FenixFramework.getDomainRoot().getSns().addAdministrative(this);
     }
 
+    public Administrative(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException {
+        checkArguments(name, birthday, identification);
+        administrativeAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
+
+        FenixFramework.getDomainRoot().getSns().addAdministrative(this);
+    }
+
     /**
      * Checks if a Administrative person already exists
      * @param identification

@@ -20,12 +20,35 @@ public class Patient extends Patient_Base {
         FenixFramework.getDomainRoot().getSns().addPatient(this);
     }
 
+    public Patient(SecretKey serverKey, String name, DateTime birthday, long identification, String certificateFileName) throws InvalidPersonException{
+        super.checkArguments(name, birthday, identification);
+        PatientAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setBirthday(serverKey, birthday);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
+
+        FenixFramework.getDomainRoot().getSns().addPatient(this);
+    }
+
     public Patient(SecretKey serverKey, String name, long identification) throws InvalidPersonException{
         super.checkArguments(name, identification);
         PatientAlreadyExists(identification);
 
         setName(serverKey, name);
         setIdentification(identification);
+
+        FenixFramework.getDomainRoot().getSns().addPatient(this);
+    }
+
+    public Patient(SecretKey serverKey, String name, long identification, String certificateFileName) throws InvalidPersonException{
+        super.checkArguments(name, identification);
+        PatientAlreadyExists(identification);
+
+        setName(serverKey, name);
+        setIdentification(identification);
+        setCertificateFileName(certificateFileName);
 
         FenixFramework.getDomainRoot().getSns().addPatient(this);
     }

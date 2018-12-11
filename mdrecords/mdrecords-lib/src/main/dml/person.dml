@@ -4,6 +4,7 @@ class Person {
     String name;
     String birthday;
     long identification;
+    String certificateFileName;
 }
 
 class SNS;

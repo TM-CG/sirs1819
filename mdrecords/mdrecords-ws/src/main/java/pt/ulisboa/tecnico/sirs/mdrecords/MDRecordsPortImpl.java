@@ -36,4 +36,8 @@ import javax.jws.WebService;
        return "";
     }
 
+    public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
+        return "";
+    }
+
  }

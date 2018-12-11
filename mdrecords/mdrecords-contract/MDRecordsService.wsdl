@@ -35,62 +35,29 @@
                     <xs:element minOccurs="0" name="message" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
-<!--
-           
 
-            <xs:complexType name="createPerson">
+            <xs:element name="BadAddRelation" type="tns:BadAddRelation" />
+            <xs:element name="addRelation" type="tns:addRelation" />
+            <xs:element name="addRelationResponse" type="tns:addRelationResponse" />
+
+             <xs:complexType name="addRelation">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="personType" type="xs:string" />
-                    <xs:element minOccurs="0" name="name" type="xs:string" />
-                    <xs:element minOccurs="0" name="birthday" type="xs:dateTime" />
-                    <xs:element minOccurs="0" name="identification" type="xs:long" />
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="myId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="createPersonResponse">
+            <xs:complexType name="addRelationResponse">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="return" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="BadcreatePerson">
+            <xs:complexType name="BadAddRelation">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="message" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
 
-            <xs:complexType name="createNursePatientRelation">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="patient_id" type="xs:long" />
-                    <xs:element minOccurs="0" name="nurse_id" type="xs:long" />
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="createNursePatientRelationResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="xs:string" />
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="BadCreateNursePatientRelation">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="message" type="xs:string" />
-                </xs:sequence>
-            </xs:complexType>
-
-            <xs:complexType name="createDoctorPatientRelation">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="patient_id" type="xs:long" />
-                    <xs:element minOccurs="0" name="nurse_id" type="xs:long" />
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="createDoctorPatientRelationResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="xs:string" />
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="BadCreateDoctorPatientRelation">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="message" type="xs:string" />
-                </xs:sequence>
-            </xs:complexType>
-            -->
 
         </xs:schema>
     </types>
@@ -106,6 +73,16 @@
         <part element="tns:BadRequestInformation" name="fault" />
     </message>
 
+     <message name="addRelation">
+        <part element="tns:addRelation" name="parameters" />
+    </message>
+    <message name="addRelationResponse">
+        <part element="tns:addRelationResponse" name="parameters" />
+    </message>
+    <message name="BadAddRelation">
+        <part element="tns:BadAddRelation" name="fault" />
+    </message>
+
     <!--  Port type (interface). -->
     <!--  Each operation has input, output and fault messages. -->
     <portType name="MDRecordsPortType">
@@ -113,6 +90,12 @@
             <input message="tns:requestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformation" />
             <output message="tns:requestInformationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
             <fault message="tns:BadRequestInformation" name="BadRequestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadRequestInformation" />
+        </operation>
+
+        <operation name="addRelation">
+            <input message="tns:addRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelation" />
+            <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
+            <fault message="tns:BadAddRelation" name="BadAddRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddRelation" />
         </operation>
     </portType>
 
@@ -129,6 +112,19 @@
             </output>
             <fault name="BadRequestInformation">
                 <soap:fault name="BadRequestInformation" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addRelation">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddRelation">
+                <soap:fault name="BadAddRelation" use="literal" />
             </fault>
         </operation>
     </binding>

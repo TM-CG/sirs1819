@@ -60,6 +60,81 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:element name="BadAddMedication" type="tns:BadAddMedication" />
+            <xs:element name="addMedication" type="tns:addMedication" />
+            <xs:element name="addMedicationResponse" type="tns:addMedicationResponse" />
+
+            <xs:complexType name="addMedication">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="personalId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                    <xs:element minOccurs="0" name="speciality" type="xs:string" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="drug" type="xs:string" />
+                    <xs:element minOccurs="0" name="usage" type="xs:float" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addMedicationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddMedication">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="BadAddGeneric" type="tns:BadAddGeneric" />
+            <xs:element name="addGeneric" type="tns:addGeneric" />
+            <xs:element name="addGenericResponse" type="tns:addGenericResponse" />
+
+            <xs:complexType name="addGeneric">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="personalId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                    <xs:element minOccurs="0" name="speciality" type="xs:string" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addGenericResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddGeneric">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="BadAddExam" type="tns:BadAddExam" />
+            <xs:element name="addExam" type="tns:addExam" />
+            <xs:element name="addExamResponse" type="tns:addExamResponse" />
+
+            <xs:complexType name="addExam">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="personalId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                    <xs:element minOccurs="0" name="speciality" type="xs:string" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                    <xs:element minOccurs="0" name="examName" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addExamResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddExam">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:element name="BadAddRelation" type="tns:BadAddRelation" />
             <xs:element name="addRelation" type="tns:addRelation" />
             <xs:element name="addRelationResponse" type="tns:addRelationResponse" />
@@ -130,6 +205,36 @@
         <part element="tns:BadAddReport" name="fault" />
     </message>
 
+    <message name="addMedication">
+        <part element="tns:addMedication" name="parameters" />
+    </message>
+    <message name="addMedicationResponse">
+        <part element="tns:addMedicationResponse" name="parameters" />
+    </message>
+    <message name="BadAddMedication">
+        <part element="tns:BadAddMedication" name="fault" />
+    </message>
+
+    <message name="addGeneric">
+        <part element="tns:addGeneric" name="parameters" />
+    </message>
+    <message name="addGenericResponse">
+        <part element="tns:addGenericResponse" name="parameters" />
+    </message>
+    <message name="BadAddGeneric">
+        <part element="tns:BadAddGeneric" name="fault" />
+    </message>
+
+    <message name="addExam">
+        <part element="tns:addExam" name="parameters" />
+    </message>
+    <message name="addExamResponse">
+        <part element="tns:addExamResponse" name="parameters" />
+    </message>
+    <message name="BadAddExam">
+        <part element="tns:BadAddExam" name="fault" />
+    </message>
+
     <message name="addRelation">
         <part element="tns:addRelation" name="parameters" />
     </message>
@@ -163,6 +268,24 @@
             <input message="tns:addReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport" />
             <output message="tns:addReportResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReportResponse" />
             <fault message="tns:BadAddReport" name="BadAddReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddReport" />
+        </operation>
+
+        <operation name="addMedication">
+            <input message="tns:addMedication" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addMedication" />
+            <output message="tns:addMedicationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addMedicationResponse" />
+            <fault message="tns:BadAddMedication" name="BadAddMedication" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddMedication" />
+        </operation>
+
+        <operation name="addGeneric">
+            <input message="tns:addGeneric" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addGeneric" />
+            <output message="tns:addGenericResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addGenericResponse" />
+            <fault message="tns:BadAddGeneric" name="BadAddGeneric" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddGeneric" />
+        </operation>
+
+        <operation name="addExam">
+            <input message="tns:addExam" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addExam" />
+            <output message="tns:addExamResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addExamResponse" />
+            <fault message="tns:BadAddExam" name="BadAddExam" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddExam" />
         </operation>
 
         <operation name="addRelation">
@@ -204,6 +327,45 @@
             </output>
             <fault name="BadAddReport">
                 <soap:fault name="BadAddReport" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addMedication">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddMedication">
+                <soap:fault name="BadAddMedication" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addGeneric">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddGeneric">
+                <soap:fault name="BadAddGeneric" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addExam">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddExam">
+                <soap:fault name="BadAddExam" use="literal" />
             </fault>
         </operation>
 

@@ -13,44 +13,77 @@ public class RequestHelper {
     /*******************************************REQUEST INFORMATION ***************************************************/
 
     public static RecordView requestInformation(SecretKey secretKey, String requestObject,
-                                                String myType, long myId, long requestWhomId) throws IOException {
+                                                String myType, long myId, long requestWhomId) throws IOException, BadRequestInformationException {
+
         SNS sns = FenixFramework.getDomainRoot().getSns();
+
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(myId);
+
+            if(myself == null){
+                throw new BadRequestInformationException("Doctor does not exist.");
+            }
+
             Patient patient = sns.getPatientById(requestWhomId);
+            if(patient == null){
+                throw new BadRequestInformationException("Patient does not exist");
+            }
 
             if(XACMLHelper.checkPersonPermission("Doctor",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Doctor", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
+            else
+                throw new BadRequestInformationException("Operation not authorized.");
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(myId);
+            if(myself == null){
+                throw new BadRequestInformationException("Nurse does not exist.");
+            }
+
             Patient patient = sns.getPatientById(requestWhomId);
+            if(patient == null){
+                throw new BadRequestInformationException("Patient does not exist");
+            }
 
             if(XACMLHelper.checkPersonPermission("Nurse",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Nurse", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
+            else
+                throw new BadRequestInformationException("Operation not authorized.");
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(myId);
+            if(myself == null)
+                throw new BadRequestInformationException("Patient does not exist");
+
             Patient patient = sns.getPatientById(requestWhomId);
+            if(patient == null)
+                throw new BadRequestInformationException("Patient does not exist");
 
             if(XACMLHelper.checkPersonPermission("Patient",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Patient", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
+            else
+                throw new BadRequestInformationException("Operation not authorized.");
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
+            if(patient == null){
+                throw new BadRequestInformationException("Administrative does not exist");
+            }
 
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, "read"))
                 return patient.getRecord(secretKey, requestObject);
+            else
+                throw new BadRequestInformationException("Operation not authorized.");
         }
 
         return null;
@@ -323,55 +356,42 @@ public class RequestHelper {
 
 
     /***********************************************CREATORS***********************************************************/
-    public static void createIdentity(String type, SecretKey secretKey, String name, DateTime birthday, long identification){
-        if (type.equals("Doctor")){
-            createDoctor(secretKey, name, birthday, identification);
+    public static String createIdentity(String type, SecretKey secretKey, String name, DateTime birthday, long identification) throws BadAddIdentityException{
+        try{
+            if (type.equals("Doctor")){
+                createDoctor(secretKey, name, birthday, identification);
+            }
+            else if(type.equals("Nurse")){
+                createNurse(secretKey, name, birthday, identification);
+            }
+            else if(type.equals("Patient")){
+                createPatient(secretKey, name, birthday, identification);
+            }
+            else if(type.equals("Administrative")){
+                createAdministrative(secretKey, name, birthday, identification);
+            }
+        }catch (InvalidPersonException e){
+            throw new BadAddIdentityException(e.getMessage());
         }
-        else if(type.equals("Nurse")){
-            createNurse(secretKey, name, birthday, identification);
-        }
-        else if(type.equals("Patient")){
-            createPatient(secretKey, name, birthday, identification);
-        }
-        else if(type.equals("Administrative")){
-            createAdministrative(secretKey, name, birthday, identification);
-        }
+        return "Add opertation on " +  type + ": " + identification + "was sucesseful.";
+
     }
 
-    private static void createDoctor(SecretKey secretKey, String name, DateTime birthday, long identification){
-        try{
-            new Doctor(secretKey, name, birthday, identification);
-        }catch(InvalidPersonException e){
-            System.out.println("Doctor information invalid.");
-            System.out.println(e.getMessage());
-        }
+    private static void createDoctor(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
+        new Doctor(secretKey, name, birthday, identification);
     }
 
-    private static void createNurse(SecretKey secretKey, String name, DateTime birthday, long identification){
-        try{
-            new Nurse(secretKey, name, birthday, identification);
-        }catch(InvalidPersonException e){
-            System.out.println("Nurse information invalid.");
-            System.out.println(e.getMessage());
-        }
+    private static void createNurse(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
+        new Nurse(secretKey, name, birthday, identification);
     }
 
-    private static void createPatient(SecretKey secretKey, String name, DateTime birthday, long identification){
-        try{
-            new Patient(secretKey, name, birthday, identification);
-        }catch(InvalidPersonException e){
-            System.out.println("Patient Information invalid.");
-            System.out.println(e.getMessage());
-        }
+    private static void createPatient(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
+        new Patient(secretKey, name, birthday, identification);
+
     }
 
-    private static void createAdministrative(SecretKey secretKey, String name, DateTime birthday, long identification){
-        try{
-            new Patient(secretKey, name, birthday, identification);
-        }catch(InvalidPersonException e){
-            System.out.println("Patient Information invalid.");
-            System.out.println(e.getMessage());
-        }
+    private static void createAdministrative(SecretKey secretKey, String name, DateTime birthday, long identification) throws InvalidPersonException{
+        new Patient(secretKey, name, birthday, identification);
     }
 
 

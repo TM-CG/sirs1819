@@ -39,8 +39,9 @@ public class SNS extends SNS_Base {
      * @param identification of the doctor
      * @return a object if doctor is found or null otherwise.
      */
+    @Atomic(mode = TxMode.READ)
     public Doctor getDoctorById(long identification) {
-        for (Doctor doctor : getDoctorSet()) {
+        for (Doctor doctor : SNS.getInstance().getDoctorSet()) {
             if (doctor.getIdentification() == identification)
                 return doctor;
         }
@@ -52,8 +53,9 @@ public class SNS extends SNS_Base {
      * @param identification of the patient
      * @return a object if patient is found or null otherwise.
      */
+    @Atomic(mode = TxMode.READ)
     public Patient getPatientById(long identification) {
-        for (Patient patient : getPatientSet()) {
+        for (Patient patient : SNS.getInstance().getPatientSet()) {
             if (patient.getIdentification() == identification)
                 return patient;
         }
@@ -64,16 +66,18 @@ public class SNS extends SNS_Base {
      * @param identification of the nurse
      * @return a object if nurse is found or null otherwise.
      */
+    @Atomic(mode = TxMode.READ)
     public Nurse getNurseById(long identification) {
-        for (Nurse nurse : getNurseSet()) {
+        for (Nurse nurse : SNS.getInstance().getNurseSet()) {
             if (nurse.getIdentification() == identification)
                 return nurse;
         }
         return null;
     }
 
+    @Atomic(mode = TxMode.READ)
     public Administrative getAdministrativeById(long identification){
-        for (Administrative administrative : getAdministrativeSet()){
+        for (Administrative administrative : SNS.getInstance().getAdministrativeSet()){
             if(administrative.getIdentification() == identification)
                 return administrative;
         }
@@ -90,19 +94,19 @@ public class SNS extends SNS_Base {
     }
     
     private void clearAll() {
-		for (Doctor doctor : getDoctorSet()) {
+		for (Doctor doctor : SNS.getInstance().getDoctorSet()) {
 			doctor.delete();
         }
         
-        for (Patient patient : getPatientSet()) {
+        for (Patient patient : SNS.getInstance().getPatientSet()) {
 			patient.delete();
         }
         
-        for (Nurse nurse : getNurseSet()) {
+        for (Nurse nurse : SNS.getInstance().getNurseSet()) {
 			nurse.delete();
 		}
 
-        for (Administrative administrative: getAdministrativeSet()) {
+        for (Administrative administrative: SNS.getInstance().getAdministrativeSet()) {
             administrative.delete();
         }
 
@@ -142,116 +146,5 @@ public class SNS extends SNS_Base {
         return data;
     }
 
-    public Record readRecord(SecretKey serverKey, Long personalId, Long patientId, String recordType){
-        SNS sns = SNS.getInstance();
-        Record newestRecord = null;
-        boolean isFirst = true;
-        //switch(recordType){
-
-            if(recordType == "Record"){
-                    if(sns.getDoctorById(personalId).getPatientSet().contains(sns.getPatientById(patientId))){
-                        for (Record record : sns.getRecordSet()) {
-                            
-
-                            if(recordType.equals(record.getClass().getSimpleName()) && 
-                            personalId.equals(record.getPersonalId()) && patientId.equals(record.getPatientId())){
-                                if(isFirst){
-                                    newestRecord = record;
-                                    isFirst = false;
-                                }
-                                else {
-                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
-                                        newestRecord = record;
-                                    } 
-                                }
-                            }
-                        }
-                    }
-                    //nurse case
-                    else if(sns.getNurseSet().contains(personalId)){
-                        for (Record record: getRecordSet()){
-                            if(recordType == record.getClass().getName() && personalId == record.getPersonalId()
-                            && patientId == record.getPatientId()){
-                                if(isFirst){
-                                    newestRecord = record;
-                                    isFirst = false;
-                                }
-                                else {
-                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
-                                        newestRecord = record;
-                                    }  
-                                }
-                            }
-                            
-                        }
-                    }
-                    //patient case
-                    else if(patientId == personalId){
-                        for (Record record: getRecordSet()){
-                            if(record.getPatientId() == patientId){
-                                if(isFirst){
-                                    newestRecord = record;
-                                    isFirst = false;
-                                }
-                                else {
-                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
-                                        newestRecord = record;
-                                    }  
-                                }
-                            }
-                        }
-                    }   
-                    return newestRecord;
-                
-                
-                
-            }
-            else {
-                return null;
-            }   
-            
-            //TODO if we have time
-            /*case "genericInformation":
-                switch(personalId){
-                    //doctor case
-                    case getDoctorSet().contains(patientId):
-                        break;
-                    //nurse case
-                    case getNurseSet().contains(patientId):
-                        break;
-                    //patient case
-                    case patientId == personalId:
-                        break;
-                }
-                break;
-            case "medication":
-                switch(personalId){
-                    //doctor case
-                    case getDoctorSet().contains(patientId):
-                        break;
-                    //nurse case
-                    case getNurseSet().contains(patientId):
-                        break;
-                    //patient case
-                    case patientId == personalId:
-                        break;
-                }
-                break;
-            case "exam":
-                switch(personalId){
-                    //doctor case
-                    case getDoctorSet().contains(patientId):
-                        break;
-                    //nurse case
-                    case getNurseSet().contains(patientId):
-                        break;
-                    //patient case
-                    case patientId == personalId:
-                        break;
-                }
-                break;
-            */
-        }
-        
     }
 

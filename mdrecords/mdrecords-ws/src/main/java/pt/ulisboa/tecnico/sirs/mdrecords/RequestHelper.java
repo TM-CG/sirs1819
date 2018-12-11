@@ -404,6 +404,7 @@ public class RequestHelper {
     public static String addFollowingRelation(String myType, long myId, long patientId) throws BadAddRelationException{
         SNS sns = SNS.getInstance();
 
+        System.out.println("MyIDDDDDDD xDDD: " + myId);
         if(myType.equals("Doctor")){
             Doctor doc = sns.getDoctorById(myId);
             Patient patient = sns.getPatientById(patientId);
@@ -428,10 +429,12 @@ public class RequestHelper {
         return null;
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void addFolowingRelation(Doctor doc, Patient patient){
             patient.addDoctor(doc);
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
     private static void addFolowingRelation(Nurse nurse, Patient patient){
         patient.addNurse(nurse);
     }

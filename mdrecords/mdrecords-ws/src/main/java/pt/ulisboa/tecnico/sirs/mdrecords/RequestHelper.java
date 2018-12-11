@@ -92,7 +92,7 @@ public class RequestHelper {
     }
 
     /****************************************** ADD METHODS ***********************************************************/
-    public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws BadRecordException, IOException{
+    public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
@@ -107,7 +107,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Doctor","Report","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Report", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addReport(secretKey, personalId, speciality, description);
+                patient.addReport(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -123,7 +123,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Nurse","Report","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Report", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addReport(secretKey, personalId, speciality, description);
+                patient.addReport(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -139,7 +139,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Patient","Report","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Report", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addReport(secretKey, personalId, speciality, description);
+                patient.addReport(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
          }
@@ -152,14 +152,14 @@ public class RequestHelper {
                 throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Report", "write")) {
-                patient.addReport(secretKey, personalId, speciality, description);
+                patient.addReport(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
         return "Operation unsuccessful";
     }
 
-    public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String drug, float usage) throws BadRecordException, IOException{
+    public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest, String drug, float usage) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
@@ -174,7 +174,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Doctor","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Medication", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                patient.addMedication(secretKey, personalId, speciality, description, digest, drug, usage);
                 return "Operation successful";
             }
         }
@@ -190,7 +190,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Nurse","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Medication", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                patient.addMedication(secretKey, personalId, speciality, description, digest, drug, usage);
                 return "Operation successful";
             }
         }
@@ -206,7 +206,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Patient","Medication","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Medication", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                patient.addMedication(secretKey, personalId, speciality, description, digest, drug, usage);
                 return "Operation successful";
             }
         }
@@ -220,7 +220,7 @@ public class RequestHelper {
                 throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Medication", "write")) {
-                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                patient.addMedication(secretKey, personalId, speciality, description, digest, drug, usage);
                 return "Operation successful";
             }
         }
@@ -228,7 +228,7 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
-    public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws BadRecordException, IOException{
+    public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
@@ -243,7 +243,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Doctor","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Generic", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addGeneric(secretKey, personalId, speciality, description);
+                patient.addGeneric(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -259,7 +259,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Nurse","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Generic", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addGeneric(secretKey, personalId, speciality, description);
+                patient.addGeneric(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -275,7 +275,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Patient","Generic","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Generic", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addGeneric(secretKey, personalId, speciality, description);
+                patient.addGeneric(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -289,7 +289,7 @@ public class RequestHelper {
                 throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Generic", "write")) {
-                patient.addGeneric(secretKey, personalId, speciality, description);
+                patient.addGeneric(secretKey, personalId, speciality, description, digest);
                 return "Operation successful";
             }
         }
@@ -297,7 +297,7 @@ public class RequestHelper {
         return "Operation unsuccessful";
     }
 
-    public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String examName) throws BadRecordException, IOException{
+    public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String digest, String examName) throws BadRecordException, IOException{
         SNS sns = FenixFramework.getDomainRoot().getSns();
 
         if(myType.equals("Doctor")){
@@ -312,7 +312,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Doctor","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Doctor", "Exam", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addExam(secretKey, personalId, speciality, description, examName);
+                patient.addExam(secretKey, personalId, speciality, description, examName, digest);
                 return "Operation successful";
             }
         }
@@ -328,7 +328,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Nurse","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Nurse", "Exam", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addExam(secretKey, personalId, speciality, description, examName);
+                patient.addExam(secretKey, personalId, speciality, description, digest, examName);
                 return "Operation successful";
             }
         }
@@ -344,7 +344,7 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Patient","Exam","write") ||
                     XACMLHelper.checkPersonPermission("Patient", "Exam", "write",
                             checkFollowingStatus(myself, patient))){
-                patient.addExam(secretKey, personalId, speciality, description, examName);
+                patient.addExam(secretKey, personalId, speciality, description, digest, examName);
                 return "Operation successful";
             }
         }
@@ -358,7 +358,7 @@ public class RequestHelper {
                 throw new BadRecordException("Patient does not exist");
 
             if (XACMLHelper.checkPersonPermission("Administrative", "Exam", "write")) {
-                patient.addExam(secretKey, personalId, speciality, description, examName);
+                patient.addExam(secretKey, personalId, speciality, description, digest, examName);
                 return "Operation successful";
             }
         }

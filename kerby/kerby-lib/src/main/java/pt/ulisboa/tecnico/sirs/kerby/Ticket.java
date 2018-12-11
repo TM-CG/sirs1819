@@ -136,11 +136,14 @@ public class Ticket {
 	}
 
     public Key getDataPrivacyKey() {
-        return dataPrivacyKey;
+        byte[] encodedPrivacyKey = view.getDataPrivacyKey();
+        Key key = SecurityHelper.recodeKey(encodedPrivacyKey);
+        return key;
     }
 
     public void setDataPrivacyKey(Key dataPrivacyKey) {
-        this.dataPrivacyKey = dataPrivacyKey;
+		byte[] encodedKey = dataPrivacyKey.getEncoded();
+		view.setDataPrivacyKey(encodedKey);
     }
 
 	// object methods --------------------------------------------------------

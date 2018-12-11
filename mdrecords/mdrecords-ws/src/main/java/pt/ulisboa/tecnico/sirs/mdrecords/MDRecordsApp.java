@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
 import javax.crypto.*;
@@ -10,6 +11,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormat;
+import pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosServerHandler;
 
 import java.security.*;
 
@@ -41,10 +43,13 @@ public class MDRecordsApp{
             wsName = args[1];
         }
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        /*KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); //key size
         Key key = keyGen.generateKey();
-        SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");
+        SecretKeySpec k = new SecretKeySpec(key.getEncoded(), "AES");*/
+
+        //TODO: DEBUG ONLY MUST BE REMOVED!!
+        SecretKey k = (SecretKey) SecurityHelper.generateKeyFromPassword("A564CC6E84FB5B77DAA4A2");
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
         DateTime dt = formatter.parseDateTime("01/01/2000");

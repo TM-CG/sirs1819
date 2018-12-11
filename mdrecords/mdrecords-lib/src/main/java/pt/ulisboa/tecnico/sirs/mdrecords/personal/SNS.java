@@ -21,6 +21,7 @@ public class SNS extends SNS_Base {
         setRoot(FenixFramework.getDomainRoot());
     }
 
+    @Atomic(mode = TxMode.WRITE)
     public static SNS getInstance() {
         if (FenixFramework.getDomainRoot().getSns() == null) {
 			return createSNS();

@@ -36,6 +36,30 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:element name="BadAddReport" type="tns:BadAddReport" />
+            <xs:element name="addReport" type="tns:addReport" />
+            <xs:element name="addReportResponse" type="tns:addReportResponse" />
+
+            <xs:complexType name="addReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="personalId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                    <xs:element minOccurs="0" name="speciality" type="xs:string" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addReportResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:element name="BadAddRelation" type="tns:BadAddRelation" />
             <xs:element name="addRelation" type="tns:addRelation" />
             <xs:element name="addRelationResponse" type="tns:addRelationResponse" />
@@ -96,6 +120,16 @@
         <part element="tns:BadRequestInformation" name="fault" />
     </message>
 
+    <message name="addReport">
+        <part element="tns:addReport" name="parameters" />
+    </message>
+    <message name="addReportResponse">
+        <part element="tns:addReportResponse" name="parameters" />
+    </message>
+    <message name="BadAddReport">
+        <part element="tns:BadAddReport" name="fault" />
+    </message>
+
     <message name="addRelation">
         <part element="tns:addRelation" name="parameters" />
     </message>
@@ -125,6 +159,12 @@
             <fault message="tns:BadRequestInformation" name="BadRequestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadRequestInformation" />
         </operation>
 
+         <operation name="addReport">
+            <input message="tns:addReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport" />
+            <output message="tns:addReportResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReportResponse" />
+            <fault message="tns:BadAddReport" name="BadAddReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddReport" />
+        </operation>
+
         <operation name="addRelation">
             <input message="tns:addRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelation" />
             <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
@@ -151,6 +191,19 @@
             </output>
             <fault name="BadRequestInformation">
                 <soap:fault name="BadRequestInformation" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="addReport">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddReport">
+                <soap:fault name="BadAddReport" use="literal" />
             </fault>
         </operation>
 

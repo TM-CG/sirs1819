@@ -52,6 +52,10 @@ import java.io.IOException;
        return null;
     }
 
+    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddReport_Exception {
+        return "";
+    }
+
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
         try {
             return RequestHelper.addFollowingRelation(myType, myId, patientId);

@@ -111,6 +111,10 @@ public class MDRecordsClient implements MDRecordsPortType {
 		return port.addIdentity(type,name,identification,birthday);
 	}
 
+	public String addReport(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddReport_Exception {
+		return port.addReport(myType, personalId, patientId, speciality, description);
+	}
+
 	/*public XMLGregorianCalendar convert(DateTime d) throws DatatypeConfigurationException{
 		final GregorianCalendar calendar = new GregorianCalendar(d.getZone().toTimeZone());
 		calendar.setTimeInMillis(d.getMillis());

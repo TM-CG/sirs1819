@@ -12,7 +12,7 @@
     <!--  XML Schema Definition (XSD) of data types. -->
     <types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mdrecords.sirs.tecnico.ulisboa.pt/" version="1.0">
-            <xs:element name="BadAddReport" type="tns:BadRequestInformation" />
+            <xs:element name="BadRequestInformation" type="tns:BadRequestInformation" />
             <xs:element name="requestInformation" type="tns:requestInformation" />
             <xs:element name="requestInformationResponse" type="tns:requestInformationResponse" />
 
@@ -36,7 +36,7 @@
                 </xs:sequence>
             </xs:complexType>
 
-            <xs:element name="BadAddReport" type="tns:BadRequestInformation" />
+            <xs:element name="BadAddReport" type="tns:BadAddReport" />
             <xs:element name="addReport" type="tns:addReport" />
             <xs:element name="addReportResponse" type="tns:addReportResponse" />
 
@@ -54,7 +54,7 @@
                     <xs:element minOccurs="0" name="return" type="xs:string" />
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="BadAddRecord">
+            <xs:complexType name="BadAddReport">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="message" type="xs:string" />
                 </xs:sequence>
@@ -126,8 +126,8 @@
     <message name="addReportResponse">
         <part element="tns:addReportResponse" name="parameters" />
     </message>
-    <message name="BadAddRecord">
-        <part element="tns:BadAddRecord" name="fault" />
+    <message name="BadAddReport">
+        <part element="tns:BadAddReport" name="fault" />
     </message>
 
     <message name="addRelation">
@@ -162,7 +162,7 @@
          <operation name="addReport">
             <input message="tns:addReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport" />
             <output message="tns:addReportResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReportResponse" />
-            <fault message="tns:BadAddRecord" name="BadRequestInformation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddRecord" />
+            <fault message="tns:BadAddReport" name="BadAddReport" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addReport/Fault/BadAddReport" />
         </operation>
 
         <operation name="addRelation">
@@ -202,8 +202,8 @@
             <output>
                 <soap:body use="literal" />
             </output>
-            <fault name="BadAddRecord">
-                <soap:fault name="BadAddRecord" use="literal" />
+            <fault name="BadAddReport">
+                <soap:fault name="BadAddReport" use="literal" />
             </fault>
         </operation>
 

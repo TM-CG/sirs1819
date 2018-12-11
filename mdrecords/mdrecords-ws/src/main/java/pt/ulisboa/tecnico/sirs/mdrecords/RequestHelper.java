@@ -12,15 +12,15 @@ public class RequestHelper {
 
     /*******************************************REQUEST INFORMATION ***************************************************/
 
-    public static RecordView requestInformation(SecretKey secretKey, String requestType, String requestObject,
+    public static RecordView requestInformation(SecretKey secretKey, String requestObject,
                                                 String myType, long myId, long requestWhomId) throws IOException {
         SNS sns = FenixFramework.getDomainRoot().getSns();
         if(myType.equals("Doctor")){
             Doctor myself = sns.getDoctorById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
-            if(XACMLHelper.checkPersonPermission("Doctor",requestObject,requestType) ||
-                    XACMLHelper.checkPersonPermission("Doctor", requestObject, requestType,
+            if(XACMLHelper.checkPersonPermission("Doctor",requestObject,"read") ||
+                    XACMLHelper.checkPersonPermission("Doctor", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
@@ -29,8 +29,8 @@ public class RequestHelper {
             Nurse myself = sns.getNurseById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
-            if(XACMLHelper.checkPersonPermission("Nurse",requestObject,requestType) ||
-                    XACMLHelper.checkPersonPermission("Nurse", requestObject, requestType,
+            if(XACMLHelper.checkPersonPermission("Nurse",requestObject,"read") ||
+                    XACMLHelper.checkPersonPermission("Nurse", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
@@ -39,8 +39,8 @@ public class RequestHelper {
             Patient myself = sns.getPatientById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
-            if(XACMLHelper.checkPersonPermission("Patient",requestObject,requestType) ||
-                    XACMLHelper.checkPersonPermission("Patient", requestObject, requestType,
+            if(XACMLHelper.checkPersonPermission("Patient",requestObject,"read") ||
+                    XACMLHelper.checkPersonPermission("Patient", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 return patient.getRecord(secretKey, requestObject);
             }
@@ -49,11 +49,207 @@ public class RequestHelper {
             Administrative myself = sns.getAdministrativeById(myId);
             Patient patient = sns.getPatientById(requestWhomId);
 
-            if (XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType))
+            if (XACMLHelper.checkPersonPermission("Administrative", requestObject, "read"))
                 return patient.getRecord(secretKey, requestObject);
         }
 
         return null;
+    }
+
+    /****************************************** ADD METHODS ***********************************************************/
+    public static String addReport(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws IOException{
+        SNS sns = FenixFramework.getDomainRoot().getSns();
+
+        if(myType.equals("Doctor")){
+            Doctor myself = sns.getDoctorById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Doctor","Report","write") ||
+                    XACMLHelper.checkPersonPermission("Doctor", "Report", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addReport(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Nurse")){
+            Nurse myself = sns.getNurseById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Nurse","Report","write") ||
+                    XACMLHelper.checkPersonPermission("Nurse", "Report", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addReport(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Patient")){
+            Patient myself = sns.getPatientById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Patient","Report","write") ||
+                    XACMLHelper.checkPersonPermission("Patient", "Report", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addReport(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+         }
+        else if(myType.equals("Administrative")) {
+            Administrative myself = sns.getAdministrativeById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if (XACMLHelper.checkPersonPermission("Administrative", "Report", "write")) {
+                patient.addReport(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        return "Operation unsuccessful";
+    }
+
+    public static String addMedication(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String drug, float usage) throws IOException{
+        SNS sns = FenixFramework.getDomainRoot().getSns();
+
+        if(myType.equals("Doctor")){
+            Doctor myself = sns.getDoctorById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Doctor","Medication","write") ||
+                    XACMLHelper.checkPersonPermission("Doctor", "Medication", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Nurse")){
+            Nurse myself = sns.getNurseById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Nurse","Medication","write") ||
+                    XACMLHelper.checkPersonPermission("Nurse", "Medication", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Patient")){
+            Patient myself = sns.getPatientById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Patient","Medication","write") ||
+                    XACMLHelper.checkPersonPermission("Patient", "Medication", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Administrative")) {
+            Administrative myself = sns.getAdministrativeById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if (XACMLHelper.checkPersonPermission("Administrative", "Medication", "write")) {
+                patient.addMedication(secretKey, personalId, speciality, description, drug, usage);
+                return "Operation successful";
+            }
+        }
+
+        return "Operation unsuccessful";
+    }
+
+    public static String addGeneric(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description) throws IOException{
+        SNS sns = FenixFramework.getDomainRoot().getSns();
+
+        if(myType.equals("Doctor")){
+            Doctor myself = sns.getDoctorById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Doctor","Generic","write") ||
+                    XACMLHelper.checkPersonPermission("Doctor", "Generic", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addGeneric(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Nurse")){
+            Nurse myself = sns.getNurseById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Nurse","Generic","write") ||
+                    XACMLHelper.checkPersonPermission("Nurse", "Generic", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addGeneric(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Patient")){
+            Patient myself = sns.getPatientById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Patient","Generic","write") ||
+                    XACMLHelper.checkPersonPermission("Patient", "Generic", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addGeneric(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Administrative")) {
+            Administrative myself = sns.getAdministrativeById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if (XACMLHelper.checkPersonPermission("Administrative", "Generic", "write")) {
+                patient.addGeneric(secretKey, personalId, speciality, description);
+                return "Operation successful";
+            }
+        }
+
+        return "Operation unsuccessful";
+    }
+
+    public static String addExam(SecretKey secretKey, String myType, long personalId, long patientId, String speciality, String description, String examName) throws IOException{
+        SNS sns = FenixFramework.getDomainRoot().getSns();
+
+        if(myType.equals("Doctor")){
+            Doctor myself = sns.getDoctorById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Doctor","Exam","write") ||
+                    XACMLHelper.checkPersonPermission("Doctor", "Exam", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addExam(secretKey, personalId, speciality, description, examName);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Nurse")){
+            Nurse myself = sns.getNurseById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Nurse","Exam","write") ||
+                    XACMLHelper.checkPersonPermission("Nurse", "Exam", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addExam(secretKey, personalId, speciality, description, examName);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Patient")){
+            Patient myself = sns.getPatientById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if(XACMLHelper.checkPersonPermission("Patient","Exam","write") ||
+                    XACMLHelper.checkPersonPermission("Patient", "Exam", "write",
+                            checkFollowingStatus(myself, patient))){
+                patient.addExam(secretKey, personalId, speciality, description, examName);
+                return "Operation successful";
+            }
+        }
+        else if(myType.equals("Administrative")) {
+            Administrative myself = sns.getAdministrativeById(personalId);
+            Patient patient = sns.getPatientById(patientId);
+
+            if (XACMLHelper.checkPersonPermission("Administrative", "Exam", "write")) {
+                patient.addExam(secretKey, personalId, speciality, description, examName);
+                return "Operation successful";
+            }
+        }
+
+        return "Operation unsuccessful";
     }
 
 

@@ -42,29 +42,46 @@ public class Patient extends Patient_Base {
         }
     }
 
-    public void addRecord(SecretKey secretKey){}
+    public void addRecord(SecretKey secretKey, String type, long personalId, String speciality, String decription){
+        if(type.equals("Report")){
+            try{
+                this.setReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, decription));
+            }catch (InvalidRecordException e){
+                System.out.println("Invalid data on Records");
+                System.out.println(e.getMessage());
+            }
+        }
+        else if(type.equals("Medication")){
+        }
+        else if(type.equals("Generic")){}
+        else if (type.equals("Exam")){}
+
+    }
 
     public RecordView getRecord(SecretKey serverKey, String recordType){
         if(recordType.equals("Report")){
-            return new RecordView(this.getReport());
+            return new RecordView(serverKey, this.getReport());
         }
         else if(recordType.equals("Medication")){
-            return new RecordView(this.getMedication());
+            return new RecordView(serverKey, this.getMedication());
         }
         else if(recordType.equals("Generic")){
-            return new RecordView(this.getGenericinformation());
+            return new RecordView(serverKey, this.getGenericinformation());
         }
         else if(recordType.equals("Exam")){
-            return new RecordView(this.getExamSet());
+            return new RecordView(serverKey, this.getExam());
         }
         return null;
     }
+
     /** Deletes Patient from the SNS */
     public void delete() {
         setSns(null);
 		deleteDomainObject();
 	}
 
+
+	/***DECRYPTORS***/
 
 }
 

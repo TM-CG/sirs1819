@@ -24,7 +24,7 @@ public class MDRecordsApp{
     public static void main(String[] args) throws Exception {
 
 
-        sns = getSNSInstance();
+        /*sns = getSNSInstance();
 
         String uddiURL = null;
         String wsName = null;
@@ -54,7 +54,7 @@ public class MDRecordsApp{
         //System.out.println("O meu nome é: " + doctor.getName(k));
         //System.out.println("O meu birthday é: " + doctor.getBirthday(k).toString(formatter));*/
 
-        Patient patient = new Patient(k, "miquelina de belém", dt, 123456788);
+       /* Patient patient = new Patient(k, "miquelina de belém", dt, 123456788);
 
         //relação criada
         doctor.addPatient(patient);
@@ -107,7 +107,7 @@ public class MDRecordsApp{
 
         /** ===========End============= SERVER DATABASE ENCRYPTION ===========End============= **/
 
-        MDRecordsEndpointManager endpoint;
+       /* MDRecordsEndpointManager endpoint;
         if (uddiURL == null) {
 			endpoint = new MDRecordsEndpointManager(wsName, wsURL);
 		}
@@ -128,7 +128,7 @@ public class MDRecordsApp{
 		finally {
 			endpoint.stop();
 		}
-
+*/
     }
 
     @Atomic(mode = Atomic.TxMode.READ)

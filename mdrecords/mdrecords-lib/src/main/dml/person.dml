@@ -115,7 +115,7 @@ relation PatientHasExam{
         multiplicity 1..1;
     }
     Exam playsRole exam{
-        multiplicity 0..*;
+        multiplicity 0..1;
     }
 }
 
@@ -127,8 +127,6 @@ relation PatientHasGeneric{
         multiplicity 0..1;
     }
 }
-
-
 
 relation DoctorFollowingPatient {
     Doctor playsRole doctor {

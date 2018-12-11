@@ -19,8 +19,31 @@ public class RecordView {
 
     public RecordView(SecretKey secretKey, Report report){
         this.patientId = report.getPatientId();
-        this.timeStamp = report.getTimeStamp();
-        }
+        this.timeStamp = report.getTimeStamp(secretKey);
+        this.speciality = report.getSpeciality(secretKey);
+        this.description = report.getDescription(secretKey);
+    }
+
+    public RecordView(SecretKey secretKey, Medication medication){
+        this.patientId = medication.getPatientId();
+        this.timeStamp = medication.getTimeStamp(secretKey);
+        this.speciality = medication.getSpeciality(secretKey);
+        this.description = medication.getDescription(secretKey);
+    }
+
+    public RecordView(SecretKey secretKey, GenericInformation generic){
+        this.patientId = generic.getPatientId();
+        this.timeStamp = generic.getTimeStamp(secretKey);
+        this.speciality = generic.getSpeciality(secretKey);
+        this.description = generic.getDescription(secretKey);
+    }
+
+    public RecordView(SecretKey secretKey, Exam exam){
+        this.patientId = exam.getPatientId();
+        this.timeStamp = exam.getTimeStamp(secretKey);
+        this.speciality = exam.getSpeciality(secretKey);
+        this.description = exam.getDescription(secretKey);
+    }
 
     public RecordView(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
         this.personalId = personalId;

@@ -32,18 +32,8 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    public String readRecord(Long patientId, Long personalId, String recordType) throws BadReadRecord_Exception{
-       
-        if(!recordType.equals("Report")){
-            return "At the moment the only recordType available at the system is 'Report'";
-        }
-
-        //TODO: Need server encryption key
-        Record record = SNS.getInstance().readRecord(null, patientId, personalId, recordType);
-        if(record.equals(null)){
-            return "No records available";
-        }
-        return record.getDescription();
+    public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long requestWhomId) throws BadRequestInformation_Exception{
+       return "";
     }
 
  }

@@ -167,7 +167,7 @@ public class SNS extends SNS_Base {
                         }
                     }
                     //nurse case
-                    else if(getNurseSet().contains(personalId)){
+                    else if(sns.getNurseSet().contains(personalId)){
                         for (Record record: getRecordSet()){
                             if(recordType == record.getClass().getName() && personalId == record.getPersonalId()
                             && patientId == record.getPatientId()){

@@ -4,6 +4,7 @@ import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Patient;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Record;
 
+import javax.crypto.SecretKey;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -40,16 +41,23 @@ import org.joda.time.DateTime;
     }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
-        return RequestHelper.addFollowingRelation(myType, myId, patientId);
+        try {
+            return RequestHelper.addFollowingRelation(myType, myId, patientId);
+        } catch (BadAddRelationException e) {
+            throwBadAddRelationException(e.getMessage());
+        }
     }
 
-    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday){
-        try{
+
+    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) {
+      /*  try{
+            SecretKey secretKey = null;
             return RequestHelper.createIdentity(secretKey, type, name, identification, this.convert(birthday));
         }catch (BadAddRelationException e){
             throwBadAddRelationException(e.getMessage());
 
-        }
+        }*/
+      return null;
     }
 
     public DateTime convert(final XMLGregorianCalendar xmlgc) {

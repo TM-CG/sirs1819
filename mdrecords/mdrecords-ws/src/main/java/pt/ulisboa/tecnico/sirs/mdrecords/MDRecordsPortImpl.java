@@ -3,7 +3,6 @@ package pt.ulisboa.tecnico.sirs.mdrecords;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Patient;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Record;
-import pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosServerHandler;
 
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
@@ -33,22 +32,12 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    public String readRecord(Long patientId, Long personalId, String recordType) throws BadReadRecord_Exception{
-       
-        if(!recordType.equals("Record")){
-            return "At the moment the only recordType available at the system is 'Report'";
-        }
+    public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long requestWhomId) throws BadRequestInformation_Exception{
+       return "";
+    }
 
-        System.out.println("PORT IMPL KEY: " + KerberosServerHandler.serverKey);
-
-        //TODO: Need server encryption key
-        Record record = SNS.getInstance().readRecord(KerberosServerHandler.serverKey, patientId, personalId, recordType);
-        if(record.equals(null)){
-            return "No records available";
-        }
-        //Cleans the key
-        KerberosServerHandler.serverKey = null;
-        return record.getDescription();
+    public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
+        return "";
     }
 
  }

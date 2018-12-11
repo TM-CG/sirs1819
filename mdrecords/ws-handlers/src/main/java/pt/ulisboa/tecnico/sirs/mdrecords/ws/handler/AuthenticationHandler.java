@@ -16,22 +16,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * This SOAPHandler will be used to intercept interactions between binas-ws-cli and
- * binas-ws SOAP messages.
+ * This SOAPHandler will be used to intercept interactions between client and server and attach a authenticator.
  */
 
-public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
-
-
-    public static final String CLIENT_ALICE = "alice@A40.binas.org";
-    public static final String CLIENT_BINAS = "binas@A40.binas.org";
-    public static final String CLIENT_CHARLIE = "charlie@A40.binas.org";
-    public static final String CLIENT_EVE = "eve@A40.binas.org";
-
-    public static final String PASSWORD_ALICE = "VDEfpZd";
-    public static final String PASSWORD_BINAS = "Na3f4aHHv";
-    public static final String PASSWORD_CHARLIE = "t2zJL5X";
-    public static final String PASSWORD_EVE = "iyPmrVk";
+public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
 
     public static final int MARGIN_ERROR = 5000; // time in ms
     Set<Date> timeRequests = new TreeSet<Date>();
@@ -60,7 +48,6 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
         //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
         //in a close future
         if (smc.get("alreadyHaveSessionKey") == null) {
-            System.out.println("BINAS HANDLER Ignore");
             return true;
         }
 
@@ -128,7 +115,7 @@ public class BinasAuthenticationHandler implements SOAPHandler<SOAPMessageContex
     /** The handleFault method is invoked for fault message processing. */
     @Override
     public boolean handleFault(SOAPMessageContext smc) {
-        System.out.println("BinasAuthenticationHandler: Handling fault message..");
+        System.out.println("AuthenticationHandler: Handling fault message..");
         return true;
     }
 

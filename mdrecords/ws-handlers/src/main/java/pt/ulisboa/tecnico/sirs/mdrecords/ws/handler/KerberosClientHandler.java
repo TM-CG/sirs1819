@@ -26,8 +26,7 @@ import java.util.Set;
 import java.util.Date;
 
 /**
- * This SOAPHandler will be used to intercept interactions between binas-ws-cli and
- * binas-ws SOAP messages.
+ * This SOAPHandler will be used to intercept interactions between client and kerberos server.
  */
 
 public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {

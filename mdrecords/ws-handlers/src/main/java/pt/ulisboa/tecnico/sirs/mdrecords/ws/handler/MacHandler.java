@@ -25,8 +25,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * This SOAPHandler will be used to intercept interactions between binas-ws-cli and
- * binas-ws SOAP messages.
+ * This SOAPHandler will be used to intercept interactions between client and server and vice-versa to attach a MAC.
  */
 
 public class MacHandler implements SOAPHandler<SOAPMessageContext> {

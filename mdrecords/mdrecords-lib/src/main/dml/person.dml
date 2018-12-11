@@ -97,7 +97,7 @@ relation PatientHasReport{
         multiplicity 1..1;
     }
     Report playsRole report{
-        multiplicity 0..1;
+        multiplicity 0..*;
     }
 }
 
@@ -106,7 +106,7 @@ relation PatientHasMedication{
         multiplicity 1..1;
     }
     Medication playsRole medication{
-        multiplicity 0..1;
+        multiplicity 0..*;
     }
 }
 
@@ -115,7 +115,7 @@ relation PatientHasExam{
         multiplicity 1..1;
     }
     Exam playsRole exam{
-        multiplicity 0..1;
+        multiplicity 0..*;
     }
 }
 
@@ -124,7 +124,7 @@ relation PatientHasGeneric{
         multiplicity 1..1;
     }
     GenericInformation playsRole genericinformation{
-        multiplicity 0..1;
+        multiplicity 0..*;
     }
 }
 

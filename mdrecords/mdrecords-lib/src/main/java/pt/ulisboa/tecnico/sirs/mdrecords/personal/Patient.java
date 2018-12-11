@@ -45,7 +45,7 @@ public class Patient extends Patient_Base {
     public void addRecord(SecretKey secretKey, String type, long personalId, String speciality, String decription){
         if(type.equals("Report")){
             try{
-                this.setReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, decription));
+                this.addReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, decription));
             }catch (InvalidRecordException e){
                 System.out.println("Invalid data on Records");
                 System.out.println(e.getMessage());
@@ -60,16 +60,64 @@ public class Patient extends Patient_Base {
 
     public RecordView getRecord(SecretKey serverKey, String recordType){
         if(recordType.equals("Report")){
-            return new RecordView(serverKey, this.getReport());
+            Report lastReport = null;
+            DateTime lastTime = null;
+            for(Report rep : this.getReportSet()){
+                if(lastTime == null || rep.getTimeStamp(serverKey).isAfter(lastTime)){
+                    lastReport = rep;
+                    lastTime = lastReport.getTimeStamp(serverKey);
+                }
+            }
+            if(lastReport == null){
+                System.out.println("Patient has no Reports");
+                return null;
+            }
+            return lastReport.getView(serverKey);
         }
         else if(recordType.equals("Medication")){
-            return new RecordView(serverKey, this.getMedication());
+            Medication lastMedication = null;
+            DateTime lastTime = null;
+            for(Medication med: this.getMedicationSet()){
+                if(lastTime == null || med.getTimeStamp(serverKey).isAfter(lastTime)){
+                    lastMedication = med;
+                    lastTime = lastMedication.getTimeStamp(serverKey);
+                }
+            }
+            if(lastMedication == null){
+                System.out.println("Patient has no Medication");
+                return null;
+            }
+            return lastMedication.getView(serverKey);
         }
         else if(recordType.equals("Generic")){
-            return new RecordView(serverKey, this.getGenericinformation());
+            GenericInformation generic = null;
+            DateTime lastTime = null;
+            for(GenericInformation gen : this.getGenericinformationSet()){
+                if(lastTime == null || gen.getTimeStamp(serverKey).isAfter(lastTime)){
+                    generic = gen;
+                    lastTime = generic.getTimeStamp(serverKey);
+                }
+            }
+            if(generic == null){
+                System.out.println("Patient has no Generic Information");
+                return null;
+            }
+            return generic.getView(serverKey);
         }
         else if(recordType.equals("Exam")){
-            return new RecordView(serverKey, this.getExam());
+            Exam lastExam  = null;
+            DateTime lastTime = null;
+            for(Exam exam : this.getExamSet()){
+                if(lastTime == null || exam.getTimeStamp(serverKey).isAfter(lastTime)){
+                    lastExam = exam;
+                    lastTime = lastExam.getTimeStamp(serverKey);
+                }
+            }
+            if(lastExam == null){
+                System.out.println("Patient has no exams");
+                return null;
+            }
+            return lastExam.getView(serverKey);
         }
         return null;
     }
@@ -80,8 +128,6 @@ public class Patient extends Patient_Base {
 		deleteDomainObject();
 	}
 
-
-	/***DECRYPTORS***/
 
 }
 

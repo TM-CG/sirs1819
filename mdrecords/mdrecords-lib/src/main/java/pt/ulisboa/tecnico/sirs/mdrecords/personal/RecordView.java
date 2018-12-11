@@ -11,10 +11,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public class RecordView {
 
-    protected long personalId;
-    protected long patientId;
-    protected DateTime timeStamp;
-    protected String speciality;
+    public long personalId;
+    public long patientId;
+    public DateTime timeStamp;
+    public String speciality;
     public String description;
 
     public RecordView() {}

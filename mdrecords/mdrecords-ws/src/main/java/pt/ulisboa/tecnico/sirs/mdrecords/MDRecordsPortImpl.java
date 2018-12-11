@@ -11,6 +11,7 @@ import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.joda.time.DateTime;
+import pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosServerHandler;
 
 import java.io.IOException;
 
@@ -39,13 +40,16 @@ import java.io.IOException;
 		this.endpointManager = endpointManager;
 	}
 
-    public String requestInformation(String requestType, String requestObject,String myType, long myId, long patientid) throws BadRequestInformation_Exception, IOException {
+    public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long patientid) throws BadRequestInformation_Exception {
        try{
            RecordView recordView = RequestHelper.requestInformation(null,requestObject, myType, myId, patientid);
            return recordView.description;
        }catch (BadRequestInformationException e){
            throwBadRequestInformation(e.getMessage());
+       } catch (IOException e) {
+           throwBadRequestInformation(e.getMessage());
        }
+       return null;
     }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
@@ -60,8 +64,7 @@ import java.io.IOException;
 
     public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception{
         try{
-            SecretKey secretKey = null;
-            return RequestHelper.createIdentity(type, secretKey, name, this.convert(birthday), identification);
+            return RequestHelper.createIdentity(type, KerberosServerHandler.serverKey, name, this.convert(birthday), identification);
         }catch (BadAddIdentityException e){
             throwBadAddIdentityException(e.getMessage());
 

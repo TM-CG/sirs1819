@@ -72,6 +72,50 @@ import java.io.IOException;
       return null;
     }
 
+    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddReport_Exception{
+        try{
+            return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description);
+        }catch (BadRecordException e){
+            throwBadAddReportException(e.getMessage());
+        }catch (IOException e) {
+            throwBadAddReportException(e.getMessage());
+        }
+        return null;
+    }
+
+    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String drug, Float usage) throws BadAddMedication_Exception{
+        try{
+            return RequestHelper.addMedication(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, drug, usage);
+        }catch (BadRecordException e){
+            throwBadAddMedicationException(e.getMessage());
+        }catch (IOException e) {
+            throwBadAddMedicationException(e.getMessage());
+        }
+        return null;
+    }
+
+    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddGeneric_Exception{
+        try{
+            return RequestHelper.addGeneric(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description);
+        }catch (BadRecordException e){
+            throwBadAddGenericException(e.getMessage());
+        }catch (IOException e) {
+            throwBadAddGenericException(e.getMessage());
+        }
+        return null;
+    }
+
+    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String exameName) throws BadAddExam_Exception{
+        try{
+            return RequestHelper.addExam(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, exameName);
+        }catch (BadRecordException e){
+            throwBadAddExamException(e.getMessage());
+        }catch (IOException e) {
+            throwBadAddExamException(e.getMessage());
+        }
+        return null;
+    }
+
     public DateTime convert(final XMLGregorianCalendar xmlgc) {
         return new DateTime(xmlgc.toGregorianCalendar().getTime());
     }
@@ -96,4 +140,33 @@ import java.io.IOException;
         faultInfo.setMessage(message);
         throw new BadAddIdentity_Exception(message, faultInfo);
     }
- }
+
+    private void throwBadAddReportException(final String message)
+            throws BadAddReport_Exception {
+        BadAddReport faultInfo = new BadAddReport();
+        faultInfo.setMessage(message);
+        throw new BadAddReport_Exception(message, faultInfo);
+    }
+
+    private void throwBadAddMedicationException(final String message)
+            throws BadAddMedication_Exception {
+        BadAddMedication faultInfo = new BadAddMedication();
+        faultInfo.setMessage(message);
+        throw new BadAddMedication_Exception(message, faultInfo);
+    }
+
+    private void throwBadAddGenericException(final String message)
+            throws BadAddGeneric_Exception {
+        BadAddGeneric faultInfo = new BadAddGeneric();
+        faultInfo.setMessage(message);
+        throw new BadAddGeneric_Exception(message, faultInfo);
+    }
+
+    private void throwBadAddExamException(final String message)
+            throws BadAddExam_Exception {
+        BadAddExam faultInfo = new BadAddExam();
+        faultInfo.setMessage(message);
+        throw new BadAddExam_Exception(message, faultInfo);
+    }
+
+}

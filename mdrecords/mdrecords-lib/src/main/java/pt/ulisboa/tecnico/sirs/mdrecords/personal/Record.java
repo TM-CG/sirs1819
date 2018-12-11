@@ -1,4 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import pt.ist.fenixframework.FenixFramework;
 
 import org.joda.time.DateTime;
@@ -7,10 +9,8 @@ import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
 
 import javax.crypto.*;
 import javax.xml.bind.DatatypeConverter;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
 import java.util.Arrays;
 
 
@@ -23,14 +23,14 @@ public class Record extends Record_Base {
         super();
     }
 
-    public Record(long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
+    public Record(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
         setPatientId(patientId);
-        setTimeStamp(timeStamp);
-        setSpeciality(speciality);
-        setDescription(description);
+        setTimeStamp(serverKey, timeStamp);
+        setSpeciality(serverKey, speciality);
+        setDescription(serverKey, description);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
@@ -46,15 +46,14 @@ public class Record extends Record_Base {
             throw new InvalidRecordException("Invalid timeStamp ID in Record, it is from future!");
     }
 
-    @Override
-    public String toString() {
+    public String toString(SecretKey serverKey) {
         String res = "<Record ";
 
         res += getPersonalId() + ", ";
         res += getPatientId() + ", ";
-        res += getTimeStamp() + ", ";
-        res += "\"" + getSpeciality() + "\", ";
-        res += "\"" + getDescription() + "\"";
+        res += getTimeStamp(serverKey) + ", ";
+        res += "\"" + getSpeciality(serverKey) + "\", ";
+        res += "\"" + getDescription(serverKey) + "\"";
 
         res = ">";
         return res;
@@ -65,10 +64,10 @@ public class Record extends Record_Base {
      * @return a base64 textual representation of the digest
      * @throws NoSuchAlgorithmException
      */
-    public byte[] calcDigest() throws NoSuchAlgorithmException {
+    public byte[] calcDigest(SecretKey serverKey) throws NoSuchAlgorithmException {
 
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] digestBytes = digest.digest(toString().getBytes());
+        byte[] digestBytes = digest.digest(toString(serverKey).getBytes());
 
         return digestBytes;
     }
@@ -83,14 +82,14 @@ public class Record extends Record_Base {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
      */
-    public boolean checkAuthenticity(Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+    public boolean checkAuthenticity(SecretKey serverKey, Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         if (getDigest() == null || getDigest().equals(""))
             return false;
 
         /**Starts by calculating the digest**/
-       byte[] digest = calcDigest();
+       byte[] digest = calcDigest(serverKey);
 
        /** Deciphers the stored digest using the author's public key**/
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -106,8 +105,168 @@ public class Record extends Record_Base {
 
     }
 
-    public RecordView getView() {
-        return new RecordView(getPersonalId(), getPatientId(), getTimeStamp(), getSpeciality(), getDescription());
+    public RecordView getView(SecretKey serverKey) {
+        return new RecordView(getPersonalId(), getPatientId(), getTimeStamp(serverKey), getSpeciality(serverKey), getDescription(serverKey));
+    }
+
+    /**
+     * Setter encapsulating database encryption
+     * @param serverKey
+     * @param timeStamp
+     */
+    public void setTimeStamp(SecretKey serverKey, DateTime timeStamp) {
+        try {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            String str = timeStamp.toString(fmt);
+            String encryptedTimeStamp= SNS.encrypt(serverKey, str);
+            super.setTimeStamp(encryptedTimeStamp);
+
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Secure getter for timeStamp
+     * @param serverKey
+     * @return
+     */
+    public DateTime getTimeStamp(SecretKey serverKey) {
+        String timeStamp = super.getTimeStamp();
+        try {
+            String strTimeStamp = SNS.decrypt(serverKey, timeStamp);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+            return formatter.parseDateTime(strTimeStamp);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Secure setter for TimeStamp
+     * @param serverKey
+     * @param speciality
+     */
+    public void setSpeciality(SecretKey serverKey, String speciality) {
+        try {
+            String encryptedSpeciality = SNS.encrypt(serverKey, speciality);
+            super.setSpeciality(encryptedSpeciality);
+
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Secure getter for speciality
+     * @param serverKey
+     * @return
+     */
+    public String getSpeciality(SecretKey serverKey) {
+        String speciality = super.getSpeciality();
+        try {
+            return SNS.decrypt(serverKey, speciality);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Secure setter for description
+     * @param serverKey
+     * @param description
+     */
+    public void setDescription(SecretKey serverKey, String description) {
+        try {
+            String encryptedDescription = SNS.encrypt(serverKey, description);
+            super.setDescription(encryptedDescription);
+
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Secure getter to Description
+     * @param serverKey
+     * @return
+     */
+    public String getDescription(SecretKey serverKey) {
+        String description = super.getDescription();
+        try {
+            return SNS.decrypt(serverKey, description);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

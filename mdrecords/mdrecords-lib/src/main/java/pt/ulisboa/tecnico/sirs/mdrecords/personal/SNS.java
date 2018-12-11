@@ -7,13 +7,9 @@ import pt.ist.fenixframework.FenixFramework;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 
-import org.omg.CORBA.Object;
-import org.joda.time.DateTime;
-
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
-import java.security.Key;
 import java.util.Base64;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -105,6 +101,10 @@ public class SNS extends SNS_Base {
 			nurse.delete();
 		}
 
+        for (Administrative administrative: getAdministrativeSet()) {
+            administrative.delete();
+        }
+
 	}
 
 	public static String encrypt(SecretKey serverKey, String data) throws NoSuchPaddingException,
@@ -141,7 +141,7 @@ public class SNS extends SNS_Base {
         return data;
     }
 
-    public Record readRecord(Long personalId, Long patientId, String recordType){
+    public Record readRecord(SecretKey serverKey, Long personalId, Long patientId, String recordType){
         SNS sns = SNS.getInstance();
         Record newestRecord = null;
         boolean isFirst = true;
@@ -159,7 +159,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     } 
                                 }
@@ -167,7 +167,7 @@ public class SNS extends SNS_Base {
                         }
                     }
                     //nurse case
-                    else if(getNurseSet().contains(personalId)){
+                    else if(sns.getNurseSet().contains(personalId)){
                         for (Record record: getRecordSet()){
                             if(recordType == record.getClass().getName() && personalId == record.getPersonalId()
                             && patientId == record.getPatientId()){
@@ -176,7 +176,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }
@@ -193,7 +193,7 @@ public class SNS extends SNS_Base {
                                     isFirst = false;
                                 }
                                 else {
-                                    if(record.getTimeStamp().isBefore(newestRecord.getTimeStamp())){
+                                    if(record.getTimeStamp(serverKey).isAfter(newestRecord.getTimeStamp(serverKey))){
                                         newestRecord = record;
                                     }  
                                 }

@@ -32,17 +32,12 @@ import javax.jws.WebService;
 		this.endpointManager = endpointManager;
 	}
 
-    public String readRecord(Long patientId, Long personalId, String recordType) throws BadReadRecord_Exception{
-       
-        if(!recordType.equals("Report")){
-            return "At the moment the only recordType available at the system is 'Report'";
-        }
+    public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long requestWhomId) throws BadRequestInformation_Exception{
+       return "";
+    }
 
-        Record record = SNS.getInstance().readRecord(patientId, personalId, recordType);
-        if(record.equals(null)){
-            return "No records available";
-        }
-        return record.getDescription();
+    public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
+        return "";
     }
 
  }

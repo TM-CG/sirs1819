@@ -52,6 +52,7 @@ public class RequestHelper {
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, requestType))
                 return patient.getRecord(secretKey, requestObject);
         }
+
         return null;
     }
 

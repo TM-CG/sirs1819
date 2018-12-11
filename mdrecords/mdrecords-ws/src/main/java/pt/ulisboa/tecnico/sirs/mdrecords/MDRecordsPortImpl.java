@@ -56,6 +56,10 @@ import java.io.IOException;
         return "";
     }
 
+    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String drug, Float usage) throws BadAddMedication_Exception {
+        return "";
+    }
+
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
         try {
             return RequestHelper.addFollowingRelation(myType, myId, patientId);

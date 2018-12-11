@@ -59,6 +59,10 @@ import java.io.IOException;
     public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String drug, Float usage) throws BadAddMedication_Exception {
         return "";
     }
+    
+    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description) throws BadAddGeneric_Exception {
+        return "";
+    }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
         try {

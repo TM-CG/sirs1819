@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 public class ExamView extends RecordView {
 
-    protected String examName;
+    public String examName;
 
     public ExamView() {super();}
 

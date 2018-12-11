@@ -4,8 +4,8 @@ import org.joda.time.DateTime;
 
 public class MedicationView extends RecordView {
 
-    protected String drugName;
-    protected float dosage;
+    public String drugName;
+    public float dosage;
 
     public MedicationView() {super();}
 

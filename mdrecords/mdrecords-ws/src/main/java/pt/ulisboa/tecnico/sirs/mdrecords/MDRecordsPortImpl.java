@@ -6,6 +6,9 @@ import pt.ulisboa.tecnico.sirs.mdrecords.personal.Record;
 
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.joda.time.DateTime;
 
 /**
  * Medical records implementation class.
@@ -37,6 +40,10 @@ import javax.jws.WebService;
     }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
+        return "";
+    }
+
+    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception {
         return "";
     }
 

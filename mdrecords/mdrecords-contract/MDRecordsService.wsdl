@@ -58,6 +58,29 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:element name="BadAddIdentity" type="tns:BadAddIdentity" />
+            <xs:element name="addIdentity" type="tns:addIdentity" />
+            <xs:element name="addIdentityResponse" type="tns:addIdentityResponse" />
+
+             <xs:complexType name="addIdentity">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="xs:string" />
+                    <xs:element minOccurs="0" name="name" type="xs:string" />
+                    <xs:element minOccurs="0" name="identification" type="xs:long" />
+                    <xs:element minOccurs="0" name="birthday" type="xs:dateTime" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addIdentityResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadAddIdentity">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
 
         </xs:schema>
     </types>
@@ -73,7 +96,7 @@
         <part element="tns:BadRequestInformation" name="fault" />
     </message>
 
-     <message name="addRelation">
+    <message name="addRelation">
         <part element="tns:addRelation" name="parameters" />
     </message>
     <message name="addRelationResponse">
@@ -81,6 +104,16 @@
     </message>
     <message name="BadAddRelation">
         <part element="tns:BadAddRelation" name="fault" />
+    </message>
+
+    <message name="addIdentity">
+        <part element="tns:addIdentity" name="parameters" />
+    </message>
+    <message name="addIdentityResponse">
+        <part element="tns:addIdentityResponse" name="parameters" />
+    </message>
+    <message name="BadAddIdentity">
+        <part element="tns:BadAddIdentity" name="fault" />
     </message>
 
     <!--  Port type (interface). -->
@@ -96,6 +129,12 @@
             <input message="tns:addRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelation" />
             <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
             <fault message="tns:BadAddRelation" name="BadAddRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddRelation" />
+        </operation>
+
+        <operation name="addIdentity">
+            <input message="tns:addIdentity" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addIdentity" />
+            <output message="tns:addIdentityResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addIdentityResponse" />
+            <fault message="tns:BadAddIdentity" name="BadAddIdentity" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddIdentity" />
         </operation>
     </portType>
 
@@ -127,6 +166,20 @@
                 <soap:fault name="BadAddRelation" use="literal" />
             </fault>
         </operation>
+
+        <operation name="addIdentity">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadAddIdentity">
+                <soap:fault name="BadAddIdentity" use="literal" />
+            </fault>
+        </operation>
+
     </binding>
 
     <!--  Service defines ports. -->

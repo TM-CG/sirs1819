@@ -2,9 +2,15 @@ package pt.ulisboa.tecnico.sirs;
 
 import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
 
+import java.util.GregorianCalendar;
 import java.util.Map;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
+
+import org.joda.time.DateTime;
 
 import pt.ulisboa.tecnico.sirs.mdrecords.*;
 //import pt.ulisboa.tecnico.sirs.ws.uddi.UDDINaming;
@@ -101,4 +107,15 @@ public class MDRecordsClient implements MDRecordsPortType {
 	public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
 		return port.addRelation(myType, myId, patientId);
 	}
+	public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception {
+		return port.addIdentity(type,name,identification,birthday);
+	}
+
+	/*public XMLGregorianCalendar convert(DateTime d) throws DatatypeConfigurationException{
+		final GregorianCalendar calendar = new GregorianCalendar(d.getZone().toTimeZone());
+		calendar.setTimeInMillis(d.getMillis());
+		return DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+	}*/
+	
+	
 }

@@ -71,4 +71,9 @@ public class MenuUI {
         }
         return option;
     }
+
+    public String displayOption() {
+        int option = display();
+        return entries.get(option - 1);
+    }
 }

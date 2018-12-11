@@ -34,6 +34,11 @@ public class CertificateHelper {
      */
     public static PrivateKey readPrivateKey(String privateKeyPath, String keyPassword) throws IOException {
 
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        URL caURL = loader.getResource("privatekeys");
+        String path_ca = caURL.getPath() + "/" + privateKeyPath + ".key.pem";
+
         FileReader fileReader = new FileReader(privateKeyPath);
         PEMParser keyReader = new PEMParser(fileReader);
 

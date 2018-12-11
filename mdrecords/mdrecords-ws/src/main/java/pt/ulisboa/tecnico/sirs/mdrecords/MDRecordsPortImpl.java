@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
+import pt.ulisboa.tecnico.sirs.mdrecords.personal.RecordView;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Patient;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Record;
@@ -10,6 +11,8 @@ import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.joda.time.DateTime;
+
+import java.io.IOException;
 
 /**
  * Medical records implementation class.
@@ -36,8 +39,13 @@ import org.joda.time.DateTime;
 		this.endpointManager = endpointManager;
 	}
 
-    public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long requestWhomId) throws BadRequestInformation_Exception{
-       return "";
+    public String requestInformation(String requestType, String requestObject,String myType, long myId, long patientid) throws BadRequestInformation_Exception, IOException {
+       try{
+           RecordView recordView = RequestHelper.requestInformation(null,requestObject, myType, myId, patientid);
+           return recordView.description;
+       }catch (BadRequestInformationException e){
+           throwBadRequestInformation(e.getMessage());
+       }
     }
 
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
@@ -50,14 +58,14 @@ import org.joda.time.DateTime;
     }
 
 
-    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday){
-      /*  try{
+    public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception{
+        try{
             SecretKey secretKey = null;
-            return RequestHelper.createIdentity(secretKey, type, name, identification, this.convert(birthday));
-        }catch (BadAddRelationException e){
-            throwBadAddRelationException(e.getMessage());
+            return RequestHelper.createIdentity(type, secretKey, name, this.convert(birthday), identification);
+        }catch (BadAddIdentityException e){
+            throwBadAddIdentityException(e.getMessage());
 
-        }*/
+        }
       return null;
     }
 

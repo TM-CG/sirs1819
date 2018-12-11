@@ -15,7 +15,7 @@ public class RecordView {
     protected long patientId;
     protected DateTime timeStamp;
     protected String speciality;
-    protected String description;
+    public String description;
 
     public RecordView() {}
 

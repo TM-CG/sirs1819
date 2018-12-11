@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 
 import org.joda.time.DateTime;
 
+import javax.crypto.SecretKey;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -15,6 +16,11 @@ public class RecordView {
     private DateTime timeStamp;
     private String speciality;
     private String description;
+
+    public RecordView(SecretKey secretKey, Report report){
+        this.patientId = report.getPatientId();
+        this.timeStamp = report.getTimeStamp();
+        }
 
     public RecordView(long personalId, long patientId, DateTime timeStamp, String speciality, String description) {
         this.personalId = personalId;

@@ -42,10 +42,29 @@ public class Patient extends Patient_Base {
         }
     }
 
+    public void addRecord(SecretKey secretKey){}
+
+    public RecordView getRecord(SecretKey serverKey, String recordType){
+        if(recordType.equals("Report")){
+            return new RecordView(this.getReport());
+        }
+        else if(recordType.equals("Medication")){
+            return new RecordView(this.getMedication());
+        }
+        else if(recordType.equals("Generic")){
+            return new RecordView(this.getGenericinformation());
+        }
+        else if(recordType.equals("Exam")){
+            return new RecordView(this.getExamSet());
+        }
+        return null;
+    }
     /** Deletes Patient from the SNS */
     public void delete() {
         setSns(null);
 		deleteDomainObject();
 	}
+
+
 }
 

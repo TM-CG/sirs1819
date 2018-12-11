@@ -80,6 +80,7 @@ public class SNS extends SNS_Base {
             if(administrative.getIdentification() == identification)
                 return administrative;
         }
+        return null;
     }
 
 

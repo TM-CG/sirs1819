@@ -1,5 +1,11 @@
 package pt.ulisboa.tecnico.sirs;
 
+import org.joda.time.DateTime;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
+
 public class RecordsClient {
     public static void main(String[] args) throws Exception {
         String kerbyPath;
@@ -22,13 +28,14 @@ public class RecordsClient {
         System.out.println("Connecting at kerby server at: " + kerbyPath + " using user: " + user);
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
-        
-        /*System.out.println("Let me invoke readRecord");
-        Long patientId = new Long(123456788);
-        Long personalId = new Long(123456789);
-        String response = recordsClient.readRecord(patientId, personalId, "Record");
-        
-        System.out.println("RESPONSE: " + response);*/
+
+        DateTime dateTime = new DateTime();
+
+        final GregorianCalendar calendar = new GregorianCalendar(dateTime.getZone().toTimeZone());
+        calendar.setTimeInMillis(dateTime.getMillis());
+        XMLGregorianCalendar birthday = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+
+        recordsClient.addIdentity("Doctor","Vítor Nunes", new Long(123456789), null);
 
     }
 }

@@ -77,7 +77,7 @@ public class CertificateHelper {
         String path = url.getPath();
 
 
-        FileInputStream is= new FileInputStream(path + "/" + publicKeyFile);
+        FileInputStream is= new FileInputStream(path + "/" + publicKeyFile + ".cert.pem");
 
         X509Certificate cer = (X509Certificate) fact.generateCertificate(is);
         if(verifySignature(cer, rootCA)) {

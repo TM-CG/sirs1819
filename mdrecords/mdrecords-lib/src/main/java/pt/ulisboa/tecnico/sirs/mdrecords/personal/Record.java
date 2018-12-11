@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords.personal;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 import pt.ist.fenixframework.FenixFramework;
 
 import org.joda.time.DateTime;
@@ -9,8 +10,11 @@ import pt.ulisboa.tecnico.sirs.kerby.SecurityHelper;
 
 import javax.crypto.*;
 import javax.xml.bind.DatatypeConverter;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 
 
@@ -32,13 +36,45 @@ public class Record extends Record_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+
+        try {
+            checkIncomingDigest(serverKey, personalId);
+
+        } catch (IllegalBlockSizeException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (InvalidKeyException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (BadPaddingException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (NoSuchPaddingException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (FileNotFoundException e) {
+            throw new InvalidRecordException(e.getMessage());
+        } catch (CertificateException e) {
+            throw new InvalidRecordException(e.getMessage());
+        }
+
         setDigest(digest);
 
         FenixFramework.getDomainRoot().getSns().addRecord(this);
 
     }
 
-    protected void checkArguments(long personalId, long patientId, DateTime timeStamp, String speciality, String description)
+    protected void checkIncomingDigest(SecretKey serverKey, long personalId) throws IllegalBlockSizeException,
+            InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException,
+            InvalidRecordException, FileNotFoundException, CertificateException {
+        //Get User public key
+        PublicKey userKey = CertificateHelper.readPublicKey(new Long(personalId).toString());
+
+        if (checkAuthenticity(serverKey, userKey) == false) {
+            throw new InvalidRecordException("RECORD: Invalid digest!");
+        }
+
+    }
+
+        protected void checkArguments(long personalId, long patientId, DateTime timeStamp, String speciality, String description)
     throws InvalidRecordException {
         if (personalId < 0)
             throw new InvalidRecordException("Invalid Personal ID in Record!");

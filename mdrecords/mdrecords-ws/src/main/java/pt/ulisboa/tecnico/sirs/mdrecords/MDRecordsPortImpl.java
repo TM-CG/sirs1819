@@ -64,6 +64,10 @@ import java.io.IOException;
         return "";
     }
 
+    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String examName) throws BadAddExam_Exception {
+        return "";
+    }
+
     public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
         try {
             return RequestHelper.addFollowingRelation(myType, myId, patientId);

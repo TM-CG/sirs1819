@@ -42,20 +42,40 @@ public class Patient extends Patient_Base {
         }
     }
 
-    public void addRecord(SecretKey secretKey, String type, long personalId, String speciality, String decription){
-        if(type.equals("Report")){
-            try{
-                this.addReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, decription));
-            }catch (InvalidRecordException e){
-                System.out.println("Invalid data on Records");
-                System.out.println(e.getMessage());
-            }
+    public void addReport(SecretKey secretKey, long personalId, String speciality, String description) {
+        try {
+            this.addReport(new Report(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description));
+        } catch (InvalidRecordException e) {
+            System.out.println("Invalid data on Records");
+            System.out.println(e.getMessage());
         }
-        else if(type.equals("Medication")){
-        }
-        else if(type.equals("Generic")){}
-        else if (type.equals("Exam")){}
+    }
 
+    public void addMedication(SecretKey secretKey, long personalId, String speciality, String description, String drug, float usage) {
+        try {
+            this.addMedication(new Medication(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, drug, usage));
+        } catch (InvalidRecordException e) {
+            System.out.println("Invalid data on Medication");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void addGeneric(SecretKey secretKey, long personalId, String speciality, String description) {
+        try {
+            this.addGenericinformation(new GenericInformation(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description));
+        } catch (InvalidRecordException e) {
+            System.out.println("Invalid data on Generic Information");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void addExam(SecretKey secretKey, long personalId, String speciality, String description, String examName){
+        try {
+            this.addExam(new Exam(secretKey, personalId, this.getIdentification(), new DateTime(), speciality, description, examName));
+        } catch (InvalidRecordException e) {
+            System.out.println("Invalid data on Exam");
+            System.out.println(e.getMessage());
+        }
     }
 
     public RecordView getRecord(SecretKey serverKey, String recordType){

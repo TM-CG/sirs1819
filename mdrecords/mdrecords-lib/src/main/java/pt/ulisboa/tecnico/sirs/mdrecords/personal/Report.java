@@ -18,7 +18,7 @@ public class Report extends Report_Base {
         super();
     }
 
-    public Report(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest, Patient patient) throws InvalidRecordException {
+    public Report(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description, String digest) throws InvalidRecordException {
         checkArguments(personalId, patientId, timeStamp, speciality, description);
 
         setPersonalId(personalId);
@@ -48,9 +48,6 @@ public class Report extends Report_Base {
             throw new InvalidRecordException(e.getMessage());
         }
 
-
-
-        setPatient(patient);
     }
 
     @Override

@@ -22,6 +22,7 @@ public class MedicationView extends RecordView {
         this.dosage = dosage;
     }
 
+    @Override
     public String toString() {
         String res = "<Medication ";
 
@@ -29,8 +30,8 @@ public class MedicationView extends RecordView {
         res += this.patientId + ", ";
         res += this.timeStamp + ", ";
         res += "\"" + this.speciality + "\", ";
-        res += "\"" + this.description + "\"";
-        res += "\"" + this.drugName + "\"";
+        res += "\"" + this.description + "\", ";
+        res += "\"" + this.drugName + "\", ";
         res += "\"" + this.dosage + "\"";
 
         res += ">";

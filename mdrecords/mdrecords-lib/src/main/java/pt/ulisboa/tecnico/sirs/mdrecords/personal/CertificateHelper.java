@@ -186,6 +186,9 @@ public class CertificateHelper {
             IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
         byte[] digest = record.calcDigest();
 
+        System.out.println("DIGEST CALC CLIENT: " + DatatypeConverter.printBase64Binary(digest));
+        System.out.println("RECORD SERVER: " + record);
+
         PrivateKey privateKey = readPrivateKey(privateKeyPath, "");
 
         byte[] digestcipher = encrypt(privateKey, digest);

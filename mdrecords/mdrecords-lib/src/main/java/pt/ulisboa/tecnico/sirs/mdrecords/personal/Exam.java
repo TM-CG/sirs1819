@@ -32,7 +32,9 @@ public class Exam extends Exam_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
-        try {
+        setDigest(digest);
+
+        /*try {
             checkIncomingDigest(serverKey, personalId);
 
         } catch (IllegalBlockSizeException e) {
@@ -49,9 +51,8 @@ public class Exam extends Exam_Base {
             throw new InvalidRecordException(e.getMessage());
         } catch (CertificateException e) {
             throw new InvalidRecordException(e.getMessage());
-        }
+        }*/
 
-        setDigest(digest);
     }
 
     public Exam(SecretKey serverKey, long personalId, long patientId, DateTime timeStamp, String speciality, String description,
@@ -63,6 +64,9 @@ public class Exam extends Exam_Base {
         setTimeStamp(serverKey, timeStamp);
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
+        setExamName(serverKey, examName);
+
+        setDigest(digest);
 
         try {
             checkIncomingDigest(serverKey, personalId);
@@ -83,9 +87,6 @@ public class Exam extends Exam_Base {
             throw new InvalidRecordException(e.getMessage());
         }
 
-        setDigest(digest);
-
-        setExamName(serverKey, examName);
 
     }
 
@@ -154,7 +155,7 @@ public class Exam extends Exam_Base {
         res += getPatientId() + ", ";
         res += getTimeStamp(serverKey) + ", ";
         res += "\"" + getSpeciality(serverKey) + "\", ";
-        res += "\"" + getDescription(serverKey) + "\"";
+        res += "\"" + getDescription(serverKey) + "\", ";
         res += "\"" + getExamName(serverKey) + "\"";
 
         res += ">";

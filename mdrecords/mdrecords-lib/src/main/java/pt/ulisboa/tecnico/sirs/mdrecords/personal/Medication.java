@@ -32,6 +32,8 @@ public class Medication extends Medication_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+        setDigest(digest);
+
         try {
             checkIncomingDigest(serverKey, personalId);
 
@@ -51,7 +53,7 @@ public class Medication extends Medication_Base {
             throw new InvalidRecordException(e.getMessage());
         }
 
-        setDigest(digest);
+
 
     }
 
@@ -65,6 +67,12 @@ public class Medication extends Medication_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+        setDrugName(serverKey, drugName);
+        setDosage(serverKey, dosage);
+
+        setDigest(digest);
+
+
         try {
             checkIncomingDigest(serverKey, personalId);
 
@@ -83,11 +91,6 @@ public class Medication extends Medication_Base {
         } catch (CertificateException e) {
             throw new InvalidRecordException(e.getMessage());
         }
-
-        setDigest(digest);
-
-        setDrugName(serverKey, drugName);
-        setDosage(serverKey, dosage);
 
    }
 
@@ -210,8 +213,8 @@ public class Medication extends Medication_Base {
         res += getPatientId() + ", ";
         res += getTimeStamp(serverKey) + ", ";
         res += "\"" + getSpeciality(serverKey) + "\", ";
-        res += "\"" + getDescription(serverKey) + "\"";
-        res += "\"" + getDrugName(serverKey) + "\"";
+        res += "\"" + getDescription(serverKey) + "\", ";
+        res += "\"" + getDrugName(serverKey) + "\", ";
         res += "\"" + getDosage(serverKey) + "\"";
 
         res += ">";

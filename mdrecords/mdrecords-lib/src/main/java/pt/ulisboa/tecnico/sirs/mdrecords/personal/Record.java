@@ -125,12 +125,16 @@ public class Record extends Record_Base {
     public boolean checkAuthenticity(SecretKey serverKey, Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
+        System.out.println("STORED DIGEST SERVER str: " + getDigest());
 
         if (getDigest() == null || getDigest().equals(""))
             return false;
 
         /**Starts by calculating the digest**/
        byte[] digest = calcDigest(serverKey);
+
+       System.out.println("DIGEST CALC SERVER: " + DatatypeConverter.printBase64Binary(digest));
+       System.out.println("RECORD SERVER: " + this.toString(serverKey));
 
        /** Deciphers the stored digest using the author's public key**/
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -139,6 +143,8 @@ public class Record extends Record_Base {
         byte[] cipheredDigest = DatatypeConverter.parseBase64Binary(getDigest());
 
         byte[] storedDigestBytes = cipher.doFinal(cipheredDigest);
+
+        System.out.println("STORED DIGEST SERVER: " + DatatypeConverter.printBase64Binary(storedDigestBytes));
 
         /** Check if both digests are the same **/
         return Arrays.equals(digest, storedDigestBytes);

@@ -63,6 +63,14 @@ import java.io.IOException;
         return null;
     }
 
+    public String removeRelation(String myType, Long myId, Long patientId) throws BadRemoveRelation_Exception {
+        try{
+            return RequestHelper.removeFollowingRelation(myType, myId, patientId);
+        }catch (BadRemoveRelationException e) {
+            throwBadRemoveRelationException(e.getMessage());
+        }
+        return null;
+    }
 
     public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception{
         try{
@@ -178,4 +186,9 @@ import java.io.IOException;
         throw new BadAddExam_Exception(message, faultInfo);
     }
 
+    private void throwBadRemoveRelationException(final String message) throws BadRemoveRelation_Exception{
+        BadRemoveRelation faultInfo = new BadRemoveRelation();
+        faultInfo.setMessage(message);
+        throw new BadRemoveRelation_Exception(message, faultInfo);
+    }
 }

@@ -456,13 +456,68 @@ public class RequestHelper {
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    private static void addFolowingRelation(Doctor doc, Patient patient){
-            patient.addDoctor(doc);
+    private static void addFolowingRelation(Doctor doc, Patient patient) throws BadAddRelationException{
+        if(patient.getDoctorSet().contains(doc)){
+            throw new BadAddRelationException("Doctor: " + doc.getIdentification() + " already follows Patient: " + patient.getIdentification() + ".");
+        }
+        patient.addDoctor(doc);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    private static void addFolowingRelation(Nurse nurse, Patient patient){
-        patient.addNurse(nurse);
+    private static void addFolowingRelation(Nurse nurse, Patient patient) throws BadAddRelationException{
+        if(patient.getDoctorSet().contains(nurse)){
+            throw new BadAddRelationException("Nurse: " + nurse.getIdentification() + " already follows Patient: " + patient.getIdentification() + ".");
+        }patient.addNurse(nurse);
+    }
+
+
+    /******************************************* REMOVE FOLLOWING RELATION ***********************************************/
+    public static String removeFollowingRelation(String myType, long myId, long patientId) throws BadRemoveRelationException{
+        SNS sns = SNS.getInstance();
+
+        if(myType.equals("Doctor")){
+            Doctor doc = sns.getDoctorById(myId);
+            Patient patient = sns.getPatientById(patientId);
+            if(doc != null && patient != null){
+                removeFolowingRelation(doc, patient);
+                return "Doctor: " + myId + " now unfollows patient: " + patientId + ".";
+            }
+            else if (doc == null)
+                throw new BadRemoveRelationException("Doctor does not exist.");
+            else
+                throw new BadRemoveRelationException("Patient does not exist.");
+
+        }
+        else if(myType.equals("Nurse")){
+            Nurse nurse = sns.getNurseById(myId);
+            Patient patient = sns.getPatientById(patientId);
+            if(nurse != null && patient != null){
+                removeFolowingRelation(nurse, patient);
+                return "Nurse: " + myId + " now unfollows patient: " + patientId + ".";
+            }
+            else if (nurse == null)
+                throw new BadRemoveRelationException("Nurse does not exist.");
+            else
+                throw new BadRemoveRelationException("Patient does not exist.");
+        }
+
+        return null;
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    private static void removeFolowingRelation(Doctor doc, Patient patient) throws BadRemoveRelationException{
+        if(!patient.getDoctorSet().contains(doc)){
+            throw new BadRemoveRelationException("Doctor: " + doc.getIdentification() + " does not follow Patient: " + patient.getIdentification() + ".");
+        }
+        patient.getDoctorSet().remove(doc);
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    private static void removeFolowingRelation(Nurse nurse, Patient patient) throws BadRemoveRelationException{
+        if(!patient.getNurseSet().contains(nurse)){
+            throw new BadRemoveRelationException("Nurse: " + nurse.getIdentification() + " does not follow Patient: " + patient.getIdentification() + ".");
+        }
+        patient.getNurseSet().remove(nurse);
     }
 
 

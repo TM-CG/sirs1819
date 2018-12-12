@@ -143,11 +143,33 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:element name="BadRemoveRelation" type="tns:BadRemoveRelation" />
+            <xs:element name="removeRelation" type="tns:removeRelation" />
+            <xs:element name="removeRelationResponse" type="tns:removeRelationResponse" />
+
+             <xs:complexType name="removeRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="myType" type="xs:string" />
+                    <xs:element minOccurs="0" name="myId" type="xs:long" />
+                    <xs:element minOccurs="0" name="patientId" type="xs:long" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="removeRelationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BadRemoveRelation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:element name="BadAddRelation" type="tns:BadAddRelation" />
             <xs:element name="addRelation" type="tns:addRelation" />
             <xs:element name="addRelationResponse" type="tns:addRelationResponse" />
 
-             <xs:complexType name="addRelation">
+            <xs:complexType name="addRelation">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="myType" type="xs:string" />
                     <xs:element minOccurs="0" name="myId" type="xs:long" />
@@ -253,6 +275,16 @@
         <part element="tns:BadAddRelation" name="fault" />
     </message>
 
+    <message name="removeRelation">
+        <part element="tns:removeRelation" name="parameters" />
+    </message>
+    <message name="removeRelationResponse">
+        <part element="tns:removeRelationResponse" name="parameters" />
+    </message>
+    <message name="BadRemoveRelation">
+        <part element="tns:BadRemoveRelation" name="fault" />
+    </message>
+
     <message name="addIdentity">
         <part element="tns:addIdentity" name="parameters" />
     </message>
@@ -298,8 +330,14 @@
 
         <operation name="addRelation">
             <input message="tns:addRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelation" />
-            <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/requestInformationResponse" />
+            <output message="tns:addRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/addRelationResponse" />
             <fault message="tns:BadAddRelation" name="BadAddRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadAddRelation" />
+        </operation>
+
+        <operation name="removeRelation">
+            <input message="tns:removeRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/removeRelation" />
+            <output message="tns:removeRelationResponse" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/removeRelationResponse" />
+            <fault message="tns:BadRemoveRelation" name="BadRemoveRelation" wsam:Action="http://mdrecords.sirs.tecnico.ulisboa.pt/MDRecordsPortType/readRecord/Fault/BadRemoveRelation" />
         </operation>
 
         <operation name="addIdentity">
@@ -387,6 +425,19 @@
             </output>
             <fault name="BadAddRelation">
                 <soap:fault name="BadAddRelation" use="literal" />
+            </fault>
+        </operation>
+
+        <operation name="removeRelation">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="BadRemoveRelation">
+                <soap:fault name="BadRemoveRelation" use="literal" />
             </fault>
         </operation>
 

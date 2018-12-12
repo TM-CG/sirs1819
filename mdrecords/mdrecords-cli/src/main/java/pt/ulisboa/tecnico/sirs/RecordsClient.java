@@ -45,6 +45,7 @@ public class RecordsClient {
         MenuUI menu = new MenuUI("Select an option");
         menu.addEntry("*DEBUG* - Create");
         menu.addEntry("*DEBUG* - Add following");
+        menu.addEntry("*DEBUG* - Remove following");
         menu.addEntry("Read Operations");
         menu.addEntry("Write Operations");
         menu.addEntry("Exit");
@@ -200,7 +201,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                new BoxUI(recordsClient.addRelation("Doctor", identification, identification2)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addRelation("Doctor", identification1, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddRelation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -223,8 +224,43 @@ public class RecordsClient {
 
                     break;
 
-
                 case 3:
+                    MenuUI debugRemoveFollowing = new MenuUI("*DEBUG* Remove Following");
+                    debugRemoveFollowing.addEntry("Doctor unfollows patient");
+                    debugRemoveFollowing.addEntry("Nurse unfollows patient");
+                    debugRemoveFollowing.addEntry("Go back");
+
+                    option2 = debugRemoveFollowing.display();
+
+                    switch (option2) {
+                        case 1:
+                            identification1 = Long.parseLong(new BoxUI("What is the doctor identification?").showAndGet());
+                            identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
+
+                            try {
+                                new BoxUI(recordsClient.removeRelation("Doctor", identification1, identification2)).show(BoxUI.GREEN_BOLD);
+                            } catch (BadRemoveRelation_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
+
+                            break;
+
+                        case 2:
+                            identification1 = Long.parseLong(new BoxUI("What is the nurse identification?").showAndGet());
+                            identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
+
+                            try {
+                                new BoxUI(recordsClient.removeRelation("Nurse", identification1, identification2)).show(BoxUI.GREEN_BOLD);
+                            } catch (BadRemoveRelation_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
+
+                            break;
+                    }
+
+                    break;
+
+                case 4:
 
                     MenuUI readMenu = new MenuUI("Read Operations");
                     readMenu.addEntry("Report");
@@ -283,7 +319,7 @@ public class RecordsClient {
 
                     break;
 
-                case 4:
+                case 5:
 
                     MenuUI writeMenu = new MenuUI("Write Operations");
                     writeMenu.addEntry("Report");
@@ -404,9 +440,8 @@ public class RecordsClient {
                     break;
 
 
-
             }
-        }while (option != 5);
+        }while (option != 6);
 
     }
 }

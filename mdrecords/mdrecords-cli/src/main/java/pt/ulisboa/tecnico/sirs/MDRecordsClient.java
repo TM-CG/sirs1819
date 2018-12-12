@@ -107,6 +107,10 @@ public class MDRecordsClient implements MDRecordsPortType {
 	public String addRelation(String myType, Long myId, Long patientId) throws BadAddRelation_Exception {
 		return port.addRelation(myType, myId, patientId);
 	}
+	public String removeRelation(String myType, Long myId, Long patientId) throws BadRemoveRelation_Exception {
+		return port.removeRelation(myType, myId, patientId);
+	}
+
 	public String addIdentity(String type, String name, Long identification, XMLGregorianCalendar birthday) throws BadAddIdentity_Exception {
 		return port.addIdentity(type,name,identification,birthday);
 	}
@@ -126,6 +130,7 @@ public class MDRecordsClient implements MDRecordsPortType {
 	public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String timestamp, String digest, String examName) throws BadAddExam_Exception {
 		return port.addExam(myType, personalId, patientId, speciality, description, timestamp, digest, examName);
 	}
+
 
 	/*public XMLGregorianCalendar convert(DateTime d) throws DatatypeConfigurationException{
 		final GregorianCalendar calendar = new GregorianCalendar(d.getZone().toTimeZone());

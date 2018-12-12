@@ -43,6 +43,29 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
      */
     @Override
     public boolean handleMessage(SOAPMessageContext smc) {
+        return processMessage(smc);
+    }
+
+
+    /** The handleFault method is invoked for fault message processing. */
+    @Override
+    public boolean handleFault(SOAPMessageContext smc) {
+        System.out.println("AuthenticationHandler: Handling fault message..");
+        return processMessage(smc);
+    }
+
+
+    /**
+     * Called at the conclusion of a message exchange pattern just prior to the
+     * JAX-WS runtime dispatching a message, fault or exception.
+     */
+    @Override
+    public void close(MessageContext messageContext) {
+        // nothing to clean up
+    }
+
+
+    public boolean processMessage(SOAPMessageContext smc) {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         //vitor: just ignore this message. I need the session key on the context to encrypt/decrypt! It will be done
@@ -84,50 +107,29 @@ public class AuthenticationHandler implements SOAPHandler<SOAPMessageContext> {
             }
         }else{ //inbound
 
-                //just remove the flag for next request
-                smc.remove("alreadyHaveSessionKey");
+            //just remove the flag for next request
+            smc.remove("alreadyHaveSessionKey");
 
-                Auth auth = (Auth) smc.get("auth");
+            Auth auth = (Auth) smc.get("auth");
 
-                //protect against replay attacks
-                if(!timeRequests.contains(auth.getTimeRequest())){
-                    timeRequests.add(auth.getTimeRequest());
-                } else {
-                    throw new RuntimeException("Received same request twice. Ignoring...");
-                }
+            //protect against replay attacks
+            if(!timeRequests.contains(auth.getTimeRequest())){
+                timeRequests.add(auth.getTimeRequest());
+            } else {
+                throw new RuntimeException("Received same request twice. Ignoring...");
+            }
 
-                //check whether client request is relatively new
-                Date currentTime = new Date();
-                if (currentTime.getTime() - auth.getTimeRequest().getTime() < MARGIN_ERROR &&
-                        currentTime.after(auth.getTimeRequest())) {
-                    return true;
-                } else {
-                    throw new RuntimeException("Client request too old. Ignoring...");
-                }
+            //check whether client request is relatively new
+            Date currentTime = new Date();
+            if (currentTime.getTime() - auth.getTimeRequest().getTime() < MARGIN_ERROR &&
+                    currentTime.after(auth.getTimeRequest())) {
+                return true;
+            } else {
+                throw new RuntimeException("Client request too old. Ignoring...");
+            }
 
 
         }
-
         return true;
     }
-
-
-    /** The handleFault method is invoked for fault message processing. */
-    @Override
-    public boolean handleFault(SOAPMessageContext smc) {
-        System.out.println("AuthenticationHandler: Handling fault message..");
-        return true;
-    }
-
-
-    /**
-     * Called at the conclusion of a message exchange pattern just prior to the
-     * JAX-WS runtime dispatching a message, fault or exception.
-     */
-    @Override
-    public void close(MessageContext messageContext) {
-        // nothing to clean up
-    }
-
-
 }

@@ -55,6 +55,33 @@ public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
      */
     @Override
     public boolean handleMessage(SOAPMessageContext smc) {
+         return processMessage(smc);
+    }
+
+
+    /** The handleFault method is invoked for fault message processing. */
+    @Override
+    public boolean handleFault(SOAPMessageContext smc) {
+        return processMessage(smc);
+    }
+
+
+    /**
+     * Called at the conclusion of a message exchange pattern just prior to the
+     * JAX-WS runtime dispatching a message, fault or exception.
+     */
+    @Override
+    public void close(MessageContext messageContext) {
+        // nothing to clean up
+    }
+
+    public static void setCurrentUser(String user){
+        currentUser = user;
+    }
+
+    public static void setCurrentPassword(String password) { currentPassword = password; }
+
+    public boolean processMessage(SOAPMessageContext smc) {
         Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         if(outbound){
@@ -155,32 +182,7 @@ public class KerberosClientHandler implements SOAPHandler<SOAPMessageContext> {
                 e.printStackTrace();
             }
         }
-
         return true;
     }
-
-
-    /** The handleFault method is invoked for fault message processing. */
-    @Override
-    public boolean handleFault(SOAPMessageContext smc) {
-        return true;
-    }
-
-
-    /**
-     * Called at the conclusion of a message exchange pattern just prior to the
-     * JAX-WS runtime dispatching a message, fault or exception.
-     */
-    @Override
-    public void close(MessageContext messageContext) {
-        // nothing to clean up
-    }
-
-    public static void setCurrentUser(String user){
-        currentUser = user;
-    }
-
-    public static void setCurrentPassword(String password) { currentPassword = password; }
-
 
 }

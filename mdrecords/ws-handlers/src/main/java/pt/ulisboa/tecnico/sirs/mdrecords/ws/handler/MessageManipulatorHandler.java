@@ -34,36 +34,7 @@ public class MessageManipulatorHandler implements SOAPHandler<SOAPMessageContext
      */
     @Override
     public boolean handleMessage(SOAPMessageContext smc) {
-        Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-        try{
-            if(delay){
-                TimeUnit.SECONDS.sleep(10);
-            }
-            if(!hacked){
-                return true;
-            }
-
-            SOAPMessage msg = smc.getMessage();
-            SOAPPart sp = msg.getSOAPPart();
-            SOAPEnvelope se = sp.getEnvelope();
-
-        if(outbound){
-            Name name = se.createName("hacker");
-            SOAPBody sb = se.getBody();
-            SOAPElement elem = sb.addBodyElement(name);
-            Name attribute = se.createName("injectedMessage");
-            elem.addAttribute(attribute, "INJECTED MESSAGE");
-
-        } else { // inbound message
-
-           }
-
-        } catch (SOAPException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return true;
+        return processMessage(smc);
     }
 
 
@@ -71,7 +42,7 @@ public class MessageManipulatorHandler implements SOAPHandler<SOAPMessageContext
     @Override
     public boolean handleFault(SOAPMessageContext smc) {
         System.out.println("KerberosClientHandler: Handling fault message..");
-        return true;
+        return processMessage(smc);
     }
 
 
@@ -90,5 +61,38 @@ public class MessageManipulatorHandler implements SOAPHandler<SOAPMessageContext
 
     public static void setDelay(){
         delay = true;
+    }
+
+    public boolean processMessage(SOAPMessageContext smc) {
+        Boolean outbound = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        try{
+            if(delay){
+                TimeUnit.SECONDS.sleep(10);
+            }
+            if(!hacked){
+                return true;
+            }
+
+            SOAPMessage msg = smc.getMessage();
+            SOAPPart sp = msg.getSOAPPart();
+            SOAPEnvelope se = sp.getEnvelope();
+
+            if(outbound){
+                Name name = se.createName("hacker");
+                SOAPBody sb = se.getBody();
+                SOAPElement elem = sb.addBodyElement(name);
+                Name attribute = se.createName("injectedMessage");
+                elem.addAttribute(attribute, "INJECTED MESSAGE");
+
+            } else { // inbound message
+
+            }
+
+        } catch (SOAPException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

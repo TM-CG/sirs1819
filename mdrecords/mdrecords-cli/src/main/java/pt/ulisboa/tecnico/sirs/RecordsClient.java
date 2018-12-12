@@ -5,9 +5,17 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import pt.ulisboa.tecnico.sirs.mdrecords.*;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
+import pt.ulisboa.tecnico.sirs.mdrecords.ws.handler.KerberosClientHandler;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +45,28 @@ public class RecordsClient {
             mdrecordsServerPath = args[3];
         }
 
+        //Load client information for kerberos
+        KerberosClientHandler.setCurrentUser(user);
 
-        System.out.println("Hello: " + type + " " + user);
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        URL caURL = loader.getResource("passwords");
+        String pathToPassFile = caURL.getPath() + "/" + user + ".txt";
+
+        File file = new File(pathToPassFile);
+        String password = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            password = br.readLine();
+
+        } catch(IOException e) {
+            System.out.println("Error in getting password from file");
+            return;
+        }
+
+        KerberosClientHandler.setCurrentPassword(password);
+
+        System.out.println("Hello: " + type + " " + user + " ");
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
 

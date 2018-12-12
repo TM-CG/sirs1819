@@ -45,7 +45,7 @@ import java.io.IOException;
     public String requestInformation(String requestType, String requestObject,String myType, Long myId, Long patientid) throws BadRequestInformation_Exception {
        try{
            RecordView recordView = RequestHelper.requestInformation(KerberosServerHandler.serverKey,requestObject, myType, myId, patientid);
-           return recordView.description;
+           return recordView.toString();
        }catch (BadRequestInformationException e){
            throwBadRequestInformation(e.getMessage());
        } catch (IOException e) {

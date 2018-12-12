@@ -51,6 +51,7 @@ public class RecordsClient {
 
         String name;
         String birthday;
+        long identification1;
         long identification2;
         DateFormat format;
         Date date;
@@ -92,7 +93,7 @@ public class RecordsClient {
                         case 1:
                             name = new BoxUI("What is the doctor name?").showAndGet();
                             birthday = new BoxUI("What is the doctor birthday? (YYYY-MM-DD)").showAndGet();
-                            identification = Long.parseLong(new BoxUI("What is the doctor identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the doctor identification?").showAndGet());
 
                             format = new SimpleDateFormat("yyyy-MM-dd");
                             date = format.parse(birthday);
@@ -103,7 +104,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                new BoxUI(recordsClient.addIdentity("Doctor", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addIdentity("Doctor", name, identification1, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -114,7 +115,7 @@ public class RecordsClient {
 
                             name = new BoxUI("What is the patient name?").showAndGet();
                             birthday = new BoxUI("What is the patient birthday? (YYYY-MM-DD)").showAndGet();
-                            identification = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             format = new SimpleDateFormat("yyyy-MM-dd");
                             date = format.parse(birthday);
@@ -125,7 +126,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                new BoxUI(recordsClient.addIdentity("Patient", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addIdentity("Patient", name, identification1, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -136,7 +137,7 @@ public class RecordsClient {
 
                             name = new BoxUI("What is the nurse name?").showAndGet();
                             birthday = new BoxUI("What is the nurse birthday? (YYYY-MM-DD)").showAndGet();
-                            identification = Long.parseLong(new BoxUI("What is the nurse identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the nurse identification?").showAndGet());
 
                             format = new SimpleDateFormat("yyyy-MM-dd");
                             date = format.parse(birthday);
@@ -147,7 +148,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                new BoxUI(recordsClient.addIdentity("Nurse", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addIdentity("Nurse", name, identification1, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -158,7 +159,7 @@ public class RecordsClient {
 
                             name = new BoxUI("What is the administrative name?").showAndGet();
                             birthday = new BoxUI("What is the administrative birthday? (YYYY-MM-DD)").showAndGet();
-                            identification = Long.parseLong(new BoxUI("What is the administrative identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the administrative identification?").showAndGet());
 
                             format = new SimpleDateFormat("yyyy-MM-dd");
                             date = format.parse(birthday);
@@ -169,7 +170,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                new BoxUI(recordsClient.addIdentity("Administrative", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addIdentity("Administrative", name, identification1, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -195,7 +196,7 @@ public class RecordsClient {
 
                     switch (option2) {
                         case 1:
-                            identification = Long.parseLong(new BoxUI("What is the doctor identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the doctor identification?").showAndGet());
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
@@ -207,11 +208,11 @@ public class RecordsClient {
                         break;
 
                         case 2:
-                            identification = Long.parseLong(new BoxUI("What is the nurse identification?").showAndGet());
+                            identification1 = Long.parseLong(new BoxUI("What is the nurse identification?").showAndGet());
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                new BoxUI(recordsClient.addRelation("Nurse", identification, identification2)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addRelation("Nurse", identification1, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddRelation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }

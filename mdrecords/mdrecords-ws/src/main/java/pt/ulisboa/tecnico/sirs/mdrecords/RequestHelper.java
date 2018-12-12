@@ -447,7 +447,7 @@ public class RequestHelper {
                 return "Nurse: " + myId + " now follows patient: " + patientId + ".";
             }
             else if (nurse == null)
-                throw new BadAddRelationException("Doctor does not exist.");
+                throw new BadAddRelationException("Nurse does not exist.");
             else
                 throw new BadAddRelationException("Patient does not exist.");
         }

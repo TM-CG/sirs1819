@@ -109,12 +109,12 @@
         </Target>
     </Rule>
     <Rule RuleId="nurse-follower-write" Effect="Permit">
-        <Description>Doctors rule for access to a report while following patient</Description>
+        <Description>Nurse rule for access to a report while following patient</Description>
         <Target>
             <AnyOf>
                 <AllOf>
                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Doctor</AttributeValue>
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Nurse</AttributeValue>
                         <AttributeDesignator AttributeId="subject-role" Category="subject-role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
                     </Match>
                 </AllOf>
@@ -201,12 +201,12 @@
         </Target>
     </Rule>
     <Rule RuleId="admin" Effect="Permit">
-        <Description>Patient Rule to access his own information</Description>
+        <Description>Administrative Rule to access his own information</Description>
         <Target>
             <AnyOf>
                 <AllOf>
                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Patient</AttributeValue>
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Administrative</AttributeValue>
                         <AttributeDesignator AttributeId="subject-role" Category="subject-role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
                     </Match>
                 </AllOf>

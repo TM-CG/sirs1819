@@ -75,8 +75,7 @@ public class RequestHelper {
             if(patient == null)
                 throw new BadRequestInformationException("Patient does not exist");
 
-            if(XACMLHelper.checkPersonPermission("Patient",requestObject,"read") ||
-                    XACMLHelper.checkPersonPermission("Patient", requestObject, "read",
+            if(XACMLHelper.checkPersonPermission("Patient", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
                 try {
                     return patient.getRecord(secretKey, requestObject);
@@ -445,7 +444,7 @@ public class RequestHelper {
             Patient patient = sns.getPatientById(patientId);
             if(nurse != null && patient != null){
                 addFolowingRelation(nurse, patient);
-                return "Nurse: " + myId + " now follows patient: " + patient + ".";
+                return "Nurse: " + myId + " now follows patient: " + patientId + ".";
             }
             else if (nurse == null)
                 throw new BadAddRelationException("Doctor does not exist.");

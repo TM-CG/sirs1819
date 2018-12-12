@@ -101,7 +101,7 @@ public class Patient extends Patient_Base {
         }
     }
 
-    public RecordView getRecord(SecretKey serverKey, String recordType){
+    public RecordView getRecord(SecretKey serverKey, String recordType) throws InvalidRecordException {
         if(recordType.equals("Report")){
             Report lastReport = null;
             DateTime lastTime = null;
@@ -112,8 +112,7 @@ public class Patient extends Patient_Base {
                 }
             }
             if(lastReport == null){
-                System.out.println("Patient has no Reports");
-                return null;
+                throw new InvalidRecordException("Patient has no Reports");
             }
             return lastReport.getView(serverKey);
         }
@@ -127,8 +126,7 @@ public class Patient extends Patient_Base {
                 }
             }
             if(lastMedication == null){
-                System.out.println("Patient has no Medication");
-                return null;
+                throw new InvalidRecordException("Patient has no Medication");
             }
             return lastMedication.getView(serverKey);
         }
@@ -142,8 +140,7 @@ public class Patient extends Patient_Base {
                 }
             }
             if(generic == null){
-                System.out.println("Patient has no Generic Information");
-                return null;
+                throw new InvalidRecordException("Patient has no Generic Information");
             }
             return generic.getView(serverKey);
         }
@@ -157,8 +154,7 @@ public class Patient extends Patient_Base {
                 }
             }
             if(lastExam == null){
-                System.out.println("Patient has no exams");
-                return null;
+                throw new InvalidRecordException("Patient has no exams");
             }
             return lastExam.getView(serverKey);
         }

@@ -3,9 +3,7 @@ package pt.ulisboa.tecnico.sirs;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import pt.ulisboa.tecnico.sirs.mdrecords.BadAddIdentity_Exception;
-import pt.ulisboa.tecnico.sirs.mdrecords.BadAddRelation_Exception;
-import pt.ulisboa.tecnico.sirs.mdrecords.BadRequestInformation_Exception;
+import pt.ulisboa.tecnico.sirs.mdrecords.*;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
 
 import javax.xml.datatype.DatatypeFactory;
@@ -105,7 +103,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                recordsClient.addIdentity("Doctor", name, identification, xmlGregCal);
+                                new BoxUI(recordsClient.addIdentity("Doctor", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -127,7 +125,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                recordsClient.addIdentity("Patient", name, identification, xmlGregCal);
+                                new BoxUI(recordsClient.addIdentity("Patient", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -149,7 +147,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                recordsClient.addIdentity("Nurse", name, identification, xmlGregCal);
+                                new BoxUI(recordsClient.addIdentity("Nurse", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -171,7 +169,7 @@ public class RecordsClient {
                             xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
                             try {
-                                recordsClient.addIdentity("Administrative", name, identification, xmlGregCal);
+                                new BoxUI(recordsClient.addIdentity("Administrative", name, identification, xmlGregCal)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddIdentity_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -201,7 +199,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.addRelation("Doctor", identification, identification2);
+                                new BoxUI(recordsClient.addRelation("Doctor", identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddRelation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -213,7 +211,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.addRelation("Nurse", identification, identification2);
+                                new BoxUI(recordsClient.addRelation("Nurse", identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddRelation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -240,7 +238,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.requestInformation("read", "Report", type, identification, identification2);
+                                new BoxUI(recordsClient.requestInformation("read", "Report", type, identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadRequestInformation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -250,7 +248,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.requestInformation("read", "Exam", type, identification, identification2);
+                                new BoxUI(recordsClient.requestInformation("read", "Exam", type, identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadRequestInformation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -261,7 +259,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.requestInformation("read", "Generic", type, identification, identification2);
+                                new BoxUI(recordsClient.requestInformation("read", "Generic", type, identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadRequestInformation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -272,7 +270,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                recordsClient.requestInformation("read", "Medication", type, identification, identification2);
+                                new BoxUI(recordsClient.requestInformation("read", "Medication", type, identification, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadRequestInformation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
@@ -313,8 +311,11 @@ public class RecordsClient {
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), reportView);
 
-                            recordsClient.addReport(type, identification, identification2, speciality, description, dtStr, digest);
-
+                            try {
+                                new BoxUI(recordsClient.addReport(type, identification, identification2, speciality, description, dtStr, digest)).show(BoxUI.GREEN_BOLD);
+                            } catch(BadAddReport_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
                             break;
 
                         case 2:
@@ -336,8 +337,11 @@ public class RecordsClient {
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), examView);
 
-                            recordsClient.addExam(type, identification, identification2, speciality, description, dtStr, digest, examName);
-
+                            try {
+                                new BoxUI(recordsClient.addExam(type, identification, identification2, speciality, description, dtStr, digest, examName)).show(BoxUI.GREEN_BOLD);
+                            } catch (BadAddExam_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
                             break;
 
                         case 3:
@@ -358,8 +362,11 @@ public class RecordsClient {
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), genericView);
 
-                            recordsClient.addGeneric(type, identification, identification2, speciality, description, dtStr, digest);
-
+                            try {
+                                new BoxUI(recordsClient.addGeneric(type, identification, identification2, speciality, description, dtStr, digest)).show(BoxUI.GREEN_BOLD);
+                            } catch (BadAddGeneric_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
                             break;
 
                         case 4:
@@ -382,8 +389,11 @@ public class RecordsClient {
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), medicationView);
 
-                            recordsClient.addMedication(type, identification, identification2, speciality, description, dtStr, digest, drugName, dosage);
-
+                            try {
+                                new BoxUI(recordsClient.addMedication(type, identification, identification2, speciality, description, dtStr, digest, drugName, dosage)).show(BoxUI.GREEN_BOLD);
+                            } catch (BadAddMedication_Exception e) {
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
+                            }
                             break;
 
                         case 5: break;

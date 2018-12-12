@@ -33,7 +33,12 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Doctor",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Doctor", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
-                return patient.getRecord(secretKey, requestObject);
+
+                try {
+                    return patient.getRecord(secretKey, requestObject);
+                } catch (InvalidRecordException e) {
+                    throw new BadRequestInformationException(e.getMessage());
+                }
             }
             else
                 throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
@@ -52,7 +57,11 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Nurse",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Nurse", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
-                return patient.getRecord(secretKey, requestObject);
+                try {
+                    return patient.getRecord(secretKey, requestObject);
+                } catch (InvalidRecordException e) {
+                    throw new BadRequestInformationException(e.getMessage());
+                }
             }
             else
                 throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
@@ -69,7 +78,11 @@ public class RequestHelper {
             if(XACMLHelper.checkPersonPermission("Patient",requestObject,"read") ||
                     XACMLHelper.checkPersonPermission("Patient", requestObject, "read",
                             checkFollowingStatus(myself, patient))){
-                return patient.getRecord(secretKey, requestObject);
+                try {
+                    return patient.getRecord(secretKey, requestObject);
+                } catch (InvalidRecordException e) {
+                    throw new BadRequestInformationException(e.getMessage());
+                }
             }
             else
                 throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
@@ -84,7 +97,11 @@ public class RequestHelper {
             }
 
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, "read"))
-                return patient.getRecord(secretKey, requestObject);
+                try {
+                    return patient.getRecord(secretKey, requestObject);
+                } catch (InvalidRecordException e) {
+                    throw new BadRequestInformationException(e.getMessage());
+                }
             else
                 throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
         }
@@ -158,7 +175,7 @@ public class RequestHelper {
                 return "Operation successful";
             }
         }
-        return myType + " with identification: " + personalId + " does not have authorization to add a Report to patient: " + patientId;
+        throw new BadRecordException(myType + " with identification: " + personalId + " does not have authorization to add a Report to patient: " + patientId);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -228,7 +245,7 @@ public class RequestHelper {
             }
         }
 
-        return myType + " with identification: " + personalId + " does not have authorization to add a Medication to patient: " + patientId;
+        throw new BadRecordException(myType + " with identification: " + personalId + " does not have authorization to add a Medication to patient: " + patientId);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -298,7 +315,7 @@ public class RequestHelper {
             }
         }
 
-        return myType + " with identification: " + personalId + " does not have authorization to add Generic Informations to patient: " + patientId;
+        throw new BadRecordException(myType + " with identification: " + personalId + " does not have authorization to add Generic Informations to patient: " + patientId);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -368,7 +385,7 @@ public class RequestHelper {
             }
         }
 
-        return myType + " with identification: " + personalId + " does not have authorization to add Exams to patient: " + patientId;
+        throw new BadRecordException(myType + " with identification: " + personalId + " does not have authorization to add Exams to patient: " + patientId);
     }
 
 

@@ -20,14 +20,15 @@ public class ExamView extends RecordView {
         this.examName = examName;
     }
 
-    public String toString(SecretKey serverKey) {
+    @Override
+    public String toString() {
         String res = "<Exam ";
 
         res += this.personalId + ", ";
         res += this.patientId + ", ";
         res += this.timeStamp + ", ";
         res += "\"" + this.speciality + "\", ";
-        res += "\"" + this.description + "\"";
+        res += "\"" + this.description + "\", ";
         res += "\"" + this.examName + "\"";
 
         res += ">";

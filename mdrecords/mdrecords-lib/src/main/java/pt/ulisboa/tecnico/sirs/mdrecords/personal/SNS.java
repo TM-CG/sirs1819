@@ -118,7 +118,6 @@ public class SNS extends SNS_Base {
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 
-        //Check with Martinez
         byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         IvParameterSpec ivspec = new IvParameterSpec(iv);
         cipher.init(Cipher.ENCRYPT_MODE, serverKey, ivspec);

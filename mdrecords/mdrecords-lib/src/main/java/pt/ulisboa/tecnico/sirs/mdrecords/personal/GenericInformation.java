@@ -30,6 +30,8 @@ public class GenericInformation extends GenericInformation_Base {
         setSpeciality(serverKey, speciality);
         setDescription(serverKey, description);
 
+        setDigest(digest);
+
         try {
             checkIncomingDigest(serverKey, personalId);
 
@@ -48,8 +50,6 @@ public class GenericInformation extends GenericInformation_Base {
         } catch (CertificateException e) {
             throw new InvalidRecordException(e.getMessage());
         }
-
-        setDigest(digest);
 
     }
 

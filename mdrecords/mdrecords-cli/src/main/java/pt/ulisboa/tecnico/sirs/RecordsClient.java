@@ -200,7 +200,7 @@ public class RecordsClient {
                             identification2 = Long.parseLong(new BoxUI("What is the patient identification?").showAndGet());
 
                             try {
-                                new BoxUI(recordsClient.addRelation("Doctor", identification, identification2)).show(BoxUI.GREEN_BOLD);
+                                new BoxUI(recordsClient.addRelation("Doctor", identification1, identification2)).show(BoxUI.GREEN_BOLD);
                             } catch (BadAddRelation_Exception e) {
                                 new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }

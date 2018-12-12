@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.sirs.mdrecords;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.RecordView;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.SNS;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.Patient;
@@ -73,7 +75,7 @@ import java.io.IOException;
       return null;
     }
 
-    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddReport_Exception{
+    public String addReport(String myType, Long personalId, Long patientId, String speciality, String description, String timestamp, String digest) throws BadAddReport_Exception{
         System.out.println("DIGEST PIMP: " + digest);
         try{
             return RequestHelper.addReport(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest);
@@ -85,7 +87,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String drug, Float usage) throws BadAddMedication_Exception{
+    public String addMedication(String myType, Long personalId, Long patientId, String speciality, String description, String timestamp, String digest, String drug, Float usage) throws BadAddMedication_Exception{
         try{
             return RequestHelper.addMedication(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest, drug, usage);
         }catch (BadRecordException e){
@@ -96,7 +98,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest) throws BadAddGeneric_Exception{
+    public String addGeneric(String myType, Long personalId, Long patientId, String speciality, String description, String timestamp, String digest) throws BadAddGeneric_Exception{
         try{
             return RequestHelper.addGeneric(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest);
         }catch (BadRecordException e){
@@ -107,7 +109,7 @@ import java.io.IOException;
         return null;
     }
 
-    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, XMLGregorianCalendar timestamp, String digest, String exameName) throws BadAddExam_Exception{
+    public String addExam(String myType, Long personalId, Long patientId, String speciality, String description, String timestamp, String digest, String exameName) throws BadAddExam_Exception{
         try{
             return RequestHelper.addExam(KerberosServerHandler.serverKey, myType, personalId, patientId, speciality, description, this.convert(timestamp), digest, exameName);
         }catch (BadRecordException e){
@@ -120,6 +122,11 @@ import java.io.IOException;
 
     public DateTime convert(final XMLGregorianCalendar xmlgc) {
         return new DateTime(xmlgc.toGregorianCalendar().getTime());
+    }
+
+    public DateTime convert(String timeStamp) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.parseDateTime(timeStamp);
     }
 
     private void throwBadAddRelationException(final String message)

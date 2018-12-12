@@ -67,6 +67,7 @@ public class Record extends Record_Base {
             InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException,
             InvalidRecordException, FileNotFoundException, CertificateException {
         //Get User public key
+
         PublicKey userKey = CertificateHelper.readPublicKey(new Long(personalId).toString());
 
         if (checkAuthenticity(serverKey, userKey) == false) {
@@ -108,8 +109,6 @@ public class Record extends Record_Base {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] digestBytes = digest.digest(toString(serverKey).getBytes());
 
-        System.out.println("CALC DIGEST:" + DatatypeConverter.printBase64Binary(digestBytes));
-
         return digestBytes;
     }
 
@@ -125,6 +124,7 @@ public class Record extends Record_Base {
      */
     public boolean checkAuthenticity(SecretKey serverKey, Key publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
 
         if (getDigest() == null || getDigest().equals(""))
             return false;
@@ -157,7 +157,7 @@ public class Record extends Record_Base {
      */
     public void setTimeStamp(SecretKey serverKey, DateTime timeStamp) {
         try {
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
             String str = timeStamp.toString(fmt);
             String encryptedTimeStamp= SNS.encrypt(serverKey, str);
             super.setTimeStamp(encryptedTimeStamp);
@@ -188,7 +188,7 @@ public class Record extends Record_Base {
         String timeStamp = super.getTimeStamp();
         try {
             String strTimeStamp = SNS.decrypt(serverKey, timeStamp);
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
             return formatter.parseDateTime(strTimeStamp);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();

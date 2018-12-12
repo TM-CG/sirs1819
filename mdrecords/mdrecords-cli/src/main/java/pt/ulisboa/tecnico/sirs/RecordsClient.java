@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.sirs;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import pt.ulisboa.tecnico.sirs.mdrecords.BadAddIdentity_Exception;
 import pt.ulisboa.tecnico.sirs.mdrecords.BadAddRelation_Exception;
 import pt.ulisboa.tecnico.sirs.mdrecords.BadRequestInformation_Exception;
@@ -64,6 +66,8 @@ public class RecordsClient {
         String digest;
         String examName;
         String drugName;
+        DateTimeFormatter fmt;
+        String dtStr;
 
         float dosage;
 
@@ -72,16 +76,6 @@ public class RecordsClient {
 
         dt = new DateTime();
         System.out.println(dt);
-
-        ReportView aaa = new ReportView(identification, new Long(987654321), dt , "fgfdgfd", "fgdfgvg");
-
-        System.out.println("report: " + aaa);
-
-        digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), aaa);
-
-        System.out.println("AAAAA: " + digest);
-
-
 
         do {
             option = menu.display();
@@ -309,20 +303,17 @@ public class RecordsClient {
                             description = new BoxUI("What is the description?").showAndGet();
 
                             dt = new DateTime();
+                            //vitor: Here we spend 4+ hours to discover we needed to put this line
+                            dt = dt.minus(dt.getMillisOfSecond());
 
-                            format = new SimpleDateFormat("yyyy-MM-dd");
-                            date = format.parse(dt.toString());
-
-                            cal = new GregorianCalendar();
-                            cal.setTime(date);
-
-                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+                            fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                            dtStr = dt.toString(fmt);
 
                             ReportView reportView = new ReportView(identification, identification2, dt , speciality, description);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), reportView);
 
-                            recordsClient.addReport(type, identification, identification2, speciality, description, xmlGregCal, digest);
+                            recordsClient.addReport(type, identification, identification2, speciality, description, dtStr, digest);
 
                             break;
 
@@ -335,20 +326,17 @@ public class RecordsClient {
                             examName = new BoxUI("What is the exam name?").showAndGet();
 
                             dt = new DateTime();
+                            //vitor: Here we spend 4+ hours to discover we needed to put this line
+                            dt = dt.minus(dt.getMillisOfSecond());
 
-                            format = new SimpleDateFormat("yyyy-MM-dd");
-                            date = format.parse(dt.toString());
-
-                            cal = new GregorianCalendar();
-                            cal.setTime(date);
-
-                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+                            fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                            dtStr = dt.toString(fmt);
 
                             ExamView examView = new ExamView(identification, identification2, dt, speciality, description, examName);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), examView);
 
-                            recordsClient.addExam(type, identification, identification2, speciality, description, xmlGregCal, digest, examName);
+                            recordsClient.addExam(type, identification, identification2, speciality, description, dtStr, digest, examName);
 
                             break;
 
@@ -360,20 +348,17 @@ public class RecordsClient {
                             description = new BoxUI("What is the description?").showAndGet();
 
                             dt = new DateTime();
+                            //vitor: Here we spend 4+ hours to discover we needed to put this line
+                            dt = dt.minus(dt.getMillisOfSecond());
 
-                            format = new SimpleDateFormat("yyyy-MM-dd");
-                            date = format.parse(dt.toString());
-
-                            cal = new GregorianCalendar();
-                            cal.setTime(date);
-
-                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+                            fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                            dtStr = dt.toString(fmt);
 
                             GenericInformationView genericView = new GenericInformationView(identification, identification2, dt, speciality, description);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), genericView);
 
-                            recordsClient.addGeneric(type, identification, identification2, speciality, description, xmlGregCal, digest);
+                            recordsClient.addGeneric(type, identification, identification2, speciality, description, dtStr, digest);
 
                             break;
 
@@ -387,20 +372,17 @@ public class RecordsClient {
                             dosage = Long.parseLong(new BoxUI("How much is the dosage?").showAndGet());
 
                             dt = new DateTime();
+                            //vitor: Here we spend 4+ hours to discover we needed to put this line
+                            dt = dt.minus(dt.getMillisOfSecond());
 
-                            format = new SimpleDateFormat("yyyy-MM-dd");
-                            date = format.parse(dt.toString());
-
-                            cal = new GregorianCalendar();
-                            cal.setTime(date);
-
-                            xmlGregCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+                            fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                            dtStr = dt.toString(fmt);
 
                             MedicationView medicationView = new MedicationView(identification, identification2, dt, speciality, description, drugName, dosage);
 
                             digest = CertificateHelper.createRecordDigest(new Long(identification).toString(), medicationView);
 
-                            recordsClient.addMedication(type, identification, identification2, speciality, description, xmlGregCal, digest, drugName, dosage);
+                            recordsClient.addMedication(type, identification, identification2, speciality, description, dtStr, digest, drugName, dosage);
 
                             break;
 

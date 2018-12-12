@@ -30,6 +30,9 @@ public class MenuUI {
     }
 
     public int display() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
         System.out.println(title);
 
         for (int i = 0; i < title.length(); i++)
@@ -47,7 +50,7 @@ public class MenuUI {
         while (option == -1) {
 
             System.out.println();
-            System.out.print("Your choice is: ");
+            System.out.print(BoxUI.WHITE_BOLD + "Your choice is: " + BoxUI.RESET);
 
             System.out.flush();
 
@@ -58,7 +61,8 @@ public class MenuUI {
 
                 if (option <= 0 || option > entries.size()) {
                     option = -1;
-                    System.out.println("Ops! Wrong number. Try again!");
+                    System.out.println(BoxUI.RED_BOLD + "Ops! Wrong number. Try again!" + BoxUI.RESET);
+                    bufferRead.readLine();
                 }
 
 

@@ -107,7 +107,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addIdentity("Doctor", name, identification, xmlGregCal);
                             } catch (BadAddIdentity_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                             break;
@@ -129,7 +129,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addIdentity("Patient", name, identification, xmlGregCal);
                             } catch (BadAddIdentity_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                             break;
@@ -151,7 +151,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addIdentity("Nurse", name, identification, xmlGregCal);
                             } catch (BadAddIdentity_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                             break;
@@ -173,7 +173,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addIdentity("Administrative", name, identification, xmlGregCal);
                             } catch (BadAddIdentity_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                             break;
@@ -203,7 +203,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addRelation("Doctor", identification, identification2);
                             } catch (BadAddRelation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                         break;
@@ -215,7 +215,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.addRelation("Nurse", identification, identification2);
                             } catch (BadAddRelation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
 
                             break;
@@ -242,7 +242,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.requestInformation("read", "Report", type, identification, identification2);
                             } catch (BadRequestInformation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
                             break;
 
@@ -252,7 +252,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.requestInformation("read", "Exam", type, identification, identification2);
                             } catch (BadRequestInformation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
                             break;
 
@@ -263,7 +263,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.requestInformation("read", "Generic", type, identification, identification2);
                             } catch (BadRequestInformation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
                             break;
 
@@ -274,7 +274,7 @@ public class RecordsClient {
                             try {
                                 recordsClient.requestInformation("read", "Medication", type, identification, identification2);
                             } catch (BadRequestInformation_Exception e) {
-                                new BoxUI(e.getMessage()).show();
+                                new BoxUI(e.getMessage()).show(BoxUI.RED_BOLD);
                             }
                             break;
 

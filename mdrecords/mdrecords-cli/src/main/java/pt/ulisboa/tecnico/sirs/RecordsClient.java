@@ -36,9 +36,9 @@ public class RecordsClient {
             kerbyPath = args[2];
             mdrecordsServerPath = args[3];
         }
-        
-        
-        System.out.println("Hello: " + user);
+
+
+        System.out.println("Hello: " + type + " " + user);
 
         MDRecordsClient recordsClient = new MDRecordsClient(mdrecordsServerPath);
 
@@ -73,9 +73,6 @@ public class RecordsClient {
 
         int option;
         int option2;
-
-        dt = new DateTime();
-        System.out.println(dt);
 
         do {
             option = menu.display();

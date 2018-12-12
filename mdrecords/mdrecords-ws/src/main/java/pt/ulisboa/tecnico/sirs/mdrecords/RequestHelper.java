@@ -36,7 +36,7 @@ public class RequestHelper {
                 return patient.getRecord(secretKey, requestObject);
             }
             else
-                throw new BadRequestInformationException("Operation not authorized.");
+                throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
         }
         else if(myType.equals("Nurse")){
             Nurse myself = sns.getNurseById(myId);
@@ -55,7 +55,7 @@ public class RequestHelper {
                 return patient.getRecord(secretKey, requestObject);
             }
             else
-                throw new BadRequestInformationException("Operation not authorized.");
+                throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
         }
         else if(myType.equals("Patient")){
             Patient myself = sns.getPatientById(myId);
@@ -72,7 +72,7 @@ public class RequestHelper {
                 return patient.getRecord(secretKey, requestObject);
             }
             else
-                throw new BadRequestInformationException("Operation not authorized.");
+                throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
         }
         else if(myType.equals("Administrative")) {
             Administrative myself = sns.getAdministrativeById(myId);
@@ -86,7 +86,7 @@ public class RequestHelper {
             if (XACMLHelper.checkPersonPermission("Administrative", requestObject, "read"))
                 return patient.getRecord(secretKey, requestObject);
             else
-                throw new BadRequestInformationException("Operation not authorized.");
+                throw new BadRequestInformationException(myType + " with identification: " + myId + " does not have authorization to read patient: " + requestWhomId + " " +requestObject);
         }
 
         return null;
@@ -158,7 +158,7 @@ public class RequestHelper {
                 return "Operation successful";
             }
         }
-        return myType + " with identification: " + personalId + " does not have authorization to add a Report";
+        return myType + " with identification: " + personalId + " does not have authorization to add a Report to patient: " + patientId;
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -228,7 +228,7 @@ public class RequestHelper {
             }
         }
 
-        return "Operation unsuccessful";
+        return myType + " with identification: " + personalId + " does not have authorization to add a Medication to patient: " + patientId;
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -298,7 +298,7 @@ public class RequestHelper {
             }
         }
 
-        return "Operation unsuccessful";
+        return myType + " with identification: " + personalId + " does not have authorization to add Generic Informations to patient: " + patientId;
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -368,7 +368,7 @@ public class RequestHelper {
             }
         }
 
-        return "Operation unsuccessful";
+        return myType + " with identification: " + personalId + " does not have authorization to add Exams to patient: " + patientId;
     }
 
 
@@ -417,18 +417,23 @@ public class RequestHelper {
                 addFolowingRelation(doc, patient);
                 return "Doctor: " + myId + " now follows patient: " + patientId + ".";
             }
+            else if (doc == null)
+                throw new BadAddRelationException("Doctor does not exist.");
             else
-                throw new BadAddRelationException("One of the subjects does not exist.");
+                throw new BadAddRelationException("Patient does not exist.");
+
         }
        else if(myType.equals("Nurse")){
             Nurse nurse = sns.getNurseById(myId);
             Patient patient = sns.getPatientById(patientId);
             if(nurse != null && patient != null){
                 addFolowingRelation(nurse, patient);
-                return "Doctor: " + myId + " now follows patient: " + patient + ".";
+                return "Nurse: " + myId + " now follows patient: " + patient + ".";
             }
+            else if (nurse == null)
+                throw new BadAddRelationException("Doctor does not exist.");
             else
-                throw new BadAddRelationException("One of the subjects does not exist.");
+                throw new BadAddRelationException("Patient does not exist.");
         }
 
         return null;

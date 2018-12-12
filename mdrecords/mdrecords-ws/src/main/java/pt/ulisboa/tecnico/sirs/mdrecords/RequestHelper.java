@@ -3,7 +3,6 @@ package pt.ulisboa.tecnico.sirs.mdrecords;
 import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 import pt.ulisboa.tecnico.sirs.mdrecords.personal.*;
-import pt.ist.fenixframework.FenixFramework;
 
 
 import javax.crypto.SecretKey;
@@ -159,7 +158,7 @@ public class RequestHelper {
                 return "Operation successful";
             }
         }
-        return "Operation unsuccessful";
+        return myType + " with identification: " + personalId + " does not have authorization to add a Report";
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
@@ -416,7 +415,7 @@ public class RequestHelper {
             Patient patient = sns.getPatientById(patientId);
             if(doc != null && patient != null){
                 addFolowingRelation(doc, patient);
-                return "Doctor: " + myId + " now follows patient: " + patient + ".";
+                return "Doctor: " + myId + " now follows patient: " + patientId + ".";
             }
             else
                 throw new BadAddRelationException("One of the subjects does not exist.");
@@ -464,7 +463,7 @@ public class RequestHelper {
         }catch (InvalidPersonException e){
             throw new BadAddIdentityException(e.getMessage());
         }
-        return "Add opertation on " +  type + ": " + identification + "was sucesseful.";
+        return "Add opertation of " +  type + ": " + identification + " was sucesseful.";
 
     }
 

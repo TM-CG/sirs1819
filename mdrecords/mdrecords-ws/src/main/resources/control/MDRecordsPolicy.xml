@@ -200,7 +200,7 @@
             </AnyOf>
         </Target>
     </Rule>
-    <Rule RuleId="patient" Effect="Permit">
+    <Rule RuleId="admin" Effect="Permit">
         <Description>Patient Rule to access his own information</Description>
         <Target>
             <AnyOf>
